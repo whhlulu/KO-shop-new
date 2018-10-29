@@ -1,0 +1,88 @@
+<template>
+    <div class="title">
+        <div class="pull-left icon-main">
+            <span></span> 
+            <span></span>
+        </div>
+        {{title}}
+        <div class="pull-right icon-main">
+            <span></span> 
+            <span></span>
+        </div>
+        <i class="user-font"><img v-lazy="imgSrc"></i>
+    </div>
+</template>
+<script>
+    export default {
+        name:'teachTitle',
+        props:{
+            imgSrc:'',
+            title:''
+        }
+    }
+</script>
+<style lang="less" scoped>
+.title{
+    width:100%;
+    height:.7rem;
+    line-height:.7rem;
+    text-indent:3.36rem;
+    position:relative;
+    background:#fff;
+    font-size:.3rem;
+    color:#fd4e4c;
+    font-weight:bold;
+    .user-font{
+        position:absolute;
+        left:2.9rem;
+        top:50%;
+        margin-top:-.15rem;
+        width:.3rem;
+        height:.3rem;
+        img{
+            width:100%;
+            height:100%;
+            display:block;
+        }
+    }
+    .icon-main{
+        position:absolute;
+        top:50%;
+        height:.14rem;
+        margin-top:-.07rem;
+        span{
+            width:.14rem;
+            height:.14rem;
+            border-radius:100%;
+            position:absolute;
+            top:0;
+        }
+    }
+    .icon-main:nth-child(1){
+        span:nth-child(1){
+            background:#febe6d;
+            left:0;
+        }
+        span:nth-child(2){
+            background:#fc8633;
+            left:.12rem;
+        }
+    }
+    .icon-main:nth-child(2){
+        span:nth-child(1){
+            background:#f88dec;
+            right:0;
+        }
+        span:nth-child(2){
+            background:#f4d37c;
+            right:.12rem;
+        }
+    }
+    .pull-left{
+        left:2.28rem;
+    }
+    .pull-right{
+        right:2.28rem;
+    }
+}
+</style>

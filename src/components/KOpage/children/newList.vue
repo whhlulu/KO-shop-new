@@ -3,7 +3,7 @@
         <div class="new-all" v-for="(item,index) in newList" :key="item.id">
             <div v-if="item.news_type==1">
                 <div class="new">
-                    <img v-if="item.video" :src="item.video" class="fl" @click="toDetails(item)">
+                    <img v-if="item.video" v-lazy="item.video" class="fl" @click="toDetails(item)">
                     <div class="fl words" :class="{allspan:!item.video}" @click="toDetails(item)">
                         <p class="text">{{item.name}}</p>
                         <p class="clearfix text company">{{item.intro}}</p>
@@ -25,7 +25,9 @@
     export default {
         name: 'newList',
         data(){
-            return {}
+            return {
+                imgs: require('@/assets/cp.png'),
+            }
         },
         props: ["newList"],
         components: {}

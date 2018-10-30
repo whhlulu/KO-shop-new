@@ -9,6 +9,7 @@ const state = { //创建数据仓库
     KOhome_data: '', //轮播数据来源-移动端网页banner
     categoryLists:[],
     homeNewList: [],
+    AllNewList: [],
     //列表页相关数据
     KOlistCurType:'1',
     //END

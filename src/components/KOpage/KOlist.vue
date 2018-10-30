@@ -11,29 +11,25 @@
                 </el-dropdown>
                 <!--<span class="list_shadow"></span>-->
             </div>
-            <!--<ul class="nav">-->
-            <!--<li class="fl" v-for="(item,index) in fenleiList" :key="item.id" :class="{active:isactive == item.id}" @click="addClass(index,'click')"><span>{{item.name}}</span></li>-->
-            <!--</ul>-->
             <div class="nav-list">
-                <a href="javascript:void(0)" class="nav" v-for="(item,index) in fenleiList" :key="item.id"
-                   :class="{active:isactive == item.id}">
+                <a href="javascript:void(0)" class="nav" v-for="(item,index) in $store.state.categoryLists" :key="item.id"
+                   :class="{active:$route.params.type == item.id}">
                     {{item.name}}
                 </a>
             </div>
-
         </div>
         <div class="new-list-scroll">
-            <new-list :newList="newList"></new-list>
-            <div class="comm-null" v-if="newList.length===0">
+            <new-list :newList="$store.state.AllNewList"></new-list>
+            <div class="comm-null" v-if="$store.state.AllNewList.length===0">
                 <div class="con-wrap text-center">
                     <img src="../../assets/null_com.png">
                     <p>暂时没有商品</p>
                 </div>
             </div>
-            <p class="page-infinite-loading" v-show="queryLoading">
-                <mt-spinner type="fading-circle" color="#666" :size="20" v-show="moreLoading"></mt-spinner>
-                <span style="font-size:.2rem;color:#666;" v-show="allLoaded">暂无更多数据</span>
-                <span style="font-size:.2rem;color:#666;" v-show="loading">加载中...</span>
+            <p class="page-infinite-loading" v-show="$store.state.KOAllqueryLoading">
+                <mt-spinner type="fading-circle" color="#666" :size="20" v-show="$store.state.KOAllmoreLoading"></mt-spinner>
+                <span style="font-size:.2rem;color:#666;" v-show="$store.state.KOAllallLoaded">暂无更多数据</span>
+                <span style="font-size:.2rem;color:#666;" v-show="$store.state.KOAllloading">加载中...</span>
             </p>
         </div>
     </div>
@@ -47,150 +43,128 @@
         name: 'newListScroll',
         data(){
             return {
-                fenleiList: [
-                    {id: 0, name: '推荐'},
-                    {id: 1, name: '分类'},
-                    {id: 2, name: '安全'},
-                    {id: 3, name: '地址'},
-                    {id: 4, name: '参加啊是的'},
-                    {id: 5, name: '其他'},
-                ],
-                isactive: 0,
-                newList: [],
-                page: 1,
                 //初始化加载相关参数
-                queryLoading: false,
-                moreLoading: false,
-                allLoaded: false,
-                loading: false,
                 scrollWatch: true,
-                slidingSwitch: true,
-                no_data: false,
             }
         },
         components: {
             newList,
         },
-        mounted() {
-            document.body.scrollTop = 0;
-            this.getOrderList();
+        created() {
             let this_ = this;
+            this.$store.state.KOAllpage = 1; //初始页
+            this.$store.state.KOAllqueryLoading = false; //整个加载的框
+            this.$store.state.KOAllallLoaded = false;
+            this.$store.state.KOAllmoreLoading = false;
+            this.$store.state.KOAllloading = false;
+            this.$store.state.KOAllno_data = false;
+            this.$store.state.KOAllslidingSwitch = true;
+            //判断是否需要重新请求分类数据
+            if(this.$store.state.categoryLists.length===0){
+                this.getCategoryLists();
+            }
+            //第一次请求首页数据
+            this.getAllNewList();
+            // document.body.scrollTop = 0;
             // 注册scroll事件并监听
-            var n = 100;
             window.addEventListener('scroll', () => {
                 if (this_.scrollWatch) {
                     // 判断是否滚动到底部
                     if (document.body.scrollTop + window.innerHeight + 50 >= document.body.offsetHeight) {
-                        if (this_.no_data === true) {
+                        if (this_.$store.state.KOAllno_data === true) {
                             return false;
                         }
                         // 如果开关打开则加载数据
-                        if (this_.slidingSwitch == true) {
-                            this_.slidingSwitch = false;
-                            if (this_.allLoaded === true) {
+                        if (this_.$store.state.KOAllslidingSwitch == true) {
+                            this_.$store.state.KOAllslidingSwitch = false;
+                            if (this_.$store.state.KOAllallLoaded === true) { //暂无更多
                                 return false;
                             } else {
-                                this_.page++;
-                                this_.queryLoading = true;
-                                this_.moreLoading = true;
-                                this_.loading = true;
-
-                                setTimeout(() => {
-                                    this_.slidingSwitch = true;
-                                    var data = [
-                                        {id: (n + 1), title: 'asd1', pic_url: '', state: ''},
-                                        {id: (n + 2), title: 'asda2', pic_url: '', state: ''},
-                                        {id: (n + 3), title: 'asd3', pic_url: '', state: ''},
-                                        {id: (n + 4), title: 'asdad4', pic_url: '', state: ''},
-                                        {id: (n + 5), title: 'asd5', pic_url: '', state: ''},
-                                    ]
+                                this_.$store.state.KOAllpage++;
+                                this_.$store.state.KOAllqueryLoading = true; // 整个加载的框
+                                this_.$store.state.KOAllmoreLoading = true; //转圈动画
+                                this_.$store.state.KOAllloading = true; //加载中
+                                this.axios({
+                                    url:`${this.$httpConfig.articleLists}/page/${this_.$store.state.KOAllpage}`,
+                                    method:'get',
+                                    params:{
+                                        app_user_id:sessionStorage.getItem('user_ID'),
+                                    }
+                                }).then((res) => {
+                                    this_.$store.state.KOAllslidingSwitch = true;
+                                    this_.$store.state.KOAllqueryLoading = false; // 整个加载的框
+                                    var data = res.data.data.records;
                                     data.forEach(function (val, index) {
-                                        this_.newList.push(val);
+                                        this_.$store.state.AllNewList.push(val);
                                     });
-                                    n = n + 20;
-                                }, 2000)
-
-//                                this.axios({
-//                                    url:API_URL + 'Home/Order/myOrder',
-//                                    method:'get',
-//                                    params:{
-//                                        app_user_id:sessionStorage.getItem('user_ID'),
-//                                        p:this_.$store.state.page
-//                                    }
-//                                }).then((res) => {
-//                                    this_.$store.state.slidingSwitch = true;
-//                                    if(res.data.status == 0){
-//                                        this_.$store.state.moreLoading = false;
-//                                        this_.$store.state.allLoaded = true;
-//                                        this_.$store.state.loading = false;
-//                                        return false;
-//                                    }
-//                                    res.data.data.forEach(function(val,index){
-//                                        this_.$store.state.order.push(val);
-//                                        });
-//                                }).catch((err) => {
-//                                    console.log(err);
-//                                });
+                                    if (data.length < 15) {
+                                        this_.$store.state.KOAllno_data = true;
+                                        this_.$store.state.KOAllqueryLoading = true; //整个加载的框
+                                        this_.$store.state.KOAllmoreLoading = false; //转圈动画
+                                        this_.$store.state.KOAllloading = false; //加载中
+                                        this_.$store.state.KOAllallLoaded = true; //暂无更多
+                                    }
+                                }).catch((err) => {
+                                    Toast('获取资讯异常')
+                                    console.log(err);
+                                });
                             }
-
                         }
                     }
                 }
 
             });
+
         },
         destroyed(){
             this.scrollWatch = false;
         },
         methods: {
+            getCategoryLists(){
+                this.axios({
+                    url: this.$httpConfig.categoryLists,
+                    method: 'get',
+                    params: {
+                        app_user_id: sessionStorage.getItem('user_ID'),
+                    }
+                }).then((res) => {
+                    if(res.data.status){
+                        this.$store.state.categoryLists = res.data.data;
+                    }else{
+                        Toast("获取资讯分类异常")
+                    }
+                }).catch((err) => {
+                    Toast("获取资讯分类异常")
+                    console.log(err);
+                });
+            },
             handleCommand(command) {
                 this.$store.state.KOlistCurType = command;
             },
-            getOrderList(){
-                var data = [
-                    {
-                        id: 1,
-                        title: '爱仕达1',
-                        pic_url: '',
-                        state: '',
-                        company: '百度新闻是包含海量资讯的新闻服务平台,真实反映每时每刻的新闻热点。您可以搜索新闻事件、'
-                    },
-                    {id: 2, title: 'sasd2', pic_url: '', state: '', company: 'ssss'},
-                    {id: 3, title: 'asd3', pic_url: '', state: '', company: 'ssss'},
-                    {id: 4, title: '4', pic_url: '', state: '', like: true},
-                    {id: 5, title: '5', pic_url: '', state: '', like: false},
-                    {id: 6, title: '5', pic_url: '', state: ''},
-                    {id: 7, title: '5', pic_url: '', state: ''},
-                    {id: 8, title: 'asd5', pic_url: '', state: ''},
-                    {id: 9, title: 'asd5', pic_url: '', state: ''},
-                    {id: 10, title: 'asd5', pic_url: '', state: ''},
-                ]
-                this.newList = data;
-                if (data.length < 10) {
-                    this.no_data = true;
-                }
-//                this.axios({
-//                        url:API_URL + 'Home/Order/myOrder',
-//                        method:'get',
-//                        params:{
-//                            app_user_id:sessionStorage.getItem('user_ID'),
-//                            p:this.$store.state.page
-//                        }
-//                    }).then((res) => {
-//                        this.$store.state.order = res.data.data;
-//                        if(res.data.data.length<10){this.$store.state.no_data = true;}
-//                        this.$store.state.order_load_wrap = false;
-//                    }).catch((err) => {
-//                        console.log(err);
-//                    });
-            },
-            toDetails(item, text, index){
-                this.$router.push({
-                    name: 'orderDetails',
-                    params: {
-                        order: item.id,
-                        order_type: 2 //1为积分订单 2 为商品订单
+            getAllNewList(){
+                var this_ = this;
+                this_.$store.state.AllNewList=[];
+                this.axios({
+                    url:`${this.$httpConfig.articleLists}/page/${this_.$store.state.KOAllpage}`,
+                    method:'get',
+                    params:{
+                        app_user_id:sessionStorage.getItem('user_ID'),
                     }
+                }).then((res) => {
+                    var data = res.data.data.records;
+                    data.forEach(function (val, index) {
+                        this_.$store.state.AllNewList.push(val);
+                    });
+                    if (data.length < 15) {
+                        this.$store.state.KOAllno_data = true;
+                        this.$store.state.KOAllqueryLoading = true; //整个加载的框
+                        this.$store.state.KOAllmoreLoading = false; //转圈动画
+                        this_.$store.state.KOAllloading = false; //加载中
+                        this.$store.state.KOAllallLoaded = true; //暂无更多
+                    }
+                }).catch((err) => {
+                    Toast('获取资讯异常')
+                    console.log(err);
                 });
             },
         }

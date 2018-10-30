@@ -40,7 +40,6 @@
             this.getOrderList();
             let this_ = this;
             // 注册scroll事件并监听
-            var n = 100;
             window.addEventListener('scroll', () => {
                 if (this_.scrollWatch) {
                     // 判断是否滚动到底部

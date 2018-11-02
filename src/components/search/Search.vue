@@ -3,7 +3,9 @@
 		<div v-title data-title="主页">商品搜索</div>
 		<div class="Search-wap clearfix">
 			<div class="Search-input-main fl">
-				<input type="search" v-model="value" placeholder="搜索宝贝、店铺..." @keyup.enter="submit(value)">
+				<form action="javascript:void(0);">
+					<input type="search" v-model="value" placeholder="搜索宝贝、店铺..." @keyup.enter.stop="submit(value)">
+				</form>
 			</div>
 			<span @click="remove" class="return-btn fl">取消</span>
 		</div>
@@ -13,7 +15,7 @@
 				<ul class="clearfix">
 					<li class="fl" v-for="(item,index) in hot_data" :key="item.id" @click="tolist('/list',index,item)">{{item.hot_words}}</li>
 				</ul>
-				<div class="def" v-if="hot_data.legnth <= 0">热门搜索为空!</div>
+				<div class="def" v-if="hot_data == null || hot_data.legnth <= 0">热门搜索为空!</div>
 			</div>
 			<div class="hit">
 				<div class="title">历史搜索</div>

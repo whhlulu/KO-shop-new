@@ -1,6 +1,6 @@
 <template>
     <div class="header">
-        <router-link to="/home" class="header_logo"></router-link>
+        <router-link to="/KOhome" class="header_logo"></router-link>
         <div class="header_seek" @click="searchIn">
             <img class="header_seek_img" :src="seekImg" alt="搜素img">
             <input type="text" disabled placeholder="搜索宝贝、店铺...">
@@ -58,13 +58,14 @@
         position: relative;
         overflow: hidden;
         .header_logo{
-            position: absolute;    
-            left: 0;
-            top: 0;
-            width: 1.85rem;
-            height: 0.9rem;
+            position: absolute;
+            left: .2rem;
+            top: 50%;
+            margin-top: -0.23rem;
+            width: .46rem;
+            height: .46rem;
             display: block;
-            background-image: url("../../../assets/images/LOGO.jpg");
+            background-image: url("../../../assets/btn-return.png");
             background-size: 100% 100%;
         }
         .header_seek{

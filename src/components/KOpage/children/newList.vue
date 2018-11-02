@@ -3,8 +3,8 @@
         <div class="new-all" v-for="(item,index) in newList" :key="item.id">
             <div v-if="item.news_type==1">
                 <div class="new">
-                    <img v-if="item.video" v-lazy="item.video" class="fl" @click="toDetails(item)">
-                    <div class="fl words" :class="{allspan:!item.video}" @click="toDetails(item)">
+                    <img v-if="item.pic_url" v-lazy="item.pic_url" class="fl" @click="toDetails(item)">
+                    <div class="fl words" :class="{allspan:!item.pic_url}" @click="toDetails(item)">
                         <p class="text">{{item.name}}</p>
                         <p class="clearfix text company">{{item.intro}}</p>
                     </div>
@@ -14,9 +14,9 @@
                 <!--</div>-->
             </div>
             <div v-if="item.news_type==2">
-                <video class="my-video" src="https://video.sina.cn/news/2018-10-28/detail-ihnaivxp9385722.d.html?vt=4&cid=37766" controls="controls">
-                    your browser does not support the video tag
-                </video>
+                <!--<video class="my-video" :src="IMG_URL + item.video" controls="controls">-->
+                    <!--your browser does not support the video tag-->
+                <!--</video>-->
             </div>
         </div>
     </div>

@@ -1,5 +1,5 @@
 <template>
-	<div>
+	<div v-loading="loading" element-loading-text="上传中……" element-loading-background="hsla(0,0%,100%,.9)">
 		<div v-title data-title="我要开店">我要开店</div>
 		<top-header :text="title"></top-header>
 		<con-header :text="text[0]" :prompt="prompt"></con-header>
@@ -12,14 +12,14 @@
 			<h4>组织机构代码证电子版：</h4>
 			<div>
 				<div>
-					<input type="file" @change="orange($event)" v-if="ipad" class="file" />
-					<img :src="ipadImg" v-show="ipadImg" class="ipadImg" @click="moves" />
+					<input type="file" @change="orange($event)" v-if="!organization_electronic" class="file" />
+					<img :src="URL + organization_electronic" v-show="organization_electronic" class="ipadImg" @click="moves" />
 				</div>
-				<h6>示例</h6>
-				<div></div>
+				<!-- <h6>示例</h6>
+				<div></div> -->
 			</div>
 			<p>
-				图片建议使用4：3的jpg、gif、png格式的图片，并且图片大小不得超过2M营业执照、住址机构代码证、税务登记证三证合一jpg、gif、png格式的图片， 并且图片大小不得超过2M
+				图片建议使用4：3的jpg、gif、png格式的图片，并且图片大小不得超过1M营业执照、住址机构代码证、税务登记证三证合一jpg、gif、png格式的图片， 并且图片大小不得超过2M
 			</p>
 		</div>
 		<con-header :text="text[1]" :prompt="prompt2"></con-header>
@@ -27,14 +27,14 @@
 			<h4>{{text[1]}}：</h4>
 			<div>
 				<div>
-					<input type="file" @change="oranges($event)" v-if="ipads" class="file" />
-					<img :src="ipadImgs" v-show="ipadImgs" class="ipadImg" @click="removes" />
+					<input type="file" @change="oranges($event)" v-if="!taxpayer_certificate" class="file" />
+					<img :src="URL + taxpayer_certificate" v-show="taxpayer_certificate" class="ipadImg" @click="removes" />
 				</div>
-				<h6>示例</h6>
-				<div></div>
+				<!-- <h6>示例</h6>
+				<div></div> -->
 			</div>
 			<p>
-				图片建议使用4：3的jpg、gif、png格式的图片，并且图片大小不得超过2M营业执照、住址机构代码证、税务登记证三证合一jpg、gif、png格式的图片， 并且图片大小不得超过2M
+				图片建议使用4：3的jpg、gif、png格式的图片，并且图片大小不得超过1M营业执照、住址机构代码证、税务登记证三证合一jpg、gif、png格式的图片， 并且图片大小不得超过2M
 			</p>
 		</div>
 		<button @click="nextinfor">提交以上信息，并填写下一页</button>
@@ -55,29 +55,49 @@
 				organization_code: '',
 				organization_electronic: '',
 				taxpayer_certificate: '',
-				ipad: true,
 				ipadImg: '',
-				ipads: true,
 				ipadImgs: '',
+				loading:false
+			}
+		},
+		created(){
+			if(sessionStorage.getItem('admissionInfo')){
+				let shopInfo =  JSON.parse(sessionStorage.getItem('admissionInfo'));
+				this.organization_code = shopInfo.organization_code;
+				this.organization_electronic = shopInfo.organization_electronic;
+				this.taxpayer_certificate = shopInfo.taxpayer_certificate;
 			}
 		},
 		methods: {
 			removes() {
-				this.ipads = true;
-				this.ipadImgs = false;
+				this.taxpayer_certificate = false;
 			},
 			moves() {
-				this.ipad = true;
-				this.ipadImg = false;
+				this.organization_electronic = false;
 			},
 			orange(e) {
+				this.loading = true;
 				var file = e.target.files[0];
+				//限制图片规格尺寸
+        		var fileSize = 0;         
+				if (!e.target.files) {     
+				var filePath = e.target.value;     
+				var fileSystem = new ActiveXObject("Scripting.FileSystemObject");        
+				var file = fileSystem.GetFile (filePath);     
+				fileSize = file.Size;    
+				} else {    
+				fileSize = e.target.files[0].size;     
+				}   
+				var size = fileSize / 1024;    
+				if(size>1000){  
+					this.loading = false;
+					Toast("附件不能大于1M");
+					e.target.value="";
+					return;
+				}
 				//接口上传文件
 				var that = this   
-				// this.organization_electronic = file.name
-				this.ipad = false
 				const reader = new FileReader();
-				this.img_type = 'data:' + file.type + ';base64,';
 				reader.readAsDataURL(file);
 				reader.onload = function() {
 					that.ipadImg = this.result;
@@ -85,7 +105,6 @@
 				let param = new FormData() // 创建form对象
 				    param.append('adv_content', file, file.name) // 通过append向form对象添加数据
 				    param.append('chunk', '0') // 添加form表单中其他数据  
-					console.log(param.get('file')) // FormData私有类对象，访问不到，可以通过get判断值是否传进去
 				let config = {    
 					headers: {
 						'Content-Type': 'multipart/form-data'
@@ -93,20 +112,45 @@
 				}
 				this.axios.post(this.$httpConfig.uploadImage, param, config)
 					.then((res) => {
+						this.loading = false;
 						if(res.data.status === 1) {
-							this.organization_electronic = res.data.data
+							this.organization_electronic = res.data.data;
+							Toast({
+                                message: res.data.message,
+                                duration: 1000
+							});
+						}else{
+							 Toast({
+                                message: res.data.message,
+                                duration: 1000
+                            });
 						}
 					})
 
 			},
 			oranges(e) {
+				this.loading = true;
 				var file = e.target.files[0];
+				//限制图片规格尺寸
+        		var fileSize = 0;         
+				if (!e.target.files) {     
+				var filePath = e.target.value;     
+				var fileSystem = new ActiveXObject("Scripting.FileSystemObject");        
+				var file = fileSystem.GetFile (filePath);     
+				fileSize = file.Size;    
+				} else {    
+				fileSize = e.target.files[0].size;     
+				}   
+				var size = fileSize / 1024;    
+				if(size>1000){  
+					this.loading = false;
+					Toast("附件不能大于1M");
+					e.target.value="";
+					return;
+				}
 				//接口上传文件
 				var that = this   
-				// this.taxpayer_certificate = file.name
-				this.ipads = false
 				const reader = new FileReader();
-				this.img_type = 'data:' + file.type + ';base64,';
 				reader.readAsDataURL(file);
 				reader.onload = function() {
 					that.ipadImgs = this.result;
@@ -114,7 +158,6 @@
 				let param = new FormData() // 创建form对象
 				    param.append('adv_content', file, file.name) // 通过append向form对象添加数据
 				    param.append('chunk', '0') // 添加form表单中其他数据
-					console.log(param.get('file')) // FormData私有类对象，访问不到，可以通过get判断值是否传进去
 				let config = {    
 					headers: {
 						'Content-Type': 'multipart/form-data'
@@ -122,8 +165,18 @@
 				}
 				this.axios.post(this.$httpConfig.uploadImage, param, config)
 					.then((res) => {
+						this.loading = false;
 						if(res.data.status === 1) {
-							this.taxpayer_certificate = res.data.data
+							this.taxpayer_certificate = res.data.data;
+							Toast({
+                                message: res.data.message,
+                                duration: 1000
+							});
+						}else{
+							Toast({
+                                message: res.data.message,
+                                duration: 1000
+                            });
 						}
 					})
 
@@ -131,36 +184,57 @@
 
 			nextinfor: function() {
 				if(this.organization_code == '') {
-					Toast('请填写组织机构代码')
+					Toast({
+						message: '请填写组织机构代码',
+						duration: 1000
+					});
 					return;
 				}
 				if(this.organization_electronic == '') {
-					Toast('请上传组织机构代码证电子版')
+					Toast({
+						message: '请上传组织机构代码证电子版',
+						duration: 1000
+					});
 					return;
 				}
 				if(this.taxpayer_certificate == '') {
-					Toast('请上传一般纳税人证明')
+					Toast({
+						message: '请上传一般纳税人证明',
+						duration: 1000
+					});
 					return;
 				}
-				this.axios.post(this.$httpConfig.uploadOrganization, QS.stringify({
-					id: sessionStorage.getItem('shop_ID'),
-					organization_code: this.organization_code,
-					organization_electronic: this.organization_electronic,
-					taxpayer_certificate: this.taxpayer_certificate
-				})).then((res) => {
-					if(res.data.status == 10001) {
-						this.$router.push('/LogIn');
-					} else {
-						Toast(res.data.message);
-						if(res.data.status == 1) {
-							this.$router.push({
-								name: "checkCompanyBankInfor"
-							})
+				if(sessionStorage.getItem('admissionInfo')){
+                    let shopInfo =  JSON.parse(sessionStorage.getItem('admissionInfo'));
+					shopInfo.organization_code = this.organization_code;
+					shopInfo.organization_electronic = this.organization_electronic;
+					shopInfo.taxpayer_certificate = this.taxpayer_certificate;
+					sessionStorage.setItem('admissionInfo',JSON.stringify(shopInfo));
+					this.axios.post(this.$httpConfig.storeJoinCompany, QS.stringify(
+						shopInfo
+					)).then((res) => {
+						if(res.data.status == 10001) {
+							this.$router.push('/LogIn');
+						} else {
+							Toast({
+								message: res.data.message,
+								duration: 1000
+							});
+							if(res.data.status == 1) {
+								this.$router.push({
+									name: "checkCompanyBankInfor"
+								})
+							}
 						}
-					}
-				}).catch((err) => {
-					console.log(err)
-				});
+					}).catch((err) => {
+						console.log(err)
+					});
+				}else{
+					Toast({
+						message: '入驻信息错误',
+						duration: 1000
+					});
+				}
 			}
 		},
 		components: {

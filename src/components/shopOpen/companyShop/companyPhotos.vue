@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div  v-loading="loading" element-loading-text="上传中……" element-loading-background="hsla(0,0%,100%,.9)">
     <div v-title data-title="我要开店">我要开店</div>
     <top-header :text="title"></top-header>
     <con-header :text ="text[0]" :prompt = "prompt"></con-header>
@@ -18,19 +18,18 @@
         </li>
     </ul>
     <div class="idPhotos">
-        <h4>法人代表姓名</h4>
+        <h4>营业执照电子版</h4>
         <div>
             <div>
-            	<input type="file"  @change="getFile($event)" accept="image/png,image/gif,image/jpeg"  v-if="name" class="file"/>
-            	<img :src="hide" v-show="hide" class="photo" @click="remove"/>
+            	<input type="file"  @change="getFile($event)"  v-if="!ImgUrl" class="file"/>
+            	<img :src="URL + ImgUrl" v-show="ImgUrl" class="photo" @click="remove"/>
             	 
             </div>
-            <h6>示例</h6>
-            <div></div>
+            <!-- <h6>示例</h6>
+            <div></div> -->
         </div>
-        <p>营业执照、组织机构代码证、税务登记证三证合一；<br/>
-	      	  图片建议使用4：3的jpg、gif、png格式的图片，并且图片大小不得超过2M营业执照、住址机构代码证、税务登记证三证合一jpg、gif、png格式的图片，
-	        	并且图片大小不得超过2M
+        <p>
+	      	  图片建议使用4：3的jpg、gif、png格式的图片，并且图片大小不得超过1M
         </p>
     </div>
     <button @click="nextinfor">提交以上信息,并填写下一页</button>
@@ -54,21 +53,32 @@ export default {
           img:"",
           file:"",
           hide:'',
-          name:true,
           size:'',
-         
+          loading:false,
+          ImgUrl:'',
+          shopInfo:{}
       }
   },
   created(){
-  	
+    if(sessionStorage.getItem('admissionInfo')){
+        let shopInfo =  JSON.parse(sessionStorage.getItem('admissionInfo'));
+        this.license_number = shopInfo.license_number;
+        this.scope_of_operation = shopInfo.scope_of_operation;
+        this.ImgUrl = shopInfo.electronic_version;
+    }
+    if(sessionStorage.getItem('kd_time')){
+        let kd_time =  JSON.parse(sessionStorage.getItem('kd_time'));
+        this.validity_start = kd_time.validity_start;
+        this.validity_end = kd_time.validity_end;
+    }
   },
   methods:{
   	remove(){
-  		this.name=true;
-  		this.hide=false;
+  		this.ImgUrl=false;
   	},
   	getFile(e){
-//	上传图片
+          this.loading = true;
+        //	上传图片
         var file = e.target.files[0]; 
         //限制图片规格尺寸
         var fileSize = 0;         
@@ -80,18 +90,11 @@ export default {
 		     } else {    
 		      fileSize = e.target.files[0].size;     
 		      }   
-		      var size = fileSize / 1024;    
-		      if(size>2000){  
-		       Toast("附件不能大于2M");
-		       e.target.value="";
-		       return
-		      }
+		      var size = fileSize / 1024;
 		      
 		       //上传图片
-		    var that = this   
-				this.name = false
+		         var that = this;
 				const reader = new FileReader();
-				this.img_type = 'data:' + file.type + ';base64,';
 				reader.readAsDataURL(file);
 				reader.onload = function(){
 	        	that.hide = this.result;
@@ -99,7 +102,6 @@ export default {
 				let param = new FormData() // 创建form对象
 				    param.append('adv_content', file, file.name) // 通过append向form对象添加数据
 				    param.append('chunk', '0') // 添加form表单中其他数据
-				    console.log(param.get('file')) // FormData私有类对象，访问不到，可以通过get判断值是否传进去
 				let config = {    
 					headers: {
 						'Content-Type': 'multipart/form-data'
@@ -107,45 +109,73 @@ export default {
 				}
 				this.axios.post(this.$httpConfig.uploadImage, param, config)
 					.then((res) => {
-						if(res.data.code === 0) {
-							that.ImgUrl = response.data.data
-						}
+                        this.loading = false;
+                        if(res.data.status === 1) {
+                            that.ImgUrl = res.data.data;
+                            Toast({
+                                message: res.data.message,
+                                duration: 1000
+                            });
+                        }else{
+                            Toast({
+                                message: res.data.message,
+                                duration: 1000
+                            });
+                        }
 					})
 
 		  },
 			nextinfor: function() {
 				if(this.license_number==''){
-					Toast('营业执照不能为空')
+                    Toast({
+						message: '营业执照不能为空',
+						duration: 1000
+					});
 					return;
 				}
 				if(this.validity_start>this.validity_end){
-					Toast('开始时间大于结束时间')
+                    Toast({
+						message: '开始时间大于结束时间',
+						duration: 1000
+					});
 					return;
 				}
 				if(this.scope_of_operation==''){
-					Toast('法定经营范围不能为空')
+                    Toast({
+						message: '法定经营范围不能为空',
+						duration: 1000
+					});
 					return;
-				}
-				this.axios.post(this.$httpConfig.uploudCompanyImage, QS.stringify({
-					id: sessionStorage.getItem('shop_ID'),
-					license_number:this.license_number,
-					validity_start:this.validity_start,
-					validity_end:this.validity_end,
-					scope_of_operation:this.scope_of_operation,
-				})).then((res) => {
-					if(res.data.status==10001){
-		               this.$router.push('/LogIn');
-		            }else {
-						Toast(res.data.message);
-						if(res.data.status == 1) {
-							this.$router.push({
-								name: "organizationPhotos"
-							})
-						}
-					}
-				}).catch((err) => {
-					console.log(err)
-				});
+                }
+                if(this.ImgUrl ==''){
+                    Toast({
+						message: '请上传营业执照',
+						duration: 1000
+					});
+					return;
+                }
+                let time1 = new Date(this.validity_start);
+                let validity_start = time1.getTime()/1000;
+                let time2 = new Date(this.validity_end);
+                let validity_end = time2.getTime()/1000;
+                if(sessionStorage.getItem('admissionInfo')){
+                    let shopInfo =  JSON.parse(sessionStorage.getItem('admissionInfo'));
+                    shopInfo.license_number = this.license_number;
+                    shopInfo.validity_start = validity_start;
+                    shopInfo.validity_end = validity_end;
+                    shopInfo.scope_of_operation = this.scope_of_operation;
+                    shopInfo.electronic_version = this.ImgUrl;
+                    sessionStorage.setItem('admissionInfo',JSON.stringify(shopInfo));
+                    sessionStorage.setItem('kd_time',JSON.stringify({validity_start:this.validity_start,validity_end:this.validity_end}));
+                    this.$router.push({
+                        name: "organizationPhotos"
+                    })
+                }else{
+                    Toast({
+                          message: '入驻信息错误',
+                          duration: 1000
+						});
+                }
 			},
 			load(){
 				

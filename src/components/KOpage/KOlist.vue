@@ -12,8 +12,13 @@
                 <!--<span class="list_shadow"></span>-->
             </div>
             <div class="nav-list">
-                <a href="javascript:void(0)" class="nav" v-for="(item,index) in $store.state.categoryLists" :key="item.id"
-                   :class="{active:$route.params.type == item.id}">
+                <a href="javascript:void(0)"
+                   class="nav"
+                   v-for="(item,index) in $store.state.categoryLists"
+                   :key="item.id"
+                   :class="{active:$route.params.type == item.id}"
+                   @click="changeCId(item.id)"
+                >
                     {{item.name}}
                 </a>
             </div>
@@ -23,7 +28,7 @@
             <div class="comm-null" v-if="$store.state.AllNewList.length===0">
                 <div class="con-wrap text-center">
                     <img src="../../assets/null_com.png">
-                    <p>暂时没有商品</p>
+                    <p>暂时没有资讯</p>
                 </div>
             </div>
             <p class="page-infinite-loading" v-show="$store.state.KOAllqueryLoading">
@@ -51,20 +56,15 @@
             newList,
         },
         created() {
-            let this_ = this;
-            this.$store.state.KOAllpage = 1; //初始页
-            this.$store.state.KOAllqueryLoading = false; //整个加载的框
-            this.$store.state.KOAllallLoaded = false;
-            this.$store.state.KOAllmoreLoading = false;
-            this.$store.state.KOAllloading = false;
-            this.$store.state.KOAllno_data = false;
-            this.$store.state.KOAllslidingSwitch = true;
+            var this_ = this;
             //判断是否需要重新请求分类数据
             if(this.$store.state.categoryLists.length===0){
                 this.getCategoryLists();
             }
             //第一次请求首页数据
-            this.getAllNewList();
+            if(this.$store.state.AllNewList.length===0){
+                this.getAllNewList();
+            }
             // document.body.scrollTop = 0;
             // 注册scroll事件并监听
             window.addEventListener('scroll', () => {
@@ -140,12 +140,26 @@
             },
             handleCommand(command) {
                 this.$store.state.KOlistCurType = command;
+                this.getAllNewList();
+            },
+            changeCId(id){
+                this.$router.push({
+                    path:'/KOlist/'+id
+                });
+                this.getAllNewList();
             },
             getAllNewList(){
                 var this_ = this;
+                this.$store.state.KOAllpage = 1; //初始页
+                this.$store.state.KOAllqueryLoading = false; //整个加载的框
+                this.$store.state.KOAllallLoaded = false;
+                this.$store.state.KOAllmoreLoading = false;
+                this.$store.state.KOAllloading = false;
+                this.$store.state.KOAllno_data = false;
+                this.$store.state.KOAllslidingSwitch = true;
                 this_.$store.state.AllNewList=[];
                 this.axios({
-                    url:`${this.$httpConfig.articleLists}/page/${this_.$store.state.KOAllpage}`,
+                    url:`${this.$httpConfig.articleLists}/cid/${this.$route.params.type}/page/${this_.$store.state.KOAllpage}/type/${this.$store.state.KOlistCurType}`,
                     method:'get',
                     params:{
                         app_user_id:sessionStorage.getItem('user_ID'),

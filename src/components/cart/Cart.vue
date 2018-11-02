@@ -1,7 +1,9 @@
 <template>
 	<div class="goos" ref="cart">
 		<div v-title data-title="我的购物车">我的购物车</div>
-		<header class="cart-header">我的购物车
+		<header class="cart-header">
+			<router-link to="/KOhome"><span class="back"></span></router-link>
+			我的购物车
 			<!-- ({{nav[0].number+nav[1].number}}) -->
 			<router-link to="/myNews"><span></span></router-link>
 		</header> 
@@ -856,6 +858,13 @@
 			height: .46rem;
 			background: url(../../assets/news1.png) no-repeat;
 			background-size: 100% 100%;
+		}
+		.back{
+			left:.4rem;
+			width: .46rem;
+			height: .46rem;
+			background:url('../../assets/btn-return.png') no-repeat;
+			background-size:100% 100%;
 		}
 	}
 	

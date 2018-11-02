@@ -169,7 +169,7 @@ const shoplist = r => require(['@/components/shopCon/shoplist'], r); //店铺列
 
 Vue.use(Router)
 const router = new Router({
-    mode: 'history',
+    //mode: 'history',
     routes: [{
         path: '/',
         component: App, //顶层路由，对应index.html

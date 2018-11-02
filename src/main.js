@@ -90,6 +90,7 @@ router.beforeEach((to, from, next) => {
             break;
         case 'KOlist':
             sessionStorage.setItem('router_index', 102);
+            sessionStorage.setItem('KOlist_index', to.params.type);
             break;
         case 'KOperson':
             sessionStorage.setItem('router_index', 104);

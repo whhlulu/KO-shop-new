@@ -22,13 +22,13 @@
 		<div class="bottom-bg"><img src="../../assets/bottom-bj.jpg"></div>
 		<!-- 单个商品 -->
 		<ul class="mark-wrap">
-			<li class="header"><img :src="URL + goods_data.store_logo" alt="" /><span>{{goods_data.store_name}}</span></li>
+			<li class="header"><img :src="URL + store.store_logo" alt="" /><span>{{store.shop_name}}</span></li>
 			<li class="clearfix" id="store">
-				<img :src="URL + goods_data.pic_url " class="fl">
+				<img :src="URL + image.pic_url " class="fl">
 				<div class="pull-right fl">
 					<p class="text">{{goods_data.title}}</p>
 					<p class="price-wrap clearfix">
-						<span class="fl price">￥<span>{{goods_data.goods_price}}</span></span>
+						<span class="fl price">￥<span>{{goods_data.price_member}}</span></span>
 						<span class="number fr">X{{goods_data.goods_num}}</span>
 					</p>
 				</div>
@@ -40,13 +40,14 @@
 						<div class="busi fr">顺丰包邮</div>
 					</div> -->
 
-					<div class="hd clearfix" @click="selectCoupon(goods_data.store_id,0)" v-if="$route.params.id != 3">
+					<div class="hd clearfix" @click="selectCoupon(goods_data.store_id, 0)" v-if="$route.params.id != 3">
 						<div class="title fl">选择优惠券</div>
 						<div class="busi fr">{{$store.state.select_coupon.name}}</div>
 					</div>
-					<div class="hd clearfix" @click="tolink('/invoice')" >
+					<div class="hd clearfix" @click="tolink('/invoice',goods_data.store_id)" >
 						<div class="title fl">开具发票</div>
-						<div class="busi fr">{{invoice_type}}</div>
+						<div class="busi fr" v-if="show[0] == 1">已开发票</div>
+						<div class="busi fr" v-else>无需发票</div>
 					</div>
 					<div class="dd">
 						<div class="title">给商家留言：</div>
@@ -59,7 +60,7 @@
 		<div class="price-set-wrap">
 			<div class="total price clearfix">
 				<span class="fl">税前商品总额</span>
-				<span class="fr">￥{{goods_data.goods_price * goods_data.goods_num}}</span>
+				<span class="fr">￥{{goods_data.price_member * goods_data.goods_num}}</span>
 			</div>
 			<div class="freight price clearfix">
 				<span class="fl">运费</span>
@@ -80,12 +81,12 @@
 				<button class="fr btn" @click="toCashierAll">提交订单</button>
 				<div class="fr money">
 					实付款&nbsp;:&nbsp;<span class="price">￥
-						<span>{{goods_data.goods_price * goods_data.goods_num + freight - $store.state.const_coupon_price|keepTwoNum}}</span>
+						<span>{{(Number(goods_data.price_member) * Number(goods_data.goods_num) + Number(freight) - Number($store.state.const_coupon_price))|keepTwoNum}}</span>
 					</span>
 				</div>
 			</div>
 		</div>
-		<detail-coupon ></detail-coupon>
+		<detail-coupon ref="coupon"></detail-coupon>
 		<Shopsn></Shopsn>
 		<div class="load-wrap" v-show="load_wrap" @touchmove.prevent>
 			<mt-spinner type="triple-bounce" color="rgb(38, 162, 255)"></mt-spinner>
@@ -106,18 +107,19 @@
 				rec_address:'',
 				title: '确认订单',
 				btn: '', //头部客服按钮开关
-				goods_data: '',
+				goods_data: {},
 				newdata: '',
 				scrollWatch: true,
 				coupon: '请选择优惠券',
 				coupon_id:'',
-				invoice_type: '无需发票', //发票选择
 				realname: '',
 				load_wrap: true,
 				message: '', //留言
 				invoice_status: 0,
 				shoImg: '',
 				goods: [],
+				store: {},
+				image: {},
 				price: '',
 				goods_item: [],
 				total_price: '',
@@ -139,7 +141,9 @@
 				quanlity:0,
 				itegral:'',
 				imgIn:'',
-				prompt:''
+				prompt:'',
+				invoiceGroup:{},
+				show:[]
 			}
 		},
 		created() {
@@ -147,15 +151,15 @@
 			this.$store.state.const_coupon = false;
 			this.$store.state.const_coupon_num = 0;
 			this.$store.state.select_coupon.name = '请选择优惠券';
-			this.$store.state.const_coupon_price = 0.00;
+			this.$store.state.const_coupon_price = 0;
 		},
 		mounted(){
 			$("html,body").animate({scrollTop:'0px'},100);
-			this.invoice_type = this.$store.state.invoice == true ? '已开发票' : '无需发票' ;
 			this.itegral=JSON.parse(sessionStorage.getItem('integral_shop'))
 		},
 		methods: {
 			selectCoupon(item,index){
+				this.$refs.coupon.getCouponFun();
 				this.$store.state.const_coupon_price_package_index = index;
 				this.$store.state.const_coupon = true;
 				this.$store.state.const_coupon_num = item;
@@ -219,7 +223,7 @@
 			//获取数据
 			getData(){
 				this.axios.post(this.$httpConfig.cartGoodsDetail, qs.stringify({
-						goods_id : this.$route.params.good_id,
+						id : this.$route.params.good_id,
 						goods_num:this.$route.params.num
 					})).then((res) => {
 						if(res.data.status == 10001){
@@ -227,12 +231,36 @@
 							return;
 						}
 						if(res.data.status == 1){
-							this.goods_data = res.data.data;
+							this.goods_data = res.data.data.goods;
+							this.store = res.data.data.store;
+							this.image = res.data.data.image;
 							this.getAddress();
+							if(sessionStorage.getItem('invoiceGroup')){
+							this.invoiceGroup = JSON.parse(sessionStorage.getItem('invoiceGroup'));
+							let listKey = Object.keys(this.invoiceGroup);
+							for (const i in listKey) {
+								if (this.invoiceGroup[listKey[i]]) {
+										this.show[i]= this.invoiceGroup[listKey[i]].translate;
+									}
+								}
+							}else{
+								let invoiceData = {};
+								invoiceData[this.goods_data.store_id] = {translate:0};
+								this.invoiceGroup = invoiceData;
+							}
 						}
 					}).catch((err) => {
 						console.log(err);
 					})
+			},
+			clearData(){
+				this.$store.state.type = null;
+				this.$store.state.rise = null;
+				this.$store.state.content = null;
+				this.$store.state.type_id = '';
+				this.$store.state.rise_id = '';
+				this.$store.state.content_id = '';
+				this.$store.state.invoice = false;
 			},
 		// 提交订单 单个商品购买
 			toCashierAll() {
@@ -243,11 +271,7 @@
 						});
 						return false;
 				}
-				let needs = 0;
-				if(this.$store.state.invoice == true){
-					needs = 1;
-				}
-				let total = parseFloat(this.goods_data.goods_price * this.goods_data.goods_num) + parseFloat(this.freight) - parseFloat(this.$store.state.const_coupon_price);
+				let total = parseFloat(this.goods_data.price_member * this.goods_data.goods_num) + parseFloat(this.freight) - parseFloat(this.$store.state.const_coupon_price);
 				var b = parseFloat(total).toFixed(3);
 				var _price = b.substring(0,b.toString().length - 1);  //这里先将a转换为float类型再保留三位小数，最后截取字符串前b.length - 1位
 				if(!this.rec_address){Toast("请填写收货地址");return false;}
@@ -256,15 +280,18 @@
 					number:this.goods_data.goods_num,
 					price_sum:parseFloat(_price), //订单总价
 					address_id:this.rec_address.id, //收货地址ID
-					invoice_id:this.$store.state.invoice_id, //发票id
+					invoice_id:this.invoiceGroup, //发票id
 					remarks:this.message, //订单备注
 					platform:2, //平台 0 代表pc 1代表app 2 代表wap
-					translate:needs, //1需要发票，0不需要
+					// translate:needs, //1需要发票，0不需要
 					// shipping_monery:this.freight, //运费
 					// invoice: [],//发票内容（json格式的二维数组）
 					// buyType:this.$route.params.id, //1：为购物车购买 2:为立即购买型
 					// coupon_id: this.coupon_id, //优惠券Id，没有优惠券传空
 				})).then((res) => {
+					this.clearData();
+					sessionStorage.removeItem('invoiceGroup');
+					sessionStorage.removeItem('invoiceInit');
 					if(res.data.status == 1){
 						sessionStorage.setItem('pay_sourse','goods');
 						this.$router.push({
@@ -284,7 +311,7 @@
 					console.log(err);
 				})
 			},
-			tolink(to) {
+			tolink(to,id) {
 				sessionStorage.removeItem('collocation_cart_id');
 				sessionStorage.removeItem('collocation_info');
 				sessionStorage.removeItem('integral_data');
@@ -299,22 +326,19 @@
 						}
 					});
 				} else if(to = '/invoice') {
-					
+					sessionStorage.removeItem('invoiceSign');
+					this.clearData();
 					this.$router.push({
 						name: 'invoice',
 						params:{
-							status:1 //1是商品 2是购物车
+							status:1, //1是商品 2是购物车
+							id:id //店铺id
 						}
 					});
 				}else{
 					this.$router.push(to);
 				}
 			},
-			limit() {
-				if(this.message.length > 45) {
-					Toast('留言不能超过45字！');
-				}
-			}
 		},
 		destroyed() {
 			this.scrollWatch = false;

@@ -31,10 +31,12 @@
 					<span class="span"> 联系人手机:</span><span>{{personalData.mobile}}</span>
 				</li>
 				<li>
-					<span class="span"> 申请时间:</span><span>{{new Date(personalData.create_time * 1000).getFullYear()+'-'+new Date(personalData.create_time * 1000).getMonth()+'-'+new Date(personalData.create_time * 1000).getDay()+' '+new Date(personalData.create_time * 1000).getHours()+':'+new Date(personalData.create_time * 1000).getMinutes()+':'+new Date(personalData.create_time * 1000).getSeconds()}}</span>
+					<span class="span"> 申请时间:</span>
+					<span>{{personalData.create_time | temp2time}}</span>
 				</li>
 				<li>
-					<span class="span"> 更新时间:</span><span>{{new Date(personalData.update_time * 1000).getFullYear()+'-'+new Date(personalData.update_time * 1000).getMonth()+'-'+new Date(personalData.update_time * 1000).getDay()+' '+new Date(personalData.update_time * 1000).getHours()+':'+new Date(personalData.update_time * 1000).getMinutes()+':'+new Date(personalData.update_time * 1000).getSeconds()}}</span>
+					<span class="span"> 更新时间:</span>
+					<span>{{personalData.update_time | temp2time}}</span>
 				</li>
 				<li>
 					<span class="span"> 身份证号码:</span><span>{{personalData.id_card}}</span>
@@ -74,10 +76,12 @@
 					<span class="span"> 营业执照号:</span><span>{{enterpriseData.license_number}}</span>
 				</li>
 				<li>
-					<span class="span manner"> 营业执照有效期开始时间:</span><span>{{enterpriseData.validity_start}}</span>
+					<span class="span manner"> 营业执照有效期开始时间:</span>
+					<span>{{enterpriseData.validity_start | temp2time}}</span>
 				</li>
 				<li>
-					<span class="span manner"> 营业执照有效期结束时间:</span><span>{{enterpriseData.validity_end}}</span>
+					<span class="span manner"> 营业执照有效期结束时间:</span>
+					<span>{{enterpriseData.validity_end | temp2time}}</span>
 				</li>
 				<li>
 					<span class="span manner"> 法定经营范围:</span><span>{{enterpriseData.scope_of_operation}}</span>
@@ -86,10 +90,12 @@
 					<span class="span manner"> 组织机构代码:</span><span>{{enterpriseData.organization_code}}</span>
 				</li>
 				<li>
-					<span class="span"> 申请时间:</span><span>{{new Date(enterpriseData.create_time * 1000).getFullYear()+'-'+new Date(enterpriseData.create_time * 1000).getMonth()+'-'+new Date(enterpriseData.create_time * 1000).getDay()+' '+new Date(enterpriseData.create_time * 1000).getHours()+':'+new Date(enterpriseData.create_time * 1000).getMinutes()+':'+new Date(enterpriseData.create_time * 1000).getSeconds()}}</span>
+					<span class="span"> 申请时间:</span>
+					<span>{{enterpriseData.create_time | temp2time}}</span>
 				</li>
 				<li>
-					<span class="span"> 更新时间:</span><span>{{new Date(enterpriseData.update_time * 1000).getFullYear()+'-'+new Date(enterpriseData.update_time * 1000).getMonth()+'-'+new Date(enterpriseData.update_time * 1000).getDay()+' '+new Date(enterpriseData.update_time * 1000).getHours()+':'+new Date(enterpriseData.update_time * 1000).getMinutes()+':'+new Date(enterpriseData.update_time * 1000).getSeconds()}}</span>
+					<span class="span"> 更新时间:</span>
+					<span>{{enterpriseData.update_time | temp2time}}</span>
 				</li>
 				<li class="id-img">
 					<span class="span"> 组织机构代码证明电子版:</span><img :src="URL + enterpriseData.organization_electronic" alt="">
@@ -191,7 +197,36 @@
 		created() {
 			this.standAjax();
 		},
-
+		filters:{
+			temp2time:function(value){
+				if (!value) {
+					return "";
+				}
+				var time = new Date(Number(value) * 1000);
+				var Y = time.getFullYear();
+				var m = time.getMonth() + 1;
+				var d = time.getDate();
+				var H = time.getHours();
+				var mi = time.getMinutes();
+				var s = time.getSeconds();
+				if (m < 10) {
+					m = '0' + m;
+				}
+				if (d < 10) {
+					d = '0' + d;
+				}
+				if (H < 10) {
+					H = "0" + H;
+				}
+				if (mi < 10) {
+					mi = '0' + mi;
+				}
+				if (s < 10) {
+					s = "0" + s;
+				}
+				return (Y + "-" + m + "-" + d + " " + H + ":" + mi + ":" + s);
+			}
+		},
 		methods: {
 			payment(status){
 				let id = '';
@@ -236,7 +271,10 @@
 			getEnterpriseProgress(){
 				this.axios.post(this.$httpConfig.CompanyStoreAduitProgress, QS.stringify({
 				})).then((res) => {
-					if(res.data.status == 1){
+					if (res.data.status == 10001) {
+						this.$router.push('/LogIn');
+
+					}else if(res.data.status == 1){
 						this.enterpriseData = res.data.data;
 					}
 				}).catch((err) => {
@@ -247,7 +285,10 @@
 			getPersonalProgress(){
 				this.axios.post(this.$httpConfig.PersonStoreAduitProgress, QS.stringify({
 				})).then((res) => {
-					if(res.data.status == 1){
+					if (res.data.status == 10001) {
+						this.$router.push('/LogIn');
+
+					}else if(res.data.status == 1){
 						this.personalData = res.data.data;
 					}
 				}).catch((err) => {

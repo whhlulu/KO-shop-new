@@ -33,42 +33,48 @@
             }
             var userName = this.$route.params.userName;
             this.getData = userName;
-            ////轮播数据来源-移动端网页banner
-            this.axios({
-                url: this.$httpConfig.home,
-                method: 'post'
-            }).then((res) => {
-                var json_wx = JSON.parse(res.request.response);
-                if(json_wx.status == 999) {
-                    window.location.href = json_wx.msg;
-                    return;
-                }
-                this.$store.state.KOhome_data = res.data.data;
-            }).catch((err) => {
-                console.log(err)
-            });
-            this.$store.state.lunboList = [
-                {id:1,pic_url:'http://center.shopsn.cn/Uploads/ad/2018-06-08/5b1a164b06c5b.jpg'},
-                {id:2,pic_url:'http://center.shopsn.cn/Uploads/ad/2018-06-08/5b1a18c3e6fa0.jpg'},
-            ];
-            this.axios({
-                url: this.$httpConfig.categoryLists,
-                method: 'get',
-                params: {
-                    app_user_id: sessionStorage.getItem('user_ID'),
-                }
-            }).then((res) => {
-                if(res.data.status){
-                    this.$store.state.categoryLists = res.data.data;
-                }else{
-                    Toast("获取资讯分类异常")
-                }
-            }).catch((err) => {
-                Toast("获取资讯分类异常")
-                console.log(err);
-            });
+            if(!this.$store.state.KOhome_data){
+                this.gethome()
+            }
+            if(this.$store.state.categoryLists.length===0){
+                this.getCategoryLists()
+            }
         },
         methods:{
+            gethome(){
+                //轮播数据来源-移动端网页banner
+                this.axios({
+                    url: this.$httpConfig.home,
+                    method: 'post'
+                }).then((res) => {
+                    var json_wx = JSON.parse(res.request.response);
+                    if(json_wx.status == 999) {
+                        window.location.href = json_wx.msg;
+                        return;
+                    }
+                    this.$store.state.KOhome_data = res.data.data;
+                }).catch((err) => {
+                    console.log(err)
+                });
+            },
+            getCategoryLists(){
+                this.axios({
+                    url: this.$httpConfig.categoryLists,
+                    method: 'get',
+                    params: {
+                        app_user_id: sessionStorage.getItem('user_ID'),
+                    }
+                }).then((res) => {
+                    if(res.data.status){
+                        this.$store.state.categoryLists = res.data.data;
+                    }else{
+                        Toast("获取资讯分类异常")
+                    }
+                }).catch((err) => {
+                    Toast("获取资讯分类异常")
+                    console.log(err);
+                });
+            },
             goAd(address){
                 window.open(address);
             },

@@ -6,20 +6,20 @@
 			<div class="status">
 				<div class="pull-left fl">需付积分</div>
 				<div class="pull-right fr">
-					<span>{{integralMoney.integral}}</span>积分</div>
+					<span>{{$route.params.integral}}</span>积分</div>
 			</div>
 		</div>
 		<div class="choice">
 			<span class="radio-label">
-				<span>扣除账户积分 - <em class="red">{{integralMoney.integral}}</em></span>
-				<span class="span-main pull-right">当前积分：<span>{{Integral.integral}}</span> 积分</span>
+				<span>扣除账户积分 - <em class="red">{{$route.params.integral}}</em></span>
+				<span class="span-main pull-right">当前积分：<span>{{Integral ? Integral.current_integral : 0}}</span> 积分</span>
 			</span>
 		</div>
 		<div class="payment-wrap">
 			<div class="status">
-				<div class="pull-left fl" @click="success">订单金额</div>
+				<div class="pull-left fl">订单金额</div>
 				<div class="pull-right fr">
-					<span>{{integralMoney.money}}</span>元</div>
+					<span>{{$route.params.money}}</span>元</div>
 			</div>
 		</div>
 		<div class="choice">
@@ -72,7 +72,6 @@
 				Integral: '',
 				paymentType: '',
 				balance: '',
-				integralMoney:{},
 				payType:{
 					1:'wechatPay',
 					2:'aliPay',
@@ -87,11 +86,6 @@
 			this.getPaymentType();
 		},
 		methods: {
-			success() {
-				this.$router.push({
-					name: 'success'
-				})
-			},
 			theChecked() {
 				this.flag = !this.flag
 			},
@@ -192,7 +186,6 @@
 
 		mounted() {
 			this.getBanlance();
-			this.integralMoney=this.$route.params.number;
 			this.orderId=sessionStorage.getItem('integral_orderID');
 		},
 		destroyed() {
@@ -305,6 +298,9 @@
 			// overflow: hidden;
 			font-size: .32rem;
 			color: #333;
+			em{
+				font-style:normal;
+			}
 		}
 		.span-main {
 			font-size: .28rem;

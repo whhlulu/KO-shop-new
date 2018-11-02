@@ -26,14 +26,14 @@
                 <li class="fl" @click="goNow">现在注册 ></li>
             </ul>
         </div>
-        <dl class="tplogin" v-show="show">
-            <dt>
-                社交账号一键登录
-                <span></span><span></span>
-            </dt>
-            <dd  @click="qqLogin"></dd>
-            <!-- <dd></dd> -->
-        </dl>
+        <!--<dl class="tplogin" v-show="show">-->
+            <!--<dt>-->
+                <!--社交账号一键登录-->
+                <!--<span></span><span></span>-->
+            <!--</dt>-->
+            <!--<dd  @click="qqLogin"></dd>-->
+            <!--&lt;!&ndash; <dd></dd> &ndash;&gt;-->
+        <!--</dl>-->
         <div class="actionsheet" v-show="isActive">
             <div class="box" @click="increment"></div>
             <div class="acti-box" :class="{active:isActive}">

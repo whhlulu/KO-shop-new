@@ -29,16 +29,12 @@
             newList,
         },
         created() {
-            //document.body.scrollTop = 0;
-            this.$store.state.KOhomepage = 1; //初始页
-            this.$store.state.KOhomequeryLoading = false; //整个加载的框
-            this.$store.state.KOhomeallLoaded = false;
-            this.$store.state.KOhomemoreLoading = false;
-            this.$store.state.KOhomeloading = false;
-            this.$store.state.KOhomeno_data = false;
-            this.$store.state.KOhomeslidingSwitch = true;
-            this.getOrderList();
             let this_ = this;
+            //document.body.scrollTop = 0;
+            //第一次请求首页数据
+            if(this.$store.state.homeNewList.length===0){
+                this.getOrderList();
+            }
             // 注册scroll事件并监听
             window.addEventListener('scroll', () => {
                 if (this_.scrollWatch) {
@@ -95,6 +91,13 @@
             getOrderList(){
                 var this_ = this;
                 this_.$store.state.homeNewList=[];
+                this.$store.state.KOhomepage = 1; //初始页
+                this.$store.state.KOhomequeryLoading = false; //整个加载的框
+                this.$store.state.KOhomeallLoaded = false;
+                this.$store.state.KOhomemoreLoading = false;
+                this.$store.state.KOhomeloading = false;
+                this.$store.state.KOhomeno_data = false;
+                this.$store.state.KOhomeslidingSwitch = true;
                 this.axios({
                     url:`${this.$httpConfig.articleLists}/page/${this_.$store.state.KOhomepage}`,
                     method:'get',

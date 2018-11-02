@@ -2,7 +2,11 @@
     <div class="per-center">
         <div v-title data-title="个人中心">个人中心</div>
         <div class="header-wrap">
-            <div class="header-hd">个人中心<router-link to="/myNews"><span></span></router-link></div>
+            <div class="header-hd">
+                <router-link to="/KOhome"><span class="back"></span></router-link>
+                个人中心
+                <router-link to="/myNews"><span></span></router-link>
+            </div>
             <div class="header-dd-center">
                 <!--<div class="setUp"></div>-->
                 <div class="icon-wrap" @click="toLink('/seetin')">
@@ -247,6 +251,11 @@
                 top:50%;
                 margin-top:-.23rem;
                 background:url('../../assets/news1.png') no-repeat;
+                background-size:100% 100%;
+            }
+            .back{
+                left:.23rem;
+                background:url('../../assets/btn-return.png') no-repeat;
                 background-size:100% 100%;
             }
         }

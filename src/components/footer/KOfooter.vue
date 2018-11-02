@@ -18,7 +18,7 @@
                 tabbar:{
                     isIcon:[require('@/assets/images/home_icon_active.png'),require('@/assets/images/class_icon_active.png'),require('@/assets/images/cart_icon_active.png'),require('@/assets/images/per_icon_active.png')],
                     Icon:[require('@/assets/images/home_icon.png'),require('@/assets/images/class_icon.png'),require('@/assets/images/cart_icon.png'),require('@/assets/images/per_icon.png')],
-                    font:['首页','小课堂','商城','我的']
+                    font:['首页','小课堂','活动','我的']
                 }
             }
         },
@@ -31,8 +31,9 @@
                         });
                         break;
                     case 1:
+                        var CID = sessionStorage.getItem('KOlist_index')?sessionStorage.getItem('KOlist_index'):this.$store.state.categoryLists[0].id
                         this.$router.push({
-                            path:'/KOlist/0'
+                            path:'/KOlist/'+CID
                         });
                         break;
                     case 2:

@@ -5,7 +5,7 @@
                 <div class="new">
                     <img v-if="item.pic_url" v-lazy="IMG_URL+item.pic_url" class="fl" @click="toDetails(item)">
                     <div class="fl words" :class="{allspan:!item.pic_url}">
-                        <p class="text" @click="toDetails(item)">{{item.name}}</p>
+                        <p class="text title" @click="toDetails(item)">{{item.name}}</p>
                         <p class="clearfix text company">{{item.intro}}</p>
                     </div>
                 </div>
@@ -143,6 +143,10 @@
                     overflow: hidden;
                     display: -webkit-box;
                     -webkit-line-clamp: 2;
+                    -webkit-box-orient: vertical;
+                }
+                .title{
+                    -webkit-line-clamp: 1;
                     -webkit-box-orient: vertical;
                 }
                 .company {

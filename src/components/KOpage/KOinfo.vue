@@ -23,6 +23,7 @@
             easyHeader,
         },
         created(){
+            document.body.scrollTop = 0;
             this.getInfo()
         },
         methods: {

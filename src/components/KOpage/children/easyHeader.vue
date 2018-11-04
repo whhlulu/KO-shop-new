@@ -60,6 +60,13 @@
         }
         .title {
             font-size: .32rem;
+            line-height: .62rem;
+            height: .62rem;
+            overflow: hidden;
+            display: -webkit-box;
+            -webkit-line-clamp: 1;
+            -webkit-box-orient: vertical;
+            padding-left: .8rem;
         }
     }
 </style>

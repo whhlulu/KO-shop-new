@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="zh-CN" style="height: 100%">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>企业应用商店</title>
+    <link rel="stylesheet" href="css/mobile.css">
+</head>
+<body style="background-color: #ebeef0;height: 100%">
+<!--back-->
+<header class="back-head">
+    应用详情
+    <a href="http://m.youyoulegou.cn" style="position: absolute;top: 0px;left: 50px;"><span style="font-size: 15px;color: #222222;">首页</span></a>
+    <img id="appCode" src="img/code_Icon.png"
+         style="width: 20px;height: 20px;position: absolute;padding: 10px;top: 8px;right: 13px;" alt="code">
+</header>
+<div class="app-info-content">
+    <div class="app" style="margin: 0px 8px 0px 8px;padding-bottom: 0px;">
+        <div class="app-content">
+            <img class="logo" alt="LOGO" src="img/1.png">
+            <div class="app-info">
+                <p class="name" id="name">学邦</p>
+                <p class="v-s" id="vS">1.1/4M</p>
+                <p class="time" id="time">更新时间:2018-11-4</p>
+            </div>
+            <a id="down" href="javascript:void(0)" onclick="locationHref(this);">
+                <div class="app-down">安装</div>
+            </a>
+        </div>
+    </div>
+    <div class="title">应用描述</div>
+    <div class="msg" id="desc"></div>
+    <div class="title">更新信息</div>
+    <div class="msg" id="updataInfo">基础功能完善，在线视频资讯观看</div>
+    <div class="title">软件截图</div>
+    <div class="pics">
+        <div class="pics-row" id="pics">
+        </div>
+    </div>
+
+</div>
+<div class="code-back" id="codeBack"
+     style="display:none;text-align: center;width: 100%;height: 100%;position: fixed;top: 0;left: 0;z-index: 1000;background: rgba(0,0,0,0.6);">
+    <div id="code" style="margin-top: 50%;position: relative;">
+        <img class="logo" src="img/1.png" style="position: absolute;top: 100px;left: calc(50% - 28px);height: 55px;width: 55px;">
+    </div>
+
+</div>
+
+
+</body>
+<script src="js/jquery-3.1.1.min.js"></script>
+<script src="js/jquery.qrcode.min.js"></script>
+<script src="js/util.js"></script>
+
+<script>
+
+var data = {
+	app_desc: '致力于学生安全教育，增强家长安全防范意识',
+	picArr: [{pic_url:'http://m.youyoulegou.cn/appstore/img/2.png'}],
+	ios_url:'',
+	and_url:'http://m.youyoulegou.cn/H5ECD4FDD_1104121753.apk',
+}
+        $('#desc').html(data.app_desc?data.app_desc:'无');
+        if(data.picArr.length>0){
+            for (var i = 0; i < data.picArr.length; i++) {
+                $('#pics').append('<img src="' + data.picArr[i].pic_url + '">');
+            }
+        }else {
+            $('#pics').html('无');
+        }
+        if (yonyou.browser.versions.ios) {
+            $('#down').attr('dataurl', (data.ios_url?data.ios_url:null));
+        } else {
+            $('#down').attr('dataurl', (data.and_url?data.and_url:null));
+        }
+    $("#code").qrcode({
+        width: 255,
+        height: 255,
+        text: location.href //任意内容
+    });
+    $('#appCode').click(function () {
+        $('#codeBack').show();
+    })
+    $('#codeBack').click(function () {
+        $('#codeBack').hide();
+    })
+</script>
+
+
+</html>

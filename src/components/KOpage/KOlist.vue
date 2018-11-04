@@ -3,7 +3,10 @@
         <div class="nav-wrap">
             <div class="nav-type">
                 <el-dropdown trigger="click"  @command="handleCommand">
-                    <span class="el-dropdown-link">{{$store.state.KOlistCurType=='1'?'图文':'视频'}}<i class="el-icon-arrow-down el-icon--right"></i></span>
+                    <span class="el-dropdown-link">
+                        {{this.KOlistCurTypeData=='2'?'视频':'图文'}}
+                        <i class="el-icon-arrow-down el-icon--right"></i>
+                    </span>
                     <el-dropdown-menu slot="dropdown">
                         <el-dropdown-item command="1">图文</el-dropdown-item>
                         <el-dropdown-item command="2">视频</el-dropdown-item>
@@ -48,6 +51,7 @@
         name: 'newListScroll',
         data(){
             return {
+                KOlistCurTypeData: sessionStorage.getItem('KOlistCurType'),
                 //初始化加载相关参数
                 scrollWatch: true,
             }
@@ -84,8 +88,9 @@
                                 this_.$store.state.KOAllqueryLoading = true; // 整个加载的框
                                 this_.$store.state.KOAllmoreLoading = true; //转圈动画
                                 this_.$store.state.KOAllloading = true; //加载中
+                                var KOlistCurType = sessionStorage.getItem('KOlistCurType') || '1'
                                 this.axios({
-                                    url:`${this.$httpConfig.articleLists}/page/${this_.$store.state.KOAllpage}`,
+                                    url:`${this.$httpConfig.articleLists}/cid/${this.$route.params.type}/page/${this_.$store.state.KOAllpage}/type/${KOlistCurType}`,
                                     method:'get',
                                     params:{
                                         app_user_id:sessionStorage.getItem('user_ID'),
@@ -139,7 +144,8 @@
                 });
             },
             handleCommand(command) {
-                this.$store.state.KOlistCurType = command;
+                this.KOlistCurTypeData=command
+                sessionStorage.setItem('KOlistCurType',command)
                 this.getAllNewList();
             },
             changeCId(id){
@@ -158,8 +164,9 @@
                 this.$store.state.KOAllno_data = false;
                 this.$store.state.KOAllslidingSwitch = true;
                 this_.$store.state.AllNewList=[];
+                var KOlistCurType = sessionStorage.getItem('KOlistCurType') || '1'
                 this.axios({
-                    url:`${this.$httpConfig.articleLists}/cid/${this.$route.params.type}/page/${this_.$store.state.KOAllpage}/type/${this.$store.state.KOlistCurType}`,
+                    url:`${this.$httpConfig.articleLists}/cid/${this.$route.params.type}/page/${this_.$store.state.KOAllpage}/type/${KOlistCurType}`,
                     method:'get',
                     params:{
                         app_user_id:sessionStorage.getItem('user_ID'),
@@ -214,7 +221,7 @@
                 padding: 0 .2rem;
                 .el-dropdown-link{
                     font-size: 16px;
-                    color: blue;
+                    color: #f85959;
                 }
                 .list_shadow {
                     position: absolute;

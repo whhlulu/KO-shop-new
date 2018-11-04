@@ -1,0 +1,325 @@
+/*清除样式*/
+/* http://meyerweb.com/eric/tools/css/reset/
+   v2.0 | 20110126
+   License: none (public domain)
+*/
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-size: 100%;
+    font: inherit;
+    vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section {
+    display: block;
+}
+body {
+    line-height: 1;
+}
+ol, ul {
+    list-style: none;
+}
+
+input,a{outline:none}
+a {
+    text-decoration: none;
+}
+
+a:link {
+    text-decoration: none;
+    outline:none
+}
+
+a:hover {
+    text-decoration: none;
+    outline:none
+}
+
+a:active {
+    text-decoration: none;
+    outline:none
+}
+* {
+    -webkit-touch-callout:none;/*系统默认菜单被禁用*/
+    -webkit-user-select: text;/*是否允许用户选中文本*/
+    -webkit-tap-highlight-color:rgba(255,255,255,0);/*点击时覆盖显示的高亮*/
+}
+input{
+    -webkit-appearance: none;/*去除系统默认appearance的样式,常用于IOS下移除原生样式*/
+}
+/*头部样式*/
+.head {
+    height: 56px;
+    width: 100%;
+    background: #fff;
+    position: fixed;
+    top:0px;
+    left: 0px;
+    z-index: 999;
+}
+.head img{
+    margin-top: 20px;
+    margin-left: 21px;
+    height: 20px;
+}
+.head form{
+    float: right;
+    display: inline-block;
+    width: calc(100% - 100px);
+    max-width: 280px;
+    height: 30px;
+    margin-top: 13px;
+}
+.head .search{
+    height: 100%;
+    width: calc(100% - 16px);
+}
+.head .form-control{
+    float: left;
+    box-sizing: border-box;
+    height: 100%;
+    border: 1px solid #ccc;
+    border-top-left-radius: 21px;
+    border-bottom-left-radius: 21px;
+    padding-left: 12px;
+    width: calc(100% - 36px);
+}
+.head .btn-info{
+    color: #fff;
+    height: 30px;
+    border-top-right-radius: 21px;
+    border-bottom-right-radius: 21px;
+    background: #0081ff;
+    border: 1px solid #0081ff;
+}
+.head .input-group-btn{
+    margin-left: -2px;
+    height: 100%;
+    border-top-right-radius: 21px;
+    border-bottom-right-radius: 21px;
+    background: #0081ff;
+    float: left;
+    width: 36px;
+
+}
+/*主菜单*/
+.main-nav{
+    height: 44px;
+    overflow: hidden;
+    margin-top: 56px;
+}
+.main-nav .nav-row{
+    font-size: 0px;
+    overflow: hidden;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    white-space: nowrap;
+}
+.main-nav .nav-row .btn-div{
+    height: 44px;
+    line-height: 44px;
+    display: inline-block;
+}
+
+.main-nav .nav-row .btn-div .a-cross{
+    font-size: 15px;
+    color: #222222;
+    opacity: 0.4;
+    display: inline-block;
+    height: 44px;
+    line-height: 44px;
+    padding-left: 20px;
+    padding-right: 20px;
+
+}
+.main-nav .nav-row .btn-div .active{
+    opacity: 1;
+}
+/*二级菜单*/
+.second-nav{
+
+}
+.second-nav .second-nav-row{
+    font-size: 0px;
+    border-top: 1px solid rgb(221, 221, 221);
+}
+.second-nav .second-nav-row .second-btn-div{
+    width: 25%;
+    height: 44px;
+    display: inline-block;
+    text-align: center;
+}
+
+.second-nav .second-nav-row .second-btn-div .second-a-cross{
+    width: 75%;
+    border: 1px solid rgba(115,121,128,0.2);
+    border-radius: 20px;
+    font-size: 14px;
+    color: #737980;
+    display: inline-block;
+    height: 24px;
+    line-height: 24px;
+    margin-top: 10px;
+
+}
+.second-nav .second-nav-row .second-btn-div .active{
+    color: #0081ff;
+}
+
+
+/*app列表*/
+.app{
+    padding-bottom: 18px;
+    background: #fff;
+    margin: 0px 16px 10px 16px;
+    border-radius: 5px;
+    display: inline-block;
+    width: calc(100% - 32px);
+}
+.app .app-content{
+    position: relative;
+}
+.app .app-content img{
+    margin: 18px auto 22px 14px;
+    width: 55px;
+    height: 55px;
+}
+.app .app-content .app-info{
+    width: 60%;
+    position: absolute;
+    display: inline-block;
+    top: 20px;
+    left: 88px;
+}
+.app .app-content .app-info .name{
+    font-size: 14px;
+    color: #2e3033;
+    margin-bottom: 6px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.app .app-content .app-info .v-s{
+    font-size: 14px;
+    color: #706b99;
+    margin-bottom: 5px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.app .app-content .app-info .time{
+    font-size: 14px;
+    color: #706b99;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.app .app-content .app-down{
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    color: #fff;
+    background: #0081ff;
+    padding: 5px 20px;
+    border-radius: 20px;
+}
+.app .app-s-desc{
+    margin-left: 14px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: #2e3033;
+}
+
+/*详细信息*/
+.back-head{
+    height: 56px;
+    line-height: 56px;
+    background: #fff;
+    text-align: center;
+    color: #222222;
+    font-size: 16px;
+    position: relative;
+}
+.app-info-content{
+    background-color: #fff;
+    margin: 10px;
+    padding-bottom: 10px;
+    /* height: calc(100% - 76px); */
+    border-radius: 5px;
+    min-height: calc(100% - 86px);
+}
+.app-info-content .title{
+    font-size: 16px;
+    color: #222222;
+    margin-left: 22px;
+    margin-bottom: 7px;
+}
+.app-info-content .msg{
+    line-height: 1.4;
+    font-size: 14px;
+    color: #737980;
+    margin-left: 22px;
+    margin-right: 22px;
+    margin-bottom: 15px;
+}
+.app-info-content .pics{
+    height: 280px;
+    margin-left: 22px;
+    width: calc(100% - 22px);
+    overflow: hidden;
+}
+.app-info-content .pics .pics-row{
+    line-height: 1.4;
+    font-size: 14px;
+    color: #737980;
+    height: 100%;
+    overflow: hidden;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    white-space: nowrap;
+}
+.pics .pics-row img{
+    height: 280px;
+    width: 150px;
+    margin-right: 10px;
+}
+
+/*weixin遮罩提示*/
+.weixin-modal{
+    z-index: 9998;
+    position: fixed;
+    top:0;
+    left:0;
+    width: 100%;
+    height: 100%;
+    background-color: #000000;
+    opacity: 0.6;
+}
+.img-weixin-tip{
+    z-index: 9999;
+    width: 300px;
+    height: auto;
+    position: fixed;
+    top: 0;
+    right: 0;
+}
+
+
+

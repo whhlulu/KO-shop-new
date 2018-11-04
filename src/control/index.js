@@ -11,7 +11,6 @@ const state = { //创建数据仓库
     homeNewList: [],
     AllNewList: [],
     //列表页相关数据
-    KOlistCurType:'1',
     //END
 
 

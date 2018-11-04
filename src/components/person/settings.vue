@@ -20,21 +20,27 @@
                		 绑定手机号码
                 <div class="icon-btn"></div>
             </dd>
-            <dd>
+            <!-- <dd>
                 	绑定支付宝
                 <div class="icon-btn"></div>
             </dd>
             <dd>
                 	绑定微信账号
                 <div class="icon-btn"></div>
-            </dd>
+            </dd> -->
             <dd  class="toPass"></dd>
-            <dd @click="toRouter('reset')">
+            <dd @click="changePassword">
                 	修改密码
                 <div class="icon-btn"></div>
             </dd>
         </dl>
         <div class="footer" @click="signOut">退出当前账户</div>
+        <mt-popup v-model="popupVisible" position="bottom">
+			<ul class="password-wrap">
+				<li v-for="(item,index) in type" :key="item.id" @click="toChange(item.r)">{{item.t}}</li>
+				<li @click="cancel">取消</li>
+			</ul>
+		</mt-popup>
     </div>
 </template>
 <script>
@@ -46,7 +52,9 @@
         data(){
             return {
                 title:'账户设置',
-                data:''
+                data:'',
+                popupVisible:false,
+                type:[{t:'通过旧密码方式',r:'reset'},{t:'通过手机验证方式',r:'phoneVerify'}]
             }
         },
         methods:{
@@ -58,6 +66,17 @@
             toRouter(name){
                  this.$router.push({
                     name:name
+                });
+            },
+            changePassword(){
+                this.popupVisible = true;
+            },
+            cancel(){
+                this.popupVisible = false;
+            },
+            toChange(t){
+                this.$router.push({
+                    name:t
                 });
             },
             toData(){
@@ -76,7 +95,7 @@
                       sessionStorage.clear(); 
                       this.axios.post(this.$httpConfig.logOut).then((res)=>{
                         if(res.data.status == 1){
-                            this.$router.push('/home');
+                            this.$router.push('/KOhome');
                         }
                       }).catch((err)=>{
 
@@ -184,5 +203,25 @@
     }
     .footer:active{
         box-shadow: 0 -5px 5px #ccc;
+    }
+    .mint-popup {
+    font-size: 0.28rem;
+    background: none;
+  }
+    .password-wrap {
+        width: 7.5rem;
+        text-align: center;
+        li {
+            height: 0.8rem;
+            line-height: 0.8rem;
+            border-top: 1px solid #ccc;
+            box-sizing: border-box;
+            color: #26a2ff;
+            font-size: 0.3rem;
+            background: #fff;
+        }
+        li:nth-child(3) {
+            margin-top: 0.2rem;
+        }
     }
 </style>

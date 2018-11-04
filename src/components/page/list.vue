@@ -23,7 +23,7 @@
 		</ul>
 		<ul class="list-wrap" v-if="sortField != 6">
 			<li class="clearfix" v-for="(item,index) in search_data" :key="index" @click="tolink(item.id)">
-				<img v-lazy="URL + item.pic_url"  class="fl">
+				<img :src="URL + item.pic_url"  class="fl">
 				<div class="list-text fl">
 					<p class="text">{{item.title}}</p>
 					<p class="new-price">￥
@@ -89,6 +89,7 @@
 			}
 		},
 		created() {
+			this.$store.state.search_value = '';
 			if(this.$route.params.status == 'search'){
 				this.api_url =  this.$httpConfig.keyWordSearch;
 			}else{
@@ -169,10 +170,17 @@
 						this.sortField = 6;
 						break;
 				}
-				 if(this.$route.params.status == 'search') {
+				 if(!this.$store.state.search_value == '' || this.$route.params.status == 'search') {
+					this.api_url =  this.$httpConfig.keyWordSearch;
+					let value = '';
+					if(this.$store.state.search_value){
+						value = this.$store.state.search_value;
+					}else{
+						value = this.$route.params.id;
+					}
 					this.axios.get(this.api_url, {
 						params: {
-							keyword: this.$route.params.id,
+							keyword: value,
 							sort: this.sort_id,
 							page:this.currentPage
 						}
@@ -197,7 +205,6 @@
 						}else{
 							this.isEnd = true;
 						}
-							Toast(res.data.message)
 							this.load = false;
 							this.load_wrap = false;
 					}).catch((err) => {
@@ -214,11 +221,6 @@
 						}
 					}).then((res) => {
 						if(res.data.status != 1) {
-							Toast({
-								message: res.data.message,
-								position: 'bottom',
-								duration: 1000
-							});
 							this.load_wrap = false;
 							this.msg = res.data.message;
 						} else {
@@ -226,9 +228,9 @@
 							for(var i in list){
 								this.search_data.push(list[i]);
 							}
-							this.load = false;
-							this.load_wrap = false;
 						}
+						this.load = false;
+						this.load_wrap = false;
 					}).catch((err) => {
 						console.log(err);
 					});

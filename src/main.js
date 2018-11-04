@@ -52,7 +52,8 @@ Vue.prototype.WX_URL = WX_URL;
 // Element
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
-
+import VideoPlayer from 'vue-video-player'
+Vue.use(VideoPlayer);
 Vue.use(ElementUI)
 Vue.use(VueLazyload, {
     preLoad: 1.3,

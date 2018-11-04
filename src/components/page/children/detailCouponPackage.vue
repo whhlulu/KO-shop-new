@@ -5,7 +5,7 @@
 				<div class="title">优惠券列表<i @click="cancel"></i></div>
 				<div class="padd">
 					<div class="order_tab_item">
-						<div  :class="showAble?'cur':''" @click="showAbleFun(true)">
+						<div :class="showAble?'cur':''" @click="showAbleFun(true)">
 							<span>可用</span>
 						</div>
 						<div :class="showAble?'':'cur'" @click="showAbleFun(false)">
@@ -17,18 +17,19 @@
 							<div class="coupon-main">
 								<div class="price-box">
 									<p class="price">
-                    <i>￥</i>
-                    <span class="big">{{item.money.substring(item.money.indexOf('.'),0)}}</span>
-                    <span>{{item.money.substring(item.money.indexOf('.'))}}</span>
-                    </p>
+										<i>￥</i>
+										<span class="big">{{item.money.substring(item.money.indexOf('.'),0)}}</span>
+										<span>{{item.money.substring(item.money.indexOf('.'))}}</span>
+									</p>
 									<p class="price-limit">满{{item.condition}}元可用</p>
 								</div>
 								<div class="info">
 									<p class="info_text">
-										<i class="info_type">{{item.name}}</i> 
+										<i class="info_type">{{item.name}}</i>
 									</p>
-									<p style="display: none;">{{item.code}}</p><!--这行不要删-->
-									<p class="info_date ">{{item.start_time}}  —  {{item.end_time}}</p>
+									<p style="display: none;">{{item.code}}</p>
+									<!--这行不要删-->
+									<p class="info_date ">{{item.start_time}} — {{item.end_time}}</p>
 								</div>
 								<div v-if="item.isSelect" class="check"></div>
 								<div v-else class="no-check"></div>
@@ -44,9 +45,9 @@
 								</div>
 								<div class="info">
 									<p class="info_text">
-										<i class="info_type">{{item.name}}</i> 
+										<i class="info_type">{{item.name}}</i>
 									</p>
-									<p class="info_date ">{{item.start_time}}  -  {{item.end_time}}</p>
+									<p class="info_date ">{{item.start_time}} - {{item.end_time}}</p>
 								</div>
 							</div>
 						</li>
@@ -64,127 +65,127 @@
 import qs from "qs";
 import { Toast } from "mint-ui";
 export default {
-  name: "detailOptions",
-  data() {
-    return {
-      showAble: true,
-      do_not_use_list: [],
-      do_use_list: [],
-      selectItem: [],
-      money:[],
-      price:0
-    };
-  },
-  computed: {},
-  mounted() {
-    this.$store.state.const_coupon_money = [];
-    this.$store.state.const_coupon_price_package = [];
-    this.getCouponFun();
-  },
-  methods: {
-    getCouponFun() {
-      this.axios
-        .post(
-          this.$httpConfig.getCoupons
-        )
-        .then(res => {
-          if(res.data.status){
-            let useList = res.data.data.do_use;
-            let notList = res.data.data.do_not_use;
-            for (var i in useList) {
-              this.do_use_list.push(useList[i]);
-            }
-            for (var i in this.do_use_list) {
-              var start_time = this.stamp2time(
-                this.do_use_list[i].use_start_time
-              );
-              var end_time = this.stamp2time(this.do_use_list[i].use_end_time);
-              this.do_use_list[i].isSelect = false;
-              this.do_use_list[i].start_time = start_time;
-              this.do_use_list[i].end_time = end_time;
-            }
-            for (var i in notList) {
-              this.do_not_use_list.push(notList[i]);
-            }
-            for (var i in this.do_not_use_list) {
-              var start_time = this.stamp2time(
-                this.do_not_use_list[i].use_start_time
-              );
-              var end_time = this.stamp2time(
-                this.do_not_use_list[i].use_end_time
-              );
-              this.do_not_use_list[i].start_time = start_time;
-              this.do_not_use_list[i].end_time = end_time;
-              }
-          }
-
-        });
-    },
-    stamp2time(value) {
-      var time = new Date(Number(value) * 1000);
-      var Y = time.getFullYear();
-      var m = time.getMonth() + 1;
-      var d = time.getDate();
-      return Y + "-" + m + "-" + d;
-    },
-    showAbleFun(status) {
-      this.showAble = status;
-    },
-    confirm() {
-      if(this.selectItem.length == 0){
-        this.cancel();
-        this.$store.state.const_coupon_price_package[this.$store.state.const_coupon_price_package_index] = 0;
-      }else{
-        var item = {
-          store_id:this.$store.state.const_coupon_num,
-          money:this.selectItem.money,
-          name:this.selectItem.name
-        }
-        this.$store.state.const_coupon_money.push(item);
-        this.$store.state.select_coupon = this.selectItem;
-        this.cancel();
-        this.price = Number(this.selectItem.money);
-        this.$store.state.const_coupon_price_package[this.$store.state.const_coupon_price_package_index] = this.price;
-      }
-      this.$store.state.const_coupon_price = 0;
-      for(var i in this.$store.state.const_coupon_price_package){
-        this.$store.state.const_coupon_price += this.$store.state.const_coupon_price_package[i]
-      }
-        this.selectItem = [];
-    },
-    select(item, index) {
-      this.selectItem = item;
-      this.axios
-        .post(
-          this.$httpConfig.checkCoupons,
-          qs.stringify({
-            id: item.c_id,
-            coupon_list_id:item.id
-          })
-        )
-        .then((res) => {
-          if(res.data.status){
-            for (var i in this.do_use_list) {
-              this.do_use_list[i].isSelect = index == i ? true : false;
-              this.do_use_list[i].code = this.do_use_list[i].name + index;
-            }
-          }else{
-            Toast(res.data.message)
-          }
-        })
-        .catch(err => {
-          Toast(err);
-        });
-    },
-    cancel() {
-      this.$store.state.const_coupon = false;
-      this.showAble = true;
-    },
-    notSelect() {
-      Toast("非常抱歉，该优惠券不可用！");
-      this.cancel();
-    }
-  }
+	name: "detailOptions",
+	data() {
+		return {
+			showAble: true,
+			do_not_use_list: [],
+			do_use_list: [],
+			selectItem: [],
+			money: [],
+			price: 0
+		};
+	},
+	computed: {},
+	mounted() {
+		this.$store.state.const_coupon_money = [];
+		this.$store.state.const_coupon_price_package = [];
+		// this.getCouponFun();
+	},
+	methods: {
+		getCouponFun() {
+			this.axios
+				.post(
+					this.$httpConfig.getCoupons
+				).then(res => {
+					if (res.data.status) {
+						let useList = res.data.data.do_use;
+						let notList = res.data.data.do_not_use;
+						for (var i in useList) {
+							this.do_use_list.push(useList[i]);
+						}
+						for (var i in this.do_use_list) {
+							var start_time = this.stamp2time(
+								this.do_use_list[i].use_start_time
+							);
+							var end_time = this.stamp2time(this.do_use_list[i].use_end_time);
+							this.do_use_list[i].isSelect = false;
+							this.do_use_list[i].start_time = start_time;
+							this.do_use_list[i].end_time = end_time;
+						}
+						for (var i in notList) {
+							this.do_not_use_list.push(notList[i]);
+						}
+						for (var i in this.do_not_use_list) {
+							var start_time = this.stamp2time(
+								this.do_not_use_list[i].use_start_time
+							);
+							var end_time = this.stamp2time(
+								this.do_not_use_list[i].use_end_time
+							);
+							this.do_not_use_list[i].start_time = start_time;
+							this.do_not_use_list[i].end_time = end_time;
+						}
+					}else{
+						Toast(res.data.message);
+					}
+				});
+		},
+		stamp2time(value) {
+			var time = new Date(Number(value) * 1000);
+			var Y = time.getFullYear();
+			var m = time.getMonth() + 1;
+			var d = time.getDate();
+			return Y + "-" + m + "-" + d;
+		},
+		showAbleFun(status) {
+			this.showAble = status;
+		},
+		confirm() {
+			if (this.selectItem.length == 0) {
+				this.cancel();
+				this.$store.state.const_coupon_price_package[this.$store.state.const_coupon_price_package_index] = 0;
+			} else {
+				var item = {
+					store_id: this.$store.state.const_coupon_num,
+					money: this.selectItem.money,
+					name: this.selectItem.name
+				}
+				this.$store.state.const_coupon_money.push(item);
+				this.$store.state.select_coupon = this.selectItem;
+				this.cancel();
+				this.price = Number(this.selectItem.money);
+				this.$store.state.const_coupon_price_package[this.$store.state.const_coupon_price_package_index] = this.price;
+			}
+			this.$store.state.const_coupon_price = 0;
+			for (var i in this.$store.state.const_coupon_price_package) {
+				this.$store.state.const_coupon_price += this.$store.state.const_coupon_price_package[i]
+			}
+			this.selectItem = [];
+		},
+		select(item, index) {
+			this.selectItem = item;
+			this.axios
+				.post(
+					this.$httpConfig.checkCoupons,
+					qs.stringify({
+						id: item.c_id,
+						coupon_list_id: item.id
+					})
+				)
+				.then((res) => {
+					if (res.data.status) {
+						for (var i in this.do_use_list) {
+							this.do_use_list[i].isSelect = index == i ? true : false;
+							this.do_use_list[i].code = this.do_use_list[i].name + index;
+						}
+					} else {
+						Toast(res.data.message)
+					}
+				})
+				.catch(err => {
+					Toast(err);
+				});
+		},
+		cancel() {
+			this.$store.state.const_coupon = false;
+			this.showAble = true;
+		},
+		notSelect() {
+			Toast("非常抱歉，该优惠券不可用！");
+			this.cancel();
+		}
+	}
 };
 </script>
 <style type="text/css">

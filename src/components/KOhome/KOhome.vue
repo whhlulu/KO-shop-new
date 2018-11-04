@@ -4,7 +4,7 @@
         <home-header :userName="getData"></home-header>
         <mt-swipe :auto="3000">
             <mt-swipe-item v-for="item in this.$store.state.KOhome_data.banner" :key="item.id">
-                <img class="home-banner-img" :src="URL + item.pic_url"  @click="goAd(item.ad_link)" />
+                <img class="home-banner-img" :src="IMG_URL + item.pic_url"  @click="goAd(item.ad_link)" />
             </mt-swipe-item>
         </mt-swipe>
         <news-flash :nav="$store.state.categoryLists"></news-flash>

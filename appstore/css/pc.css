@@ -1,0 +1,349 @@
+/*清除样式*/
+html {
+    height: 100%;
+}
+
+body {
+    height: 100%;
+}
+
+a {
+    text-decoration: none;
+    color: #3d3d3d;
+}
+
+a:link {
+    text-decoration: none;
+    color: #3d3d3d;
+}
+
+a:hover {
+    text-decoration: none;
+    color: #00ACCB;
+}
+
+a:active {
+    text-decoration: none;
+    color: #00ACCB;
+}
+
+/*头部样式*/
+.head {
+    background-color: #ffffff;
+    margin-top: 24px;
+    border-radius: 5px;
+}
+
+.brand {
+    height: 84px;
+}
+
+.brand img {
+    height: 24px;
+    margin: 36px 0 24px 68px;
+
+}
+
+.brand .search {
+    margin-top: 24px;
+    margin-right: 54px;
+}
+
+.brand .search .form-control {
+    border-top-left-radius: 21px;
+    border-bottom-left-radius: 21px;
+    padding-left: 24px;
+    height: 38px;
+}
+
+.brand .search .btn-info {
+    border-top-right-radius: 21px;
+    border-bottom-right-radius: 21px;
+    background: #0081ff;
+    border: 1px solid #0081ff;
+    height: 38px;
+}
+
+.brand-nav {
+    margin: 0 70px;
+    border-top-color: #e3e3e3;
+}
+
+.main-nav {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    margin-left: 64px;
+    margin-right: 64px;
+}
+/*.main-nav-row {
+
+}*/
+
+.main-nav .main-nav-cur {
+    font-size: 0px;
+}
+
+.main-nav .main-nav-cur .btn-div {
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+}
+
+/*.main-nav .main-nav-row .main-nav-cur .btn-div:hover {
+    background-color: #0081ff;
+    border-radius: 5px;
+}*/
+
+.main-nav .main-nav-cur .btn-div:hover .a-cross {
+    color: #0081ff;
+}
+
+.main-nav .main-nav-cur .active {
+    background-color: #0081ff;
+    border-radius: 5px;
+}
+
+.main-nav .main-nav-cur .active .a-cross {
+    color: #ffffff;
+}
+.main-nav .main-nav-cur .active:hover .a-cross {
+    color: #ffffff;
+}
+
+.main-nav .main-nav-cur .a-cross {
+    display: inline-block;
+    width: 208px;
+    height: 42px;
+    line-height: 42px;
+    padding-right: 18px;
+    padding-left: 18px;
+    color: #343e5c;
+    font-size: 14px;
+}
+
+/*apps*/
+.apps {
+    background-color: #ffffff;
+    margin-top: 12px;
+    border-radius: 5px;
+    height: 100%;
+    min-height: 500px;
+    padding: 28px 50px 10px 50px;
+    overflow: hidden;
+    overflow-y: auto;
+
+}
+
+.apps .app {
+    width: 32%;
+    height: 140px;
+    padding: 18px 0;
+    border-radius: 3px;
+    margin-bottom: 12px;
+    box-shadow: 0px 3px 9px 0px rgba(0, 0, 0, 0.1);
+
+}
+
+.app:nth-child(3n-1) {
+    margin-left: 2%;
+    margin-right: 2%;
+}
+
+.apps .app .app-logo img {
+    height: 66px;
+    width: 66px;
+}
+
+.apps .app .app-info {
+    padding: 0 16px 0 0;
+}
+
+.apps .app .app-info p {
+    display: block;
+    margin: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.apps .app .app-info .name {
+    margin-bottom: 11px;
+    font-size: 15px;
+    color: #2e3033;
+}
+
+.apps .app .app-info .v-s {
+    font-size: 14px;
+    color: #706b99;
+}
+
+.apps .app .app-info .time {
+    font-size: 14px;
+    color: #706b99;
+}
+
+.apps .app .app-s-desc {
+    margin-top: 18px;
+    font-size: 14px;
+    color: #737980;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.ul-nav{
+    display: none;
+    background-color: #ffffff;
+    position: absolute;
+    top: 58px;
+    border-radius: 5px;
+    z-index: 999;
+    width: 208px;
+    padding: 18px;
+    margin: 0;
+    box-shadow: 0.698px 9.976px 30px 0px rgba(0, 57, 112, 0.3);
+}
+.li-nav {
+    text-align: center;
+    display: block;
+    list-style: none;
+    height: 42px;
+    line-height: 42px;
+    width: 172px;
+    z-index: 999;
+    font-size: 14px;
+    color: #343e5c;
+    border-radius: 5px;
+}
+.li-nav:hover{
+    color: #fff;
+    background-color: #0081ff;
+}
+/*app详细页面*/
+.back-head{
+    height: 80px;
+    line-height: 80px;
+    background-color: #ffffff;
+    margin-top: 24px;
+    border-radius: 5px;
+}
+.back-head img{
+    margin: -2px 24px auto 30px;
+}
+
+.app-down{
+    position: relative;
+    height: 100%;
+}
+.app-down img{
+    width: 80%;
+    height: 80%;
+    position: absolute;
+    top: 20%;
+    right: 10%;
+}
+.app-desc {
+   padding-left: 74px;
+    padding-top: 60px;
+}
+
+.app-desc .title{
+    margin-top: 18px;
+    font-size: 16px;
+    color: #56595c;
+}
+
+.app-desc .content{
+    font-size: 14px;
+    color: #737980;
+}
+.app-desc .app-logo img {
+    height: 66px;
+    width: 66px;
+}
+
+.app-desc .app-info {
+    padding: 0 16px 0 0;
+}
+
+.app-desc .app-info p {
+    display: block;
+    margin: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.app-desc .app-info .name {
+    margin-bottom: 11px;
+    font-size: 15px;
+    color: #2e3033;
+}
+
+.app-desc .app-info .v-s {
+    font-size: 14px;
+    color: #706b99;
+}
+
+.app-desc .app-info .time {
+    font-size: 14px;
+    color: #706b99;
+}
+
+.app-desc .app-de{
+    margin-top: 0px;
+}
+
+.p-app-pics img{
+    width: 150px;
+}
+.app-pics{
+    overflow: hidden;
+    width: 560px;
+}
+.app-pics .p-app-pics{
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}
+
+.app-pics .p-app-pics li{
+    margin-right: 40px;
+    float: left;
+    width: 150px;
+    height: 268px;;
+}
+
+
+.app-pics .p-app-pics li img{
+    float: left;
+    width: 150px;
+    height: 268px;;
+}
+
+.app-down .down-back{
+    font-size: 18px;
+    position: absolute;
+    left: 25%;
+    width: 50%;
+    height: 40px;
+    line-height: 40px;
+    text-align: center;
+    border-radius: 20px;
+    color: #ffffff;
+}
+.app-down .and-down{
+    top: 78%;
+    background: #47B36B;
+}
+.app-down .ios-down{
+    top: 88%;
+    background: #0081ff;
+}
+.app-code{
+    margin-left: 50%;
+    /* width: 50%; */
+    position: absolute;
+    left: -112px;
+    top: 40%;
+}
+

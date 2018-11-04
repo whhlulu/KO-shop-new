@@ -156,7 +156,7 @@
                     this.load = false;
                     if(res.data.status == 1){
                         // this.setTime(); //不要删除
-                        this.$router.push('/home')
+                        this.$router.push('/KOhome')
                         this.show = false;
                     }
                 }).catch((err) => {

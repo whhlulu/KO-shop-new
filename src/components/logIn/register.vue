@@ -30,10 +30,30 @@
                 <span class="icon"></span>
                 <input type="text" placeholder="请输入邮箱地址" v-model="email">
             </div>
-            <div class="input-main rec">
-                <span class="icon"></span>
-                <input type="text" placeholder="选填推荐码">
+            <div class="input-main school" @click="editSchool">
+                <input type="text" placeholder="请选择学校" v-model="schoolValue">
             </div>
+            <mt-popup
+                    v-model="popupVisible"
+                    position="bottom">
+                <div id="listBtn" style="overflow:hidden">
+                    <button   @click.stop="btmValues(1)">清除</button>
+                    <button style="float:right"  @click.stop="btmValues(2)">确认</button>
+                </div>
+                <mt-picker :slots="slots" @change="onSchoolChange"></mt-picker>
+            </mt-popup>
+            <div class="input-main grade-clazz">
+                <input class="grade" type="text" placeholder="请选择年级" v-model="grade">
+                <input class="clazz" type="text" placeholder="请输入班级" v-model="clazz">
+            </div>
+            <div class="input-main student">
+                <span class="icon"></span>
+                <input type="text" placeholder="请输入学生姓名" v-model="student">
+            </div>
+            <!--<div class="input-main rec">-->
+                <!--<span class="icon"></span>-->
+                <!--<input type="text" placeholder="选填推荐码">-->
+            <!--</div>-->
             <button class="btn-in" @click="register">注&nbsp;&nbsp;册</button>
         </div>
         <div class="return-btn">
@@ -42,12 +62,31 @@
     </div>
 </template>
 <script>
-    import { Toast } from 'mint-ui';
+    import { Toast, Popup, Picker  } from 'mint-ui';
     import Qs from 'qs'
+    import schoolList from './school'
     export default {
         name : 'register',
         data(){
             return {
+                popupVisible: false,
+                slots: [
+                    {
+                        flex: 1,
+                        values: Object.keys(schoolList),
+                        className: 'slot1',
+                        textAlign: 'center'
+                    }, {
+                        divider: true,
+                        content: '-',
+                        className: 'slot2'
+                    }, {
+                        flex: 1,
+                        values: schoolList['抚州城区'],
+                        className: 'slot3',
+                        textAlign: 'center'
+                    }
+                ],
                 title:this.$constant.mainTitle+'注册',
                 username : '',
                 mobile:'',
@@ -59,9 +98,31 @@
                 isActive:false,
                 scrollWatch:true,
                 // sessionId:''
+                school:'',
+                schoolValue:'',
+                grade:'',
+                clazz:'',
+                student:'',
             }
         },
         methods : {
+            editSchool(){
+                this.popupVisible = true;
+            },
+            onSchoolChange(picker, values) {
+                picker.setSlotValues(1, schoolList[values[0]]);
+                this.school = values[1];
+            },
+            btmValues(index){
+                this.popupVisible =false;
+                if(index == 1){
+                    this.school = '';
+                    this.schoolValue = ''
+                }
+                if(index == 2){
+                    this.schoolValue = this.school
+                }
+            },
             remove(){
                 this.$router.go(-1);
             },
@@ -138,7 +199,11 @@
                         verify:this.message,
                         email:this.email,
                         password:this.password,
-                        re_password:this.re_password
+                        re_password:this.re_password,
+                        schoole:this.schoolValue,
+                        grade:this.grade,
+                        class:this.clazz,
+                        student_name:this.student,
                     })
                 }).then((res) => {
                     Toast(res.data.message);
@@ -160,7 +225,30 @@
         }
     }
 </script>
+<style lang="less">
+    .register-wrap{
+        .mint-popup-bottom{
+            width: 100%;
+        }
+    }
+</style>
 <style lang="less" scoped>
+    #listBtn{
+        z-index: 1;
+        border-bottom: 1/100rem solid #ccc;
+        button{
+            background-color: #fff;
+            margin: 20/100rem 40/100rem;
+            border:0;
+            color: #ff8000;
+            button:last-child{
+                float: right;
+            }
+            button:first-child{
+                float: left;
+            }
+        }
+    }
     .register-wrap{
         padding:0 .6rem;
         background:#fff;
@@ -203,6 +291,28 @@
                     border-radius:5px;
                     font-size:.28rem;
                     line-height:100%;
+                }
+            }
+            .school{
+                input{
+                    text-indent:.4rem;
+                }
+            }
+            .grade-clazz{
+                input{
+                    text-indent:.4rem;
+                }
+                .grade{
+                    width: 49%;
+                }
+                .clazz{
+                    width: 49%;
+                    float: right;
+                }
+            }
+            .student{
+                input{
+                    text-indent:.4rem;
                 }
             }
             .userName{

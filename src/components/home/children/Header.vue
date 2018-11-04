@@ -3,13 +3,13 @@
         <router-link to="/KOhome" class="header_logo"></router-link>
         <div class="header_seek" @click="searchIn">
             <img class="header_seek_img" :src="seekImg" alt="搜素img">
-            <input type="text" disabled placeholder="搜索宝贝、店铺...">
+            <input type="search" placeholder="搜索宝贝、店铺...">
         </div>
         <div class="header_news">
-            <router-link to="">
+            <!-- <router-link to="">
                 <img class="header_news_RichScan" :src="RichScan" alt="扫一扫img">
                 <div class="header_RichScan" id="myBtn" @click="act">扫一扫</div>
-            </router-link>
+            </router-link> -->
             <router-link to = '/myNews' class="trouble">
                 <img class="header_news_advices" :src="advices" alt="消息img">
                 <div class="header_RichScan">消息中心</div>
@@ -59,9 +59,8 @@
         overflow: hidden;
         .header_logo{
             position: absolute;
-            left: .2rem;
-            top: 50%;
-            margin-top: -0.23rem;
+            top: .24rem;
+            left: .4rem;
             width: .46rem;
             height: .46rem;
             display: block;
@@ -69,11 +68,10 @@
             background-size: 100% 100%;
         }
         .header_seek{
-            width: 3.3rem;
+            width: 4rem;
             height: 0.6rem;
-            margin: auto;
             background-color: #E9C440;
-            margin-top: 0.15rem;
+            margin: 0.15rem 0 0 2.1rem;
             border-radius: 0.25rem;
             position: relative;    
         }
@@ -103,7 +101,7 @@
              position: absolute;
              right: 0.1rem;
              top:0.15rem;
-             width: 2rem;
+             width: auto;
              height: 0.62rem; 
            	
          }

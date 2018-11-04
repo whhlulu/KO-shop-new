@@ -146,11 +146,11 @@
                     -webkit-box-orient: vertical;
                 }
                 .company {
-                    height: .52rem;
-                    font-size: .24rem;
-                    line-height: .26rem;
+                    height: 26px;
+                    font-size: 12px;
+                    line-height: 14px;
                     color: #B6B4B5;
-                    padding-top: .2rem;
+                    padding-top: 10px;
                     padding-left: .2rem;
                 }
             }

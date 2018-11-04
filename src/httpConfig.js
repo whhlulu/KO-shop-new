@@ -3,7 +3,7 @@
 //const request =  "http://api.shopsn.net/"
 window.API_URL = 'http://mapi.youyoulegou.cn/';
 window.IMG_URL = 'http://center.youyoulegou.cn/';
-window.URL = 'http://center.shopsn.cn/';
+window.URL = 'http://center.youyoulegou.cn/';
 const request = window.API_URL;
 const imgRequest = window.URL;
 

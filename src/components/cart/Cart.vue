@@ -1,12 +1,10 @@
 <template>
 	<div class="goos" ref="cart">
 		<div v-title data-title="我的购物车">我的购物车</div>
-		<header class="cart-header">
-			<router-link to="/KOhome"><span class="back"></span></router-link>
-			我的购物车
+		<header class="cart-header">我的购物车
 			<!-- ({{nav[0].number+nav[1].number}}) -->
 			<router-link to="/myNews"><span></span></router-link>
-		</header> 
+		</header>
 		<ul class="nav">
 			<li @click="selectNav(index)" :class="{active:item.isSelected}" :key="index" v-for="(item,index) in nav">{{item.name}}</li>
 		</ul>
@@ -22,14 +20,14 @@
 		<div style="margin-bottom:1.5rem" v-show="nav[0].isSelected">
 			<dl class="mark-wrap" v-if="$store.state.cart_data" v-for="(items,index1) in $store.state.cart_data" v-bind:key="index1">
 				<dt>
-					<label class="checkBox" :class="{active:items.checked}" @click="addShop(index1,items)"><span></span></label>
-					<a @click="enterShop(items)">{{items.shop_name}}</a>
-					<span class="clearfix" @click="deit(index1,$event)">
-						<i class="fl">{{total.fn}}</i>
-						<em class="fl"></em>
-					</span>
-					<span class="all" :class="{allColor:items.checked}">全选</span>
-				</dt>
+						<label class="checkBox" :class="{active:items.checked}" @click="addShop(index1,items)"><span></span></label>
+						<a @click="enterShop(items)">{{items.shop_name}}</a>
+						<span class="clearfix" @click="deit(index1,$event)">
+							<i class="fl">{{total.fn}}</i>
+							<em class="fl"></em>
+						</span>
+						<span class="all" :class="{allColor:items.checked}">全选</span>
+					</dt>
 				<dd class="clearfix" v-for="(item,index) in items.goods" :key="item.id" :class="{active:!total.deit}">
 					<label class="checkBox" :class="{active:item.checked}" @click="addCom(index1,index,item)" checked><span></span></label>
 					<label v-show="isEdit" class="checkBox" :class="{active:item.checked}" @click="addCom(index1,index,item)" checked><span></span></label>
@@ -63,8 +61,8 @@
 				<div class="seat"></div>
 				<div class="footer clearfix">
 					<label class="chicked fl" :class="{active:flag}" @click="seat()">
-						<span></span>{{total.setData}}
-					</label>
+							<span></span>{{total.setData}}
+						</label>
 					<button class="set-btn fr" v-show="total.deit" @click="toOrder">去结算({{total.seleNumber}})</button>
 					<div class="total fl" v-show="total.deit">
 						<div class="total-metre clearfix">
@@ -83,24 +81,28 @@
 		<div class="load-wrap" v-show="$store.state.cart_load" @touchmove.prevent>
 			<mt-spinner type="triple-bounce" color="rgb(38, 162, 255)"></mt-spinner>
 		</div>
-        <to-top></to-top>
+		<to-top></to-top>
 	</div>
 </template>
+
 <script>
-	import { MessageBox, Toast } from 'mint-ui';
+	import {
+		MessageBox,
+		Toast
+	} from 'mint-ui';
 	import qs from 'qs';
 	import hotGoods from '@/components/home/children/hotGoods';
 	import Shopsn from '@/components/page/Shopsn.vue';
 	import cartPackage from '@/components/cart/cartPackage.vue';
-    import toTop from '@/components/page/toTop.vue';
+	import toTop from '@/components/page/toTop.vue';
 	export default {
 		name: 'cart',
 		data() {
 			return {
 				load: false,
 				load_wrap: true,
-				cart_click:0,
-				sw:false,
+				cart_click: 0,
+				sw: false,
 				total: {
 					seleNumber: 0,
 					newPrice: 0,
@@ -124,18 +126,25 @@
 				delRemove: [],
 				isEdit: true,
 				cartId: [],
-				news:[],
-				nav:[
-					{name:'商品',isSelected:true,number:0},
-					{name:'推荐套餐',isSelected:false,number:0}
+				news: [],
+				nav: [{
+						name: '商品',
+						isSelected: true,
+						number: 0
+					},
+					{
+						name: '推荐套餐',
+						isSelected: false,
+						number: 0
+					}
 				],
-                isactive: '',
-                slide_switch: false, //避免多次下拉
-                load_show: true, //滚动动画
-                roll_switch: true, //触发下拉加载开关
-                no_data: false, //第一次没数据时的样式
-                sliding_no_data: false, //下拉没数据时的样式
-                page: 1,
+				isactive: '',
+				slide_switch: false, //避免多次下拉
+				load_show: true, //滚动动画
+				roll_switch: true, //触发下拉加载开关
+				no_data: false, //第一次没数据时的样式
+				sliding_no_data: false, //下拉没数据时的样式
+				page: 1,
 			}
 		},
 		created() {
@@ -144,37 +153,37 @@
 		mounted() {
 			this.$store.state.cart_data = [];
 			this.$store.state.package_cart_data = '';
-			if(this.$route.params.status == 2){
+			if (this.$route.params.status == 2) {
 				this.nav[1].isSelected = true;
 				this.nav[0].isSelected = false;
 				this.getPackageCart();
-			}else{
+			} else {
 				this.nav[0].isSelected = true;
 				this.nav[1].isSelected = false;
 				this.getCartData();
 			}
 			this.$store.state.cart_load = false;
 			document.body.scrollTop = 0;
-
-            let _this = this;
-            window.addEventListener('scroll', function () {
+	
+			let _this = this;
+			window.addEventListener('scroll', function() {
 				if (!_this.$refs.cart) return;
-				console.log(document.body.scrollTop + window.innerHeight >= document.body.offsetHeight,_this.roll_switch == false,_this.slide_switch == true)
-                if (document.body.scrollTop + window.innerHeight >= document.body.offsetHeight) {
-                    //如果第一次请求没数据或数据没达到每页个数就不会再请求数据
-                    
-                    if (_this.slide_switch == true) {
-                        _this.slide_switch = false;
-                        _this.page++;
-                        _this.getCartData();
-                    }
-                }
-            })
+				console.log(document.body.scrollTop + window.innerHeight >= document.body.offsetHeight, _this.roll_switch == false, _this.slide_switch == true)
+				if (document.body.scrollTop + window.innerHeight >= document.body.offsetHeight) {
+					//如果第一次请求没数据或数据没达到每页个数就不会再请求数据
+	
+					if (_this.slide_switch == true) {
+						_this.slide_switch = false;
+						_this.page++;
+						_this.getCartData();
+					}
+				}
+			})
 		},
 		methods: {
-			selectNav(index){
+			selectNav(index) {
 				console.log(index)
-				if(this.sw == true) return;
+				if (this.sw == true) return;
 				this.$store.state.cart_data = [];
 				this.$store.state.package_cart_data = '';
 				this.cart_click++;
@@ -192,20 +201,20 @@
 						break;
 					default:
 						break;
-				}		
+				}
 			},
 			getPackageCart() {
 				this.length = [];
 				// 获取购物车套餐商品
 				this.axios.post(this.$httpConfig.cartPackageList)
-				.then(res => {
-					Toast(res.data.message)
-					this.sw = false;
-					this.$store.state.no_data = res.data.data == ''?true:false;
-					if (res.data.status == 10001) {
-						this.$router.push("/LogIn");
-					} else {
-						if (res.data.status) {
+					.then(res => {
+						Toast(res.data.message)
+						this.sw = false;
+						this.$store.state.no_data = res.data.data == '' ? true : false;
+						if (res.data.status == 10001) {
+							this.$router.push("/LogIn");
+						} else {
+							if (res.data.status) {
 								this.length = res.data.data;
 								this.$store.state.package_cart_data = res.data.data;
 							} else {
@@ -213,21 +222,21 @@
 							}
 						}
 					})
-				.catch(err => {
-					Toast(err);
-				});
+					.catch(err => {
+						Toast(err);
+					});
 			},
-			getCartData(){
+			getCartData() {
 				this.length = [];
-				this.axios.post(this.$httpConfig.cartGoodsList,qs.stringify({
-					page:this.page
+				this.axios.post(this.$httpConfig.cartGoodsList, qs.stringify({
+					page: this.page
 				})).then((res) => {
 					this.sw = false;
-					this.$store.state.no_data = res.data.data == null?true:false;
-					if(res.data.status == 10001) {
+					this.$store.state.no_data = res.data.data == null ? true : false;
+					if (res.data.status == 10001) {
 						this.$router.push('/LogIn');
 					} else {
-                    	this.stateHandling(res.data.status, res.data.data.goods);
+						this.stateHandling(res.data.status, res.data.data.goods);
 						this.$store.state.cart_load = false;
 						// for(var i in this.$store.state.cart_data) {
 						// 	for(var j in this.$store.state.cart_data[i].goods) {
@@ -240,39 +249,39 @@
 					console.log(err);
 				});
 			},
-            //请求成功后的操作
-            returnOperation(data) {
-                if (data.length < 10 && this.page == 1) { //第一次请求成功如果数据没达到每页页数就禁止下拉
-                    this.load_show = false; //动画隐藏
-                    this.roll_switch = false; //禁止下拉加载
+			//请求成功后的操作
+			returnOperation(data) {
+				if (data.length < 10 && this.page == 1) { //第一次请求成功如果数据没达到每页页数就禁止下拉
+					this.load_show = false; //动画隐藏
+					this.roll_switch = false; //禁止下拉加载
 				}
-					for (let index = 0; index < data.length; index++) {
-						this.$store.state.cart_data.push(data[index]);
-					}
-                this.slide_switch = true;
-            },
-            //请求后返回不同状态时的处理
-            stateHandling(status, data) {
-                if (status == 10001) {
-                    this.$router.push('/LogIn');
-                } else if (status == 1) { //成功后的处理
-                    this.returnOperation(data);
-                } else if (status == 0 && this.page == 1) { //第一次请求失败时
-                    this.no_data = true; //无数据时的样式
-                    this.load_show = false; //动画隐藏
-                    this.roll_switch = false; //禁止下拉加载
-                } else { //第二次或更多次无数据时
-                    this.sliding_no_data = true; //无数据时的样式
-                    this.load_show = false; //动画隐藏
-                    this.roll_switch = false; //禁止下拉加载
-                }
-            },
-			enterShop(items){
+				for (let index = 0; index < data.length; index++) {
+					this.$store.state.cart_data.push(data[index]);
+				}
+				this.slide_switch = true;
+			},
+			//请求后返回不同状态时的处理
+			stateHandling(status, data) {
+				if (status == 10001) {
+					this.$router.push('/LogIn');
+				} else if (status == 1) { //成功后的处理
+					this.returnOperation(data);
+				} else if (status == 0 && this.page == 1) { //第一次请求失败时
+					this.no_data = true; //无数据时的样式
+					this.load_show = false; //动画隐藏
+					this.roll_switch = false; //禁止下拉加载
+				} else { //第二次或更多次无数据时
+					this.sliding_no_data = true; //无数据时的样式
+					this.load_show = false; //动画隐藏
+					this.roll_switch = false; //禁止下拉加载
+				}
+			},
+			enterShop(items) {
 				this.$router.push({
 					name: "shopHome",
 					params: {
 						id: items.store_id,
-              			index:0
+						index: 0
 					}
 				})
 			},
@@ -291,9 +300,9 @@
 				})
 			},
 			addgoods(goods) {
-				if(this.goods.length > 0) {
-					for(var j = 0; j < this.goods.length; j++) {
-						if(this.goods[j].id == goods.id) {
+				if (this.goods.length > 0) {
+					for (var j = 0; j < this.goods.length; j++) {
+						if (this.goods[j].id == goods.id) {
 							return;
 						} else {
 							this.goods.push(goods)
@@ -307,11 +316,11 @@
 				}
 			},
 			deletegoods(goods) {
-				if(this.goods.length == 0) {
+				if (this.goods.length == 0) {
 					return;
 				} else {
-					for(var j = 0; j < this.goods.length; j++) {
-						if(this.goods[j].id == goods.id) {
+					for (var j = 0; j < this.goods.length; j++) {
+						if (this.goods[j].id == goods.id) {
 							this.goods.splice(j, 1);
 							return;
 						}
@@ -321,33 +330,33 @@
 			deit(index1, e) { //编辑购物车
 				var list = this.$store.state.cart_data[index1].goods,
 					len = list.length;
-				if(this.total.deit) {
-					for(var i = 0; i < len; i++) {
+				if (this.total.deit) {
+					for (var i = 0; i < len; i++) {
 						this.total.deit = false;
 						this.total.fn = '完成';
 						this.isEdit = false;
 					}
 				} else {
 					this.getAllprice();
-					for(var i = 0; i < len; i++) {
+					for (var i = 0; i < len; i++) {
 						this.total.deit = true;
 						this.total.fn = '编辑';
 						this.isEdit = true;
-
+	
 					}
-
+	
 				}
 			},
 			addShop(index, items) {
 				var list = this.$store.state.cart_data[index]['goods'],
 					len = list.length;
-				if(this.$store.state.cart_data[index]['checked']) {
-					for(var i = 0; i < len; i++) {
+				if (this.$store.state.cart_data[index]['checked']) {
+					for (var i = 0; i < len; i++) {
 						list[i]['checked'] = false;
 						this.deletegoods(list[i]);
 					}
 				} else {
-					for(var i = 0; i < len; i++) {
+					for (var i = 0; i < len; i++) {
 						list[i]['checked'] = true;
 						this.addgoods(list[i]);
 					}
@@ -358,24 +367,24 @@
 			},
 			addCom(index1, index, item) { //单选
 				var list = this.$store.state.cart_data[index1]['goods'];
-				var	len = list.length;
-				if(list[index]['checked']) {
+				var len = list.length;
+				if (list[index]['checked']) {
 					this.$store.state.cart_data[index1]['checked'] = false;
 					this.flag = false;
 					list[index]['checked'] = !list[index]['checked'];
-					for(var i = 0; i < this.goods.length; i++) {
-						if(this.goods[i].id == item.id) {
+					for (var i = 0; i < this.goods.length; i++) {
+						if (this.goods[i].id == item.id) {
 							this.goods.splice(i, 1);
 							break;
 						}
 					}
-
+	
 				} else {
 					list[index]['checked'] = !list[index]['checked'];
 					// 判断是否选择当前店铺的全选			    
 					var off = true;
-					for(var j = 0; j < len; j++) {
-						if(typeof list[j]['checked'] == 'undefined' || list[j]['checked'] == false) {
+					for (var j = 0; j < len; j++) {
+						if (typeof list[j]['checked'] == 'undefined' || list[j]['checked'] == false) {
 							off = false;
 						}
 					}
@@ -388,18 +397,18 @@
 			},
 			seat() { //全选
 				var offon = true;
-				if(this.flag) {
+				if (this.flag) {
 					offon = false;
 				}
-				for(var i = 0, len = this.$store.state.cart_data.length; i < len; i++) {
+				for (var i = 0, len = this.$store.state.cart_data.length; i < len; i++) {
 					this.$store.state.cart_data[i]['checked'] = offon;
 					var list = this.$store.state.cart_data[i]['goods'];
-					for(var k = 0, len1 = list.length; k < len1; k++) {
+					for (var k = 0, len1 = list.length; k < len1; k++) {
 						list[k]['checked'] = offon;
-						if(this.flag == false) {
+						if (this.flag == false) {
 							this.addgoods(list[k]);
 							this.total.seleNumber = this.goods.length
-						} else if(this.flag == true) {
+						} else if (this.flag == true) {
 							this.deletegoods(list[k])
 							this.total.seleNumber = this.goods.length
 						}
@@ -409,25 +418,25 @@
 				this.getAllprice();
 			},
 			getAllprice() {
-				if(!this.$store.state.cart_data){
+				if (!this.$store.state.cart_data) {
 					this.$store.state.no_data = true;
-				} 
+				}
 				let allprice = 0;
 				let num = 0
 				this.$store.state.cart_data.forEach((value, index) => {
 					value.goods.forEach((value, index) => {
-						if(value.checked) {
+						if (value.checked) {
 							allprice += value.goods_num * value.price_new
 						}
 					})
 				})
-    			this.total.seleNumber = this.goods.length>99?'99+': this.goods.length;
+				this.total.seleNumber = this.goods.length > 99 ? '99+' : this.goods.length;
 				this.price = allprice
 			},
 			hasAllchecked() {
 				var flag1 = true;
-				for(var i = 0, len = this.$store.state.cart_data.length; i < len; i++) {
-					if(typeof this.$store.state.cart_data[i]['checked'] === 'undefined' || this.$store.state.cart_data[i]['checked'] == false) {
+				for (var i = 0, len = this.$store.state.cart_data.length; i < len; i++) {
+					if (typeof this.$store.state.cart_data[i]['checked'] === 'undefined' || this.$store.state.cart_data[i]['checked'] == false) {
 						flag1 = false;
 						break;
 					}
@@ -435,19 +444,19 @@
 				flag1 == true ? this.flag = true : this.flag = false;
 			},
 			cartNumModify(item) {
-				if(item.goods_num == 0) {
+				if (item.goods_num == 0) {
 					return;
 				} else {
 					this.axios.post(this.$httpConfig.cartNumModify, qs.stringify({
 						cart_id: item.id,
 						num: item.goods_num
 					})).then((res) => {
-						if(res.data.status == 10001) {
+						if (res.data.status == 10001) {
 							this.$router.push('/LogIn');
 						} else {
 							this.load = false;
-							if(res.data.status == 1) {
-								if(item.goods_num == 0) {
+							if (res.data.status == 1) {
+								if (item.goods_num == 0) {
 									item.goods_num = 1;
 									Toast({
 										message: '不能为0哦!'
@@ -466,19 +475,19 @@
 				}
 			},
 			reduce(index, item) { //商品减少
-				if(item.goods_num <= 1) {
+				if (item.goods_num <= 1) {
 					item.goods_num = 1;
 					Toast('不能再减少了哟!!');
 					return false;
-				} else if(item.goods_num > 1) {
+				} else if (item.goods_num > 1) {
 					this.axios.post(this.$httpConfig.cartNumReduce, qs.stringify({
 						cart_id: item.id
 					})).then((res) => {
-						if(res.data.status == 10001) {
+						if (res.data.status == 10001) {
 							this.$router.push('/LogIn');
 						} else {
 							item.goods_num--
-							this.load = false;
+								this.load = false;
 						}
 					}).catch((err) => {
 						console.log(err);
@@ -490,10 +499,10 @@
 				this.axios.post(this.$httpConfig.cartNumPlus, qs.stringify({
 					cart_id: item.id
 				})).then((res) => {
-					if(res.data.status == 10001) {
+					if (res.data.status == 10001) {
 						this.$router.push('/LogIn');
 					} else {
-						if(res.data.status == 1) {
+						if (res.data.status == 1) {
 							item.goods_num++;
 							this.load = false;
 						} else {
@@ -506,43 +515,46 @@
 			},
 			remove(index, key, item) { //从购物车中删除商品
 				MessageBox.confirm('确定删除此商品?').then(action => {
-						this.axios.post(this.$httpConfig.delGoodsCart, qs.stringify({
-							id: item.id
-						})).then((res) => {
-							if(res.data.status == 10001) {
-								this.$router.push('/LogIn');
-							} else {
-								if(res.data.status == 1) {
-									this.$store.state.cart_data[key].goods.splice(index,1);
-								}
-								if(this.$store.state.cart_data[key].goods.length == 0){
-									this.$store.state.cart_data.splice(key,1);
-								}
-								if(this.$store.state.cart_data.length == 0){
-									this.$store.state.cart_data = [];
-								}
-								Toast('删除成功！');
-								this.getAllprice();
+					this.axios.post(this.$httpConfig.delGoodsCart, qs.stringify({
+						id: item.id
+					})).then((res) => {
+						if (res.data.status == 10001) {
+							this.$router.push('/LogIn');
+						} else {
+							if (res.data.status == 1) {
+								this.$store.state.cart_data[key].goods.splice(index, 1);
 							}
-						}).catch((err) => {
-							console.log(err);
-						})
+							if (this.$store.state.cart_data[key].goods.length == 0) {
+								this.$store.state.cart_data.splice(key, 1);
+							}
+							if (this.$store.state.cart_data.length == 0) {
+								this.$store.state.cart_data = [];
+							}
+							Toast('删除成功！');
+							this.getAllprice();
+						}
 					}).catch((err) => {
 						console.log(err);
-					});
+					})
+				}).catch((err) => {
+					console.log(err);
+				});
 			},
 			toOrder() { //去结算
+				sessionStorage.removeItem('invoiceSign');
+				sessionStorage.removeItem('invoiceGroup');
+				sessionStorage.removeItem('invoiceInit');
 				this.$store.state.invoice = false;
 				this.$store.state.rise = null;
 				this.$store.state.type = null;
 				this.$store.state.content = null;
 				this.$store.state.invoice_id = '';
-				if(this.goods == '') {
+				if (this.goods == '') {
 					Toast('请选择您要购买的物品！');
 					this.load = false;
 					return;
 				}
-				for(var i = 0; i < this.goods.length; i++) {
+				for (var i = 0; i < this.goods.length; i++) {
 					this.cartId.push(this.goods[i].id);
 				}
 				this.$router.push({
@@ -554,39 +566,39 @@
 			},
 			collection() { //添加到收藏
 				this.delRemove = [];
-				for(var i = 0; i < this.goods.length; i++) {
+				for (var i = 0; i < this.goods.length; i++) {
 					this.delRemove.push(this.goods[i].id);
 				}
-				if(this.goods == '') {
+				if (this.goods == '') {
 					Toast('请选择您要收藏的物品!');
 					return;
 				}
-				
+	
 				this.axios.post(this.$httpConfig.cartAddCollection, qs.stringify({
 					goods: this.delRemove.join(','),
 				})).then((res) => {
-					if(res.data.status == 10001) {
+					if (res.data.status == 10001) {
 						this.$router.push('/LogIn');
 					} else {
 						Toast({
 							message: res.data.message
 						});
-						if(res.data.status == 1) {
+						if (res.data.status == 1) {
 							var allGoods = this.$store.state.cart_data;
-							for(var i in this.goods){
-								for(var j in allGoods){
-									if(this.goods[i].store_id == allGoods[j].store_id){
-										for(var k in allGoods[j].goods){
-											if(allGoods[j].goods[k].id == this.goods[i].id){
-												this.$store.state.cart_data[j].goods.splice(k,1);
-												if(this.$store.state.cart_data[j].goods.length == 0){
-													this.$store.state.cart_data.splice(k,1);
+							for (var i in this.goods) {
+								for (var j in allGoods) {
+									if (this.goods[i].store_id == allGoods[j].store_id) {
+										for (var k in allGoods[j].goods) {
+											if (allGoods[j].goods[k].id == this.goods[i].id) {
+												this.$store.state.cart_data[j].goods.splice(k, 1);
+												if (this.$store.state.cart_data[j].goods.length == 0) {
+													this.$store.state.cart_data.splice(k, 1);
 												}
-												if(this.$store.state.cart_data.length == 0){
+												if (this.$store.state.cart_data.length == 0) {
 													this.$store.state.cart_data = [];
 												}
 											}
-
+	
 										}
 									}
 								}
@@ -602,61 +614,64 @@
 			hotGoods,
 			Shopsn,
 			cartPackage,
-            toTop
+			toTop
 		},
 		watch: {
-			cart_click(){
+			cart_click() {
 				this.flag = false;
 				this.total.seleNumber = 0;
 				this.price = 0;
 				this.goods = [];
-				}
+			}
 		},
-
+	
 		destroyed() {
 			this.scrollWatch = false;
 		}
-
+	
 	}
 </script>
-<style scoped>
-.package{
-	background-color: #F1F1F1;
-}
-.clearfix1{
-	background: #f1f1f1!important;
-}
-.title1{
-	color: #444;
-	font-size: .2rem;
-	padding: .2rem 1rem;
-	height: .3rem;
-	line-height: .3rem;
-	position: relative;
-}
-.checkBox1{
-	top: none!important;
-	height: .7rem!important;
-}
 
+<style scoped>
+	.package {
+		background-color: #F1F1F1;
+	}
+	
+	.clearfix1 {
+		background: #f1f1f1!important;
+	}
+	
+	.title1 {
+		color: #444;
+		font-size: .2rem;
+		padding: .2rem 1rem;
+		height: .3rem;
+		line-height: .3rem;
+		position: relative;
+	}
+	
+	.checkBox1 {
+		top: none!important;
+		height: .7rem!important;
+	}
 </style>
 
 <style lang="less" scoped>
 	.goos {
 		background: #f1f1f1;
-		.nav{
+		.nav {
 			display: flex;
 			flex-direction: row;
 			justify-content: space-between;
 			height: .9rem;
-			li{
+			li {
 				width: 50%;
 				display: flex;
 				align-items: center;
 				justify-content: center;
 				font-size: 14px;
 			}
-			li.active{
+			li.active {
 				color: #D19E29;
 				border-bottom: .03rem solid #D19E29;
 			}
@@ -859,13 +874,6 @@
 			background: url(../../assets/news1.png) no-repeat;
 			background-size: 100% 100%;
 		}
-		.back{
-			left:.4rem;
-			width: .46rem;
-			height: .46rem;
-			background:url('../../assets/btn-return.png') no-repeat;
-			background-size:100% 100%;
-		}
 	}
 	
 	.mark-wrap {
@@ -889,7 +897,7 @@
 				font-size: .32rem;
 				z-index: 0;
 			}
-			a{
+			a {
 				font-size: .32rem;
 				color: #D19E29;
 			}

@@ -212,7 +212,10 @@ const config = {
     perfectInfo: request + 'StoreInformation/perfectInfo', //入驻提交--企业
     storeJoinCompany: request + 'StoreJoinCompany/storeJoinCompany', //填写入驻资料– 开户银行信息
     CompanyStoreAduitProgress: request + userModuleIndex + 'CompanyStoreAduitProgress/getStoreByUser', //企业入驻进度查询
+    storeJoinCompany: request + 'StoreJoinCompany/storeJoinCompany', //企业前三步合并一个请求
 
+    //入驻验证
+    isCheckIn: request + 'CanICheckIn/isCheckIn', //个人企业入驻验证
     //  个人入驻
     agreementOfInvestment: request + 'StoreHelp/agreementOfInvestment', //入驻协议
     enterBankInfo: request + 'StorePerson/enterBankInfo', //个人入驻-填写结算账号信息

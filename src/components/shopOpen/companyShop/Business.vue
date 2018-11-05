@@ -69,7 +69,7 @@
 		<ul class="per-center">
 			<p class="little-hint"><i>*</i> 绑定分类后才有对应的分类规格</p>
 			<li class="listHead" v-for="(item,index) in goods_class" :key="item.id">
-				<span class="delete" @click="del(index)">x</span>
+				<i class="delete" v-if="goods_class.length !=1" @click="del(index)"></i>
 				<a href="javascript:;" @click="management(index)">
 					<span> 经营分类:</span>
 					<span class="content">{{item.content}}</span>
@@ -182,7 +182,6 @@
 		created() {
 			this.shopAjax();
 			this.levelAjax();
-			this.getGoodsClass('1','0');
 		},
 		components: {
 			topHeader,
@@ -302,11 +301,20 @@
 			},
 			manageSelect(index){
 				if(this.province==""||this.province=="请选择") {
-					Toast('请选择分类');
+					Toast({
+						message: '请选择分类',
+						duration: 1000
+					});
 				} else if(this.city==""||this.city=="请选择"){
-					Toast('请选择分类');
+					Toast({
+						message: '请选择分类',
+						duration: 1000
+					});
 				}else if(this.area==""||this.area=="请选择" ){
-					Toast('请选择分类');
+					Toast({
+						message: '请选择分类',
+						duration: 1000
+					});
 				}else{
 					if(this.provinceId == ''|| this.cityId == '' || this.areaId == ''){
 						this.goods_class[index].popupVisible = false;
@@ -337,7 +345,10 @@
 			shopAjax() {
 				this.axios.post(this.$httpConfig.storeClasses)
 					.then((res) => {
-						Toast(res.data.message);
+						Toast({
+							message: res.data.message,
+							duration: 1000
+						});
 						if(res.data.status == 1) {
 							this.data = res.data.data
 						}
@@ -348,7 +359,10 @@
 			levelAjax() {
 				this.axios.post(this.$httpConfig.getShopLevel)
 					.then((res) => {
-						Toast(res.data.message);
+						Toast({
+							message: res.data.message,
+							duration: 1000
+						});
 						if(res.data.status == 1) {
 							this.level = res.data.data
 						}
@@ -410,7 +424,10 @@
 					if(res.data.status == 10001) {
 						this.$router.push('/LogIn');
 					} else {
-						Toast(res.data.message);
+						Toast({
+							message: res.data.message,
+							duration: 1000
+						});
 						if(res.data.status == 1) {
 							this.$router.push({
 								name: "settledAgreementSuc"
@@ -515,10 +532,8 @@
 			margin-bottom: 10/100rem;
 			position: relative;
 			.delete{
-				text-align: center;
-				background: #D19E29;
-				color: #fff;
-				border-radius:.3rem;
+				background: url(../../../assets/delect01.png) no-repeat;
+				background-size: 100% 100%;
 				display: block;
 				width: .5rem;
 				height: .5rem;

@@ -20,8 +20,8 @@
             <div v-if="!settled" @click="settledClick"  class="noPng"></div>
             <div @click="detailFun('入驻协议')">查看详情<img class="rightImg" :src="rightImgs" alt=""></div>
       </header>
-      <button class="btnOk button1"  @click="checkCompanyadd">企业入驻</button>
-      <button class="btnNo button2" @click="checkProadd">个人入驻</button>
+      <button class="btnOk button1"  @click="admission('q')">企业入驻</button>
+      <button class="btnNo button2" @click="admission('g')">个人入驻</button>
   </div>
 </template>
 <script>
@@ -70,51 +70,45 @@ export default {
       promiseClick: function(){
           this.promise = !this.promise;
       },
-      checkProadd(){       
-					this.agreementPerAjax();
-      },
-      checkCompanyadd(){
-        	this.agreementComAjax();
-      },
-      agreementPerAjax(){
-      	if(!this.promise){
-      			Toast("请同意承诺书");
-      			return;
+    //入驻
+      admission(n){
+        sessionStorage.removeItem('admissionInfo');
+        sessionStorage.removeItem('kd_address');
+        sessionStorage.removeItem('kd_time');
+        if(!this.promise){
+            Toast({
+                message: "请同意承诺书",
+                duration: 1000
+            });
+            return;
       	}
       	if(!this.settled){
-      			Toast("请同意协议");
-      			return;
-      	}
-      	
-      	this.axios.post(this.$httpConfig.agreementOfInvestment)
-      	.then((res) => {
-						Toast(res.data.message);
-						if(res.data.status == 1) {
-								this.$router.push({name:'checkProadd'})
-						}
-	
-					}).catch((err) => {
-						console.log(err)
-					});
-      },
-      agreementComAjax(){
-      	if(!this.promise){
-      			Toast("请同意承诺书");
-      			return;
-      	}
-      	if(!this.settled){
-      			Toast("请同意入驻协议");
-      			return;
-      	}
-      	this.axios.post(this.$httpConfig.agreementOfInvestment)
-      	.then((res) => {
-						Toast(res.data.message);
-						if(res.data.status == 1) {
-							this.$router.push({name:'checkCompanyadd'})
-						}
-					}).catch((err) => {
-						console.log(err)
-					});
+            Toast({
+                message: "请同意协议",
+                duration: 1000
+            });
+            return;
+          }
+        this.axios.post(this.$httpConfig.isCheckIn).then((res) => {
+            if(res.data.status == 10001){
+                this.$router.push("/LogIn");
+                return false;
+            }
+            if(res.data.status == 1) {
+                if(n == 'q'){
+                    this.$router.push({name:'checkCompanyadd'})
+                }else{
+                    this.$router.push({name:'checkProadd'})
+                }
+            }else{
+                Toast({
+                    message: res.data.message,
+                    duration: 1000
+                });
+            }
+            }).catch((err) => {
+                console.log(err)
+            });
       }
   },
   components:{

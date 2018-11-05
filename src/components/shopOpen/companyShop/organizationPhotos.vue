@@ -40,8 +40,14 @@
 		<button @click="nextinfor">提交以上信息，并填写下一页</button>
 	</div>
 </template>
+
 <script>
-	import { Field, Popup, Radio, Toast } from 'mint-ui';
+	import {
+		Field,
+		Popup,
+		Radio,
+		Toast
+	} from 'mint-ui';
 	import QS from 'qs';
 	import topHeader from '@/components/page/children/header.vue';
 	import conHeader from '@/com/conHeader'; // 内容头
@@ -57,12 +63,12 @@
 				taxpayer_certificate: '',
 				ipadImg: '',
 				ipadImgs: '',
-				loading:false
+				loading: false
 			}
 		},
-		created(){
-			if(sessionStorage.getItem('admissionInfo')){
-				let shopInfo =  JSON.parse(sessionStorage.getItem('admissionInfo'));
+		created() {
+			if (sessionStorage.getItem('admissionInfo')) {
+				let shopInfo = JSON.parse(sessionStorage.getItem('admissionInfo'));
 				this.organization_code = shopInfo.organization_code;
 				this.organization_electronic = shopInfo.organization_electronic;
 				this.taxpayer_certificate = shopInfo.taxpayer_certificate;
@@ -79,20 +85,20 @@
 				this.loading = true;
 				var file = e.target.files[0];
 				//限制图片规格尺寸
-        		var fileSize = 0;         
-				if (!e.target.files) {     
-				var filePath = e.target.value;     
-				var fileSystem = new ActiveXObject("Scripting.FileSystemObject");        
-				var file = fileSystem.GetFile (filePath);     
-				fileSize = file.Size;    
-				} else {    
-				fileSize = e.target.files[0].size;     
-				}   
-				var size = fileSize / 1024;    
-				if(size>1000){  
+				var fileSize = 0;
+				if (!e.target.files) {
+					var filePath = e.target.value;
+					var fileSystem = new ActiveXObject("Scripting.FileSystemObject");
+					var file = fileSystem.GetFile(filePath);
+					fileSize = file.Size;
+				} else {
+					fileSize = e.target.files[0].size;
+				}
+				var size = fileSize / 1024;
+				if (size > 1000) {
 					this.loading = false;
 					Toast("附件不能大于1M");
-					e.target.value="";
+					e.target.value = "";
 					return;
 				}
 				//接口上传文件
@@ -113,39 +119,39 @@
 				this.axios.post(this.$httpConfig.uploadImage, param, config)
 					.then((res) => {
 						this.loading = false;
-						if(res.data.status === 1) {
+						if (res.data.status === 1) {
 							this.organization_electronic = res.data.data;
 							Toast({
-                                message: res.data.message,
-                                duration: 1000
+								message: res.data.message,
+								duration: 1000
 							});
-						}else{
-							 Toast({
-                                message: res.data.message,
-                                duration: 1000
-                            });
+						} else {
+							Toast({
+								message: res.data.message,
+								duration: 1000
+							});
 						}
 					})
-
+	
 			},
 			oranges(e) {
 				this.loading = true;
 				var file = e.target.files[0];
 				//限制图片规格尺寸
-        		var fileSize = 0;         
-				if (!e.target.files) {     
-				var filePath = e.target.value;     
-				var fileSystem = new ActiveXObject("Scripting.FileSystemObject");        
-				var file = fileSystem.GetFile (filePath);     
-				fileSize = file.Size;    
-				} else {    
-				fileSize = e.target.files[0].size;     
-				}   
-				var size = fileSize / 1024;    
-				if(size>1000){  
+				var fileSize = 0;
+				if (!e.target.files) {
+					var filePath = e.target.value;
+					var fileSystem = new ActiveXObject("Scripting.FileSystemObject");
+					var file = fileSystem.GetFile(filePath);
+					fileSize = file.Size;
+				} else {
+					fileSize = e.target.files[0].size;
+				}
+				var size = fileSize / 1024;
+				if (size > 1000) {
 					this.loading = false;
 					Toast("附件不能大于1M");
-					e.target.value="";
+					e.target.value = "";
 					return;
 				}
 				//接口上传文件
@@ -166,61 +172,61 @@
 				this.axios.post(this.$httpConfig.uploadImage, param, config)
 					.then((res) => {
 						this.loading = false;
-						if(res.data.status === 1) {
+						if (res.data.status === 1) {
 							this.taxpayer_certificate = res.data.data;
 							Toast({
-                                message: res.data.message,
-                                duration: 1000
+								message: res.data.message,
+								duration: 1000
 							});
-						}else{
+						} else {
 							Toast({
-                                message: res.data.message,
-                                duration: 1000
-                            });
+								message: res.data.message,
+								duration: 1000
+							});
 						}
 					})
-
+	
 			},
-
+	
 			nextinfor: function() {
-				if(this.organization_code == '') {
+				if (this.organization_code == '') {
 					Toast({
 						message: '请填写组织机构代码',
 						duration: 1000
 					});
 					return;
 				}
-				if(this.organization_electronic == '') {
+				if (this.organization_electronic == '') {
 					Toast({
 						message: '请上传组织机构代码证电子版',
 						duration: 1000
 					});
 					return;
 				}
-				if(this.taxpayer_certificate == '') {
+				if (this.taxpayer_certificate == '') {
 					Toast({
 						message: '请上传一般纳税人证明',
 						duration: 1000
 					});
 					return;
 				}
-				if(sessionStorage.getItem('admissionInfo')){
-                    let shopInfo =  JSON.parse(sessionStorage.getItem('admissionInfo'));
+				if (sessionStorage.getItem('admissionInfo')) {
+					let shopInfo = JSON.parse(sessionStorage.getItem('admissionInfo'));
 					shopInfo.organization_code = this.organization_code;
 					shopInfo.organization_electronic = this.organization_electronic;
 					shopInfo.taxpayer_certificate = this.taxpayer_certificate;
-					sessionStorage.setItem('admissionInfo',JSON.stringify(shopInfo));
+					sessionStorage.setItem('admissionInfo', JSON.stringify(shopInfo));
 					this.axios.post(this.$httpConfig.storeJoinCompany, QS.stringify(
 						shopInfo
 					)).then((res) => {
-						if(res.data.status == 10001) {
+						if (res.data.status == 10001) {
 							this.$router.push('/LogIn');
 						} else {
 							Toast({
 								message: res.data.message,
 								duration: 1000
 							});
-							if(res.data.status == 1) {
+							if (res.data.status == 1) {
 								this.$router.push({
 									name: "checkCompanyBankInfor"
 								})
@@ -229,7 +235,7 @@
 					}).catch((err) => {
 						console.log(err)
 					});
-				}else{
+				} else {
 					Toast({
 						message: '入驻信息错误',
 						duration: 1000
@@ -243,6 +249,7 @@
 		}
 	}
 </script>
+
 <style lang="less" scoped>
 	.idPhotos {
 		border-bottom: 1/100rem solid #fff;

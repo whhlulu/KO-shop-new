@@ -5,6 +5,9 @@
 		<con-header :text="text[0]"></con-header>
 		<ul class="per-center">
 			<li>
+				<span class="span"> 店铺名称</span><input type="text" placeholder="请输入店铺名称..." v-model="store_name">
+			</li>
+			<li>
 				<span class="span"> 公司名称</span><input type="text" placeholder="请输入公司名称..." v-model="company_name">
 			</li>
 			<li @click="callingArea">
@@ -21,10 +24,10 @@
 				<span class="span"> 公司电话:</span><input type="tel" placeholder="请输入公司电话..." v-model="company_mobile">
 			</li>
 			<li>
-				<span class="span"> 注册资金:</span><input type="text" placeholder="请输入注册资金..." v-model="registered_capital">
+				<span class="span"> 注册资金:</span><input type="tel" placeholder="请输入注册资金..." v-model="registered_capital">
 			</li>
 			<li>
-				<span class="span"> 联系人姓名:</span><input type="text" placeholder="请输入联系人姓名..." v-model="name">
+				<span class="span"> 联系人姓名:</span><input type="text" placeholder="请输入真实姓名" v-model="name">
 			</li>
 			<li>
 				<span class="span"> 联系人手机:</span><input type="tel" placeholder="请输入联系人电话..." v-model="mobile"  oninput="if(value.length > 11)value=value.slice(0, 11)">
@@ -75,6 +78,7 @@
 			return {
 				title: '填写入驻资料',
 				text: ['开户银行信息'],
+				store_name:'',
 				company_name: "",
 				company_mobile: "",
 				registered_capital: "",
@@ -121,65 +125,97 @@
 				cityIndex: -1,
 				areaIndex: -1,
 				streetIndex: -1,
-				choiceAreaCon: '请选择地区'
+				choiceAreaCon: '请选择地区',
+				shopInfo:{}
 			}
 		},
 		components: {
 			topHeader,
 			conHeader
 		},
+		created(){
+			this.proAjax(0, 0);
+			if(sessionStorage.getItem('admissionInfo')){
+				this.shopInfo =  JSON.parse(sessionStorage.getItem('admissionInfo'));
+				this.store_name = this.shopInfo.store_name;
+				this.company_name = this.shopInfo.company_name;
+				this.data.addressAll = sessionStorage.getItem('kd_address');
+				this.provinceId = this.shopInfo.prov_id;
+				this.cityId	= this.shopInfo.city;
+				this.areaId	= this.shopInfo.dist;
+				this.address = this.shopInfo.address;
+				this.company_mobile = this.shopInfo.company_mobile;
+				this.registered_capital = this.shopInfo.registered_capital;
+				this.name = this.shopInfo.name;
+				this.mobile = this.shopInfo.mobile;
+			}
+		},
 		methods: {
 			nextinfor: function() {
-				if(this.company_name==''){
-					Toast("请填写公司名称");
+				if(!this.store_name){
+					Toast({
+						message: '请填写公司名称',
+						duration: 1000
+					});
 					return;
 				}
-				if(this.address==''){
-					Toast("请填写详细地址");
+				if(!this.company_name){
+					Toast({
+						message: '请填写公司名称',
+						duration: 1000
+					});
 					return;
 				}
-				if(!(/^((0\d{2,3}-\d{7,8})|(1[3584]\d{9}))$/.test(this.company_mobile))){
-					Toast("请填写正确的电话");
+				if(!this.address){
+					Toast({
+						message: '请填写详细地址',
+						duration: 1000
+					});
 					return;
 				}
-				if(this.registered_capital==''){
-					Toast("请填写注册资金");
+				if(!(/^((0\d{2,3}-?)?\d{7,8}|(1[3584]\d{9}))$/.test(this.company_mobile))){
+					Toast({
+						message: '请填写正确的电话',
+						duration: 1000
+					});
 					return;
 				}
-				if(this.name==''){
-					Toast("请填写联系人名称");
+				if(!this.registered_capital){
+					Toast({
+						message: '请填写正确注册资金',
+						duration: 1000
+					});
+					return;
+				}
+				if(!this.name){
+					Toast({
+						message: '请填写联系人名称',
+						duration: 1000
+					});
 					return;
 				}
 				if(!(/^1[3|4|5|7|8][0-9]{9}$/.test(this.mobile))){
-					Toast("请填写正确的手机号");
+					Toast({
+						message: '请填写正确的手机号',
+						duration: 1000
+					});
 					return;
 				}
-					this.axios.post(this.$httpConfig.storeJoinCompany, QS.stringify({
-						name: this.name,
-						company_name: this.company_name,
-						company_mobile: this.company_mobile,
-						registered_capital: this.registered_capital,
-						mobile: this.mobile,
-						prov_id: this.provinceId,
-						city: this.cityId,
-						dist:this.areaId,
-						address: this.address
-					})).then((res) => {
-						if(res.data.status==10001){
-		                	this.$router.push('/LogIn');
-		                }else {
-							Toast(res.data.message);
-							if(res.data.status == 1) {
-								sessionStorage.setItem('shop_ID', res.data.data);
-								this.$router.push({
-									name: "companyPhotos"
-								})
-							}
-						}
-					}).catch((err) => {
-						Toast('重复开店');
-						console.log(err)
-					});
+						this.shopInfo.store_name = this.store_name;
+						this.shopInfo.company_name = this.company_name;
+						this.shopInfo.prov_id = this.provinceId;
+						this.shopInfo.city = this.cityId;
+						this.shopInfo.dist = this.areaId;
+						this.shopInfo.address = this.address;
+						this.shopInfo.company_mobile = this.company_mobile;
+						this.shopInfo.registered_capital = this.registered_capital;
+						this.shopInfo.name = this.name;
+						this.shopInfo.mobile = this.mobile;
+						sessionStorage.setItem('admissionInfo',JSON.stringify(this.shopInfo));
+						sessionStorage.setItem('kd_address',this.data.addressAll);
+						this.$router.push({
+							name: "companyPhotos"
+						})
 			},
 			callingArea() {
 				this.popupVisible = true;
@@ -193,11 +229,20 @@
 			selectaddress() {
 				this.popupVisible = false;
 				if(this.province==""||this.province=="请选择") {
-					Toast('请选择地址');
+					Toast({
+						message: '请选择地址',
+						duration: 1000
+					});
 				} else if(this.city==""||this.city=="请选择"){
-					Toast('请选择地址');
+					Toast({
+						message: '请选择地址',
+						duration: 1000
+					});
 				}else if(this.area==""||this.area=="请选择" ){
-					Toast('请选择地址');
+					Toast({
+						message: '请选择地址',
+						duration: 1000
+					});
 				}else{
 					this.data.addressAll = this.province + '-' + this.city + '-' + this.area;
 					this.choiceCity=false;// 市按钮的显示隐藏
@@ -291,10 +336,6 @@
 				this.area = name;
 				this.areaId = id;
 			},
-		},
-
-		mounted() {
-			this.proAjax(0, 0)
 		},
 	}
 </script>

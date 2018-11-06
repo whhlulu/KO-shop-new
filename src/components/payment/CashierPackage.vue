@@ -4,7 +4,7 @@
 		<cashier-header :text="title" :btn="btn"></cashier-header>
 		<div class="payment-wrap">
 			<div class="status">
-				<div class="pull-left fl" @click="success">订单金额</div>
+				<div class="pull-left fl">订单金额</div>
 				<div class="pull-right fr">
 					<span>{{$route.params.number}}</span>元</div>
 			</div>
@@ -72,11 +72,6 @@
 			this.orderId=sessionStorage.getItem('integral_orderID');
 		},
 		methods: {
-			success() {
-				this.$router.push({
-					name: 'success'
-				})
-			},
 			theChecked() {
 				this.flag = !this.flag
 			},

@@ -72,7 +72,8 @@
                         name: 'cartOrderPackage',
                         params: {
                             cart_id: data.id,
-                            priceArr:data.priceArr 
+                            oldPrice: data.oldPrice,
+                            reduction :data.reduction
                         }
                     });
                 }else{
@@ -94,9 +95,57 @@
                     this.$router.push("/home")
                 }
             },
+            //处理选中的发票
+            invoiceProcessing(id){
+                //店铺id发票id是否开发票
+                if(sessionStorage.getItem('invoiceGroup')){
+                    let arr = JSON.parse(sessionStorage.getItem('invoiceGroup'));
+                    
+                    if(arr[this.$route.params.id]){
+                        arr[this.$route.params.id] = {id:id,translate:1};
+                    }else{
+                        arr[this.$route.params.id] = {id:id,translate:1};
+                    }
+                    
+                    sessionStorage.setItem('invoiceGroup',JSON.stringify(arr));
+                }else{
+                    let invoiceGroup = {};
+                    let store_id = this.$route.params.id;
+                    invoiceGroup[store_id] ={id:id,translate:1};
+                    sessionStorage.setItem('invoiceGroup',JSON.stringify(invoiceGroup));
+                }
+                //发票选中信息
+                if(sessionStorage.getItem('invoiceInit')){ //存在是修改
+                    let invoiceIndex = JSON.parse(sessionStorage.getItem('invoiceInit'));
+                    if(invoiceIndex[this.$route.params.id]){
+                        invoiceIndex[this.$route.params.id][0] = this.$store.state.type;
+                        invoiceIndex[this.$route.params.id][1] = this.$store.state.rise;
+                        invoiceIndex[this.$route.params.id][2] = this.$store.state.content;
+                    }else{
+                        invoiceIndex[this.$route.params.id] = [this.$store.state.type,this.$store.state.rise,this.$store.state.content];
+                    }
+                        sessionStorage.setItem('invoiceInit',JSON.stringify(invoiceIndex));
+                }else{ //不存在 新保存一条
+                    let invoiceInit = {};
+                    let store_id = this.$route.params.id;
+                    invoiceInit[store_id] = [this.$store.state.type,this.$store.state.rise,this.$store.state.content];
+                    sessionStorage.setItem('invoiceInit',JSON.stringify(invoiceInit));
+                }
+            },
             //保存发票信息
             saveInvoice(route){
                 if(this.$store.state.invoice == false){
+                    if(sessionStorage.getItem('invoiceGroup')){
+                        let arr = JSON.parse(sessionStorage.getItem('invoiceGroup'));
+                        this.$set(arr[this.$route.params.id],"translate",0)
+                        delete arr[this.$route.params.id].id;
+                        sessionStorage.setItem('invoiceGroup',JSON.stringify(arr));
+                    }
+                    if(sessionStorage.getItem('invoiceInit')){
+                        let index = JSON.parse(sessionStorage.getItem('invoiceInit'));
+                        delete index[this.$route.params.id];
+                        sessionStorage.setItem('invoiceInit',JSON.stringify(index));
+                    }
                     if(route === 1){
                             this.goGoodsOrder();
                         }else if(route === 2){
@@ -131,9 +180,9 @@
                     });
                     return;
                 }
-
-                if(this.$store.state.isInvoicePackage == true){
-                    
+                let sign = sessionStorage.getItem('invoiceSign');
+                if(sign && this.$store.state.invoice == true){
+                    console.log(1)
                     this.axios.post(this.$httpConfig.cartPackageInvoices,qs.stringify({
                         raised_id:this.$store.state.rise_id,
                         content_id:this.$store.state.content_id,
@@ -143,7 +192,8 @@
                                     this.$router.push('/LogIn');
                             }else {
                                 if(res.data.status == 1){
-                                        this.$store.state.invoice_package_arr[this.$store.state.invoicePackageIndex] = res.data.data.invoice_id;
+                                    this.invoiceProcessing(res.data.data.invoice_id);
+                                        // this.$store.state.invoice_package_arr[this.$store.state.invoicePackageIndex] = res.data.data.invoice_id;
                                     if(route === 1){
                                         this.goGoodsOrder();
                                     }else if(route === 2){
@@ -163,8 +213,9 @@
                             console.log(err);
                         });
                                 
-                }else{
-                    
+                }
+                if(!sign && this.$store.state.invoice == true){
+                    console.log(2)
                     this.axios.post(this.$httpConfig.invoicesOrderAdd,qs.stringify({
                         raised_id:this.$store.state.rise_id,
                         content_id:this.$store.state.content_id,
@@ -174,7 +225,7 @@
                                     this.$router.push('/LogIn');
                             }else {
                                 if(res.data.status == 1){
-                                    this.$store.state.invoice_id = res.data.data.invoice_id;
+                                    this.invoiceProcessing(res.data.data.invoice_id);
                                     if(route === 1){
                                         this.goGoodsOrder();
                                     }else if(route === 2){
@@ -226,12 +277,7 @@
 							    }else {
 		                            Toast(res.data.message);
 		                            if(res.data.status == 1){
-		                            this.$router.push({
-                                        name:'address',
-                                        params:{
-                                            status:2
-                                        }
-                                    });
+		                            this.$router.back();
 		                          }
 		                       }
                             }).catch((err) => {
@@ -253,12 +299,7 @@
 							    }else {
 		                            Toast(res.data.message);
 		                            if(res.data.status == 1){
-		                            this.$router.push({
-                                        name:'address',
-                                        params:{
-                                            status:2
-                                        }
-                                    });
+		                            this.$router.back();
 		                          }
 		                       }
                             }).catch((err) => {
@@ -299,12 +340,7 @@
 					        }else {
 									Toast(res.data.message);
                             if(res.data.status == 1){
-                                 this.$router.push({
-                                    name:'address',
-                                    params:{
-                                        status:this.$route.params.status
-                                    }
-                                });
+                                 this.$router.back();
                             }
                          }
                         }).catch((err) => {

@@ -4,7 +4,7 @@
 		<cashier-header :text="title" :btn="btn"></cashier-header>
 		<div class="payment-wrap" v-if="$route.params.id != 3">
 			<div class="status">
-				<div class="pull-left fl" @click="success">订单金额</div>
+				<div class="pull-left fl">订单金额</div>
 				<div class="pull-right fr">
 					<span>{{$route.params.number}}</span>元</div>
 			</div>
@@ -67,7 +67,8 @@
 					3:'ylPay',
 					4:'banlancePay'
 				},
-				payData:'' //支付时返回的数据
+				payData:'', //支付时返回的数据
+				ley_user:'',//支付时要传的值
 			}
 		},
 		created() {
@@ -76,11 +77,6 @@
 			this.orderId=sessionStorage.getItem('integral_orderID');
 		},
 		methods: {
-			success() {
-				this.$router.push({
-					name: 'success'
-				})
-			},
 			theChecked() {
 				this.flag = !this.flag
 			},
@@ -113,7 +109,9 @@
 				var url_ = this.payData;
 				console.log(url_);
 				var that = this;
-				that.axios.post(url_).then((res)=>{
+				that.axios.post(url_,qs.stringify({
+					ley_user:that.ley_user
+				})).then((res)=>{
 					if(res.data == 'SUCCESS'){
 						Toast('支付成功!');
 						that.$router.push({
@@ -136,10 +134,13 @@
 				})).then(function(res) {
 					that.payData = res.data.data;
 					if(res.data.status == 30000 || res.data.status == 0) {
+						that.$message.info(res.data.message);
 						that.$router.push({
 							name: 'description'
 						})
 					} else {
+						console.log(res.data)
+						that.ley_user = res.data.ley_user;
 						eval('that.'+ that.payType[id]+'()');
 					}
 				}).catch((err) => {

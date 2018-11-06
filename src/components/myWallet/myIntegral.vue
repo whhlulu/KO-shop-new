@@ -7,7 +7,6 @@
                 <p class="title">可用积分</p>
                 <p class="number">{{data.integral}}</p>
                 <p class="link" @click="tolink('/intOrder')">我的兑换</p>
-                <!--      -->
             </div>
         </div>
         <integ-shares :rule="ruleCon" @addShow="addHide"></integ-shares>

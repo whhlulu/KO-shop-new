@@ -8,22 +8,12 @@
 			</mt-swipe-item>
 		</mt-swipe>
 		<div class="describe" v-if="$store.state.commodity_data">
-			<p class="fn">{{$store.state.commodity_data.title}}</p>
+			<p class="fn">{{$store.state.commodity_data.goods.title}}</p>
 			<p class="price" >
-				<span class="orc">￥<em>{{$store.state.commodity_data.price_member}}</em></span>
-				<span class="new">原价 ：￥<s>{{$store.state.commodity_data.price_market}}</s></span>
+				<span class="orc">￥<em>{{$store.state.commodity_data.goods.price_member}}</em></span>
+				<span class="new">原价 ：￥<s>{{$store.state.commodity_data.goods.price_market}}</s></span>
 			</p>
 		</div>
-		<!-- 促销 -->
-		<!--<div class="Promotions" v-if="$store.state.commodity_data.promotion">
-            <h4>促销</h4>
-            <div>
-               <div class="promotionsDiv" v-for="(item,index) in $store.state.commodity_data.promotion" :key="index">
-                   <span>{{item.name}}</span>
-                   <p> {{item.description}}</p>
-               </div>
-            </div>
-        </div>-->
 		<!-- 已选 -->
 		<div class="selected" @click="theSon">已选
 			<span class="number">数量{{$store.state.commodity_val}}</span>
@@ -34,12 +24,12 @@
 		<!-- 店铺 -->
 		<shop-infor :shopData="shopData" :data="$store.state.commodity_data"></shop-infor>
 		<!-- 搭配套餐推荐 -->
-		<pr-list v-show="$store.state.matchGood" :conItem="conItemRe" :storeId="shopData.id" :val="1" :data="$store.state.matchGood"></pr-list>
+		<pr-list ref="borther" v-show="$store.state.matchGood" :conItem="conItemRe" :storeId="shopData.id" :val="1" :data="$store.state.matchGood"></pr-list>
 		<!-- 猜你喜欢 -->
-		<pr-list :conItem="conItem" :val="2" :data="$store.state.dataLeave"></pr-list>
+		<pr-list v-if="$store.state.dataLeave.length != 0 || $store.state.dataLeave.length" :conItem="conItem" :val="2" :data="$store.state.dataLeave"></pr-list>
 
 		<div class="prompt" @click="toTab">点击查看更多商品信息</div>
-		<detail-option v-if='guige' :data="$store.state.commodity_data"></detail-option>
+		<detail-option @recommend="matchGood($store.state.commodity_data.goods.id)" v-if='guige' :data="$store.state.commodity_data"></detail-option>
 		<Shopsn></Shopsn>
 		<foot-btn :state="sonState" :Number="$store.state.commodity_val" :data="$store.state.commodity_data" @reduce="reduce" @plus="plus" :money='this.$route.params.money'></foot-btn>
 		<div class="load-wrap" v-show="load_wrap" @touchmove.prevent>
@@ -93,14 +83,22 @@
 				end: '',
 				brand: '',
 				finish: false,
-				images: []
+				images: [],
+				page: 1,
+				p_id: 0,
 			}
 		},
 		created() {
 			this.$store.state.const_join = false;
 			this.$store.state.catr_number = 0;
+			this.$store.state.goods_id = '';
+			this.$store.state.matchGood = '';
+			
 		},
 		methods: {
+			recommend(){
+
+			},
 			countDown() {
 				this.finish = true
 			},
@@ -108,7 +106,8 @@
 				this.$router.push({
 					name: 'tab',
 					params: {
-						id: this.$route.params.id
+						id: this.$route.params.id,
+						p_id: this.p_id
 					}
 				});
 			},
@@ -116,12 +115,10 @@
 				this.$store.state.const_join = true;
 			},
 			myLove() {
-				this.axios({ //猜你喜欢
-					url: this.$httpConfig.guessLove,
-					method: 'get',
-					params: {
-					}
-				}).then((res) => {					
+				this.axios.post(
+					this.$httpConfig.guessLove,
+					qs.stringify({page : this.page})
+				).then((res) => {					
 					this.$store.state.dataLeave = res.data.data;
 				}).catch((err) => {
 					console.log(err);
@@ -132,36 +129,18 @@
 				
 			},
 			matchGood(id) {
-				this.axios.post(this.$httpConfig.matchGood,qs.stringify({
-					goods_id: id
-				})).then((res) => {
+				this.$HTTP(this.$httpConfig.matchGood,{goods_id: id},'post').then((res)=>{
 					this.$store.state.matchGood = res.data.data;
-				}).catch((err) => {
-					console.log(err);
 				})
 			},
 			shopInfo() {
-				this.axios({
-					url: this.$httpConfig.shopInfo,
-					method: 'get',
-					params: {
-						id: this.$store.state.commodity_data.store_id
-					}
-				}).then((res) => {
+				this.$HTTP(this.$httpConfig.shopInfo,{id: this.$store.state.commodity_data.goods.store_id},'get').then((res)=>{
 					this.shopData = res.data.data;
-				}).catch((err) => {
-					console.log(err);
-				});
+				})
 			},
 			//商品详情
 			ax() {
-				this.axios({
-					url: this.$httpConfig.goodInfo,
-					method: 'get',
-					params: {
-						id: this.$route.params.id
-					}
-				}).then((res) => {
+				this.$HTTP(this.$httpConfig.goodInfo,{id: this.$route.params.id},'get').then((res)=>{
 					if(res.data.data.cart_count){
 						this.$store.state.catr_number = parseInt(res.data.data.cart_count);
 					}
@@ -170,13 +149,12 @@
 					this.brand = res.data.data.brand_id;
 					this.$store.state.commodity_data = res.data.data;
 					this.$store.state.commodity_val = 1;
-					this.matchGood(this.$store.state.commodity_data.id)
-					this.shopInfo(this.$store.state.commodity_data.store_id)
+					this.matchGood(this.$store.state.commodity_data.goods.id);
+					this.shopInfo();
 					this.guige = true;
 					this.load_wrap = false;
-				}).catch((err) => {
-					console.log(err);
-				});
+					this.p_id = res.data.data.goods.p_id;
+				})
 			},
 			reduce() {
 				if(this.number <= 1) return;
@@ -198,12 +176,6 @@
 			$('html,body').animate({
 				scrollTop: '0px'
 			}, 100);
-			this.nowday = new Date().getTime();
-			var date = new Date('2018-05-15 18:55:49:123');
-			this.endday = date.getTime();
-			if(this.endday <= this.nowday) {
-				this.end = '活动已结束！'
-			}
 			this.ax();
 			this.myLove();
 			this.spec();
@@ -362,7 +334,7 @@
 	.selected {
 		padding: 0 .5rem 0 .2rem;
 		min-height: .8rem;
-		line-height: .6rem;
+		line-height: .8rem;
 		font-size: .3rem;
 		color: #777;
 		position: relative;

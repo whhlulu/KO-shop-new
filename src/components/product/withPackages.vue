@@ -15,7 +15,7 @@
                 <p>{{item.title}}</p>
             </div>
             <div class="pri">
-                <p v-show="list == 0">{{item.goods_price}}</p>
+                <p v-show="list == 0">{{item.price_member}}</p>
                 <p v-show="list == 2">{{item.price_market}}</p>
                 <span>x1</span>
             </div>
@@ -32,14 +32,14 @@
                         </div>
                         <p>{{items.title}}</p>
                     </div>
-                    <div class="content" v-for="item in items.goods" :key="item.id" @click="toInfo(item.goods_id)">
+                    <div class="content" v-if="item.package_id== items.id" v-for="item in package_goods" :key="item.id" @click="toInfo(item.goods_id)">
                         <img :src="URL+item.pic_url" alt="">
                         <div class="con">
                             <p>{{item.title}}</p>
                         </div>
                         <div class="pri">
-                            <p class="old-price">{{item.goods_price}}</p>
-                            <p class="new-price">{{item.discount}}</p>
+                            <p class="old-price">{{item.price_member}}</p>
+                            <p class="new-price">{{item.goods_discount}}</p>
                             <span>x1</span>
                         </div>
                     </div>
@@ -82,11 +82,14 @@
                     newPrice:0
                 },
                 cart_list:[], //购物车列表
-                cart_status:2
+                cart_status:2,
+                store_id: '0',
+                package_goods: []
             }
         },
         created(){
             this.goods_id = this.$route.params.package_goods_id;
+            this.store_id = this.$route.params.store_id;
         },
         mounted(){
             this.tabList(0);
@@ -157,9 +160,13 @@
                 	this.axios.post(this.$httpConfig.accessories,qs.stringify({
 		                goods_id:this.goods_id
 		            })).then((res) => {
-		            	this.accessories=res.data.data;
-                        for(var i in this.accessories){
-                            this.accessories[i].isSelected = false;
+                        if(res.data.status == 1){
+                            this.accessories=res.data.data;
+                            for(var i in this.accessories){
+                                this.accessories[i].isSelected = false;
+                            }
+                        }else{
+                            this.accessories=[];
                         }
 		             	this.titleIndex=0;
                         this.list=0;
@@ -170,25 +177,32 @@
                 	
                 }else if(index==1){
                 	this.axios.post(this.$httpConfig.package,qs.stringify({
-		                goods_id:this.goods_id
+                        goods_id:this.goods_id,
+                        store_id:this.store_id
 		            })).then((res) => {
-		            	this.accessories=res.data.data;
-                        for(var i in this.accessories){
-                            this.accessories[i].isSelected = false;
-                            var newPackage = {
-                                discount:0,
-                                oldPrice:0,
-                                newPrice:0
+                        if(res.data.status == 1){
+                            this.accessories=res.data.data.package;
+                            this.package_goods = res.data.data.goods;
+
+                            for(var i in this.accessories){
+                                this.accessories[i].isSelected = false;
+                                var newPackage = {
+                                    discount:0,
+                                    oldPrice:0,
+                                    newPrice:0
+                                }
+                                newPackage.discount += parseFloat(this.accessories[i].total) - parseFloat(this.accessories[i].discount);
+                                newPackage.oldPrice += parseFloat(this.accessories[i].total);
+                                newPackage.newPrice += parseFloat(this.accessories[i].discount);
+                                this.packagePrice.push(newPackage);
+                                console.log(this.packagePrice)
+                                this.packageID.push(this.accessories[i].package_id);
                             }
-                            for(var j in this.accessories[i].goods){
-                                    newPackage.discount += (Number(this.accessories[i].goods[j].goods_price)-Number(this.accessories[i].goods[j].discount));
-                                    newPackage.oldPrice += (Number(this.accessories[i].goods[j].goods_price));
-                                    newPackage.newPrice += (Number(this.accessories[i].goods[j].discount));
-                            }
-                            this.packagePrice.push(newPackage);
-                            this.packageID.push(this.accessories[i].package_id);
+                            
+                        }else{
+                            this.accessories = [];
                         }
-		             	this.titleIndex=1;
+                        this.titleIndex=1;
                         this.list=1;
                         this.cart_status = 3;
 		              }).catch((err) => {
@@ -199,10 +213,14 @@
                 	this.axios.post(this.$httpConfig.matchGood,qs.stringify({
 		                goods_id:this.goods_id
 		            })).then((res) => {
-		            	this.accessories=res.data.data;
-                        for(var i in this.accessories){
-                            this.accessories[i].isSelected = false;
-                            this.accessories[i].other = '1';
+                        if(res.data.status == 1){
+                            this.accessories=res.data.data;
+                            for(var i in this.accessories){
+                                this.accessories[i].isSelected = false;
+                                this.accessories[i].other = '1';
+                            }
+                        }else{
+                            this.accessories=[];
                         }
 		             	this.titleIndex=2;
                         this.list=2;
@@ -213,6 +231,8 @@
                 }
             },
             buy(){
+                sessionStorage.removeItem('invoiceGroup');
+				sessionStorage.removeItem('invoiceInit');
                 if(!this.accessories){
                         Toast({
                             message: "暂无商品",
@@ -237,6 +257,8 @@
             },
             //优惠套餐立即购买
             setMealBuy(){
+                sessionStorage.removeItem('invoiceGroup');
+				sessionStorage.removeItem('invoiceInit');
                 if(!this.accessories){
                     Toast({
                         message: "暂无商品",
@@ -275,7 +297,7 @@
                         var selectedList = [];
                         for(var i in this.accessories){
                             if(this.accessories[i].isSelected == true){
-                                selectedList.push(this.accessories[i].package_id);
+                                selectedList.push(this.accessories[i].id);
                             }
                         }
                         if(selectedList.length == 0){

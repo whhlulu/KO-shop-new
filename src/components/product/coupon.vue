@@ -92,7 +92,6 @@
                         this.isBottom = false;
                         this.isEnd = false;
                         var list = res.data.data.records;
-                        console.log(this.data,index)
                         for(var i in list){
                             this.data[index-1].push(list[i]);
                         }

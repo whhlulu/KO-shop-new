@@ -67,7 +67,7 @@
 				<span class="answer fr">{{order.pay_type}}</span>
 			</p>
 			<p class="mode clearfix" v-if="$route.params.order_type == 0 ||$route.params.order_type == 1">
-				<span class="title fl">所兑换积分</span>
+				<span class="title fl">额外支付金额</span>
 				<span class="answer fr">{{order.price_sum}}</span>
 			</p>
 			<p class="mode clearfix" v-show="order.order_status >= 3">
@@ -262,7 +262,13 @@
 						Toast(err);
 					})
 				}else if(this.$route.params.order_type == 1){
-					this.integralPay();
+					this.$router.push({
+						name: 'confirmOrderIntegral',
+						params: {
+							good_id: this.order.integral_id,
+							num: this.order.goods_num
+						},
+					})
 				}
 			},
 			conReceipt() {
@@ -274,43 +280,34 @@
 					console.log(err)
 				})
 			},
-			integralPay(){
+			integralPay(data){
 				if(this.address == '') {
 					Toast({
 						message: '请先填写地址'
 					})
 					return;
 				}
-				sessionStorage.setItem("scoreIn",JSON.stringify(this.order.interagl_total));
-				sessionStorage.setItem('integral_orderID', this.order.id);
-				//余额支付接口
-				this.axios.post(this.$httpConfig.confirmExchange, qs.stringify({
-					remarks:this.order.remarks,
-					address_id:this.order.address_id,
-					id:this.order.integral_id
-				})).then((res) => {
-					Toast(res.data.message);
-					sessionStorage.setItem('pay_sourse','integral')
+				sessionStorage.setItem('pay_sourse','integral');
 					this.$router.push({
 						name: 'CashierIntegral',
 						params: {
 							id: 1, 
-							number:res.data.data
+							integral: data.integral,
+							money:data.money
 						},
-						query:{
-							goods:this.$route.query.goods,
-							orderId:res.data.data.orderId
-						}
 					});
-					this.$store.state.order_number = res.data.data.orderId;
-				}).catch((err) => {
-					console.log(err);
-				});
+			
 			},
 			pay(item) { //马上付款
+			console.log(item)
 				let total = Number(item.price_sum) + Number(item.shipping_monery);
 				if(this.$route.params.order_type == 1) {
-					this.integralPay();
+					let interagl_total = item.interagl_total;
+					let data = {
+						integral:interagl_total,
+						money:total
+					}
+					this.integralPay(data);
 				} else {
 					if(this.address == '') {
 						Toast({
@@ -363,7 +360,6 @@
 					if(res.data.status == 10001) {
 						this.$router.push('/LogIn');
 					} else {
-						Toast(res.data.message)
 						this.order = res.data.data
 						this.load_wrap = false
 						this.address=res.data.data

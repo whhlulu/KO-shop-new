@@ -40,7 +40,7 @@ const config = {
     //个人中心（积分）
     rule: request + userModuleIndex + 'Integral/rule', // 积分规则 
     integralLog: request + userModuleIndex + 'Integral/integralLog', // 积分明细
-    userIntegral: request + 'IntegralUse/getIntegral', // 我的积分
+    userIntegral: request + userModuleIndex + 'UserData/getIntegral', // 我的积分
 
     //个人中心（用户消息控制器）
     Newslist: request + userModuleIndex + 'News/lists', // 消息列表
@@ -75,15 +75,15 @@ const config = {
     getFirstId: request + 'GoodsClass/getFirstId', // 一级分类ID
     getOtherClass: request + 'GoodsClass/getOtherClass', // 二级分类
     goodInfo: request + 'Goods/goodInfo', // 商品详情
-    guessLove: request + 'FootPrint/guessLove', // 猜你喜欢
+    guessLove: request + 'GuessYouLike/guessYouLike', // 猜你喜欢
     //	goodSpecs: request + 'Goods/goodSpecs', // 规格
     matchGood: request + 'GoodsCombo/matchGood', // 最佳搭配套餐
     accessories: request + 'GoodsCombo/accessories', // 搭配配件
-    package: request + 'GoodsCombo/package', // 优惠套餐
+    package: request + 'GoodsPackage/packageList', // 优惠套餐
     shopInfo: request + 'Store/shopInfo', // 商品 归属店铺信息
-    ShopGoodClass: request + 'GoodsClass/lookShopGoodClass', //店铺分类
-    goodsProblems: request + 'Problem/goodsProblems', // 商品咨询
-    userCommitProblem: request + 'Problem/userCommitProblem', // 提交咨询
+    ShopGoodClass: request + 'StoreBindGoodsClass/getBindGoodsClass', //店铺分类
+    goodsProblems: request + 'GoodsConsultation/consultationData', // 商品咨询
+    userCommitProblem: request + 'GoodsConsultation/userCommitProblem', // 提交咨询
     goodsStoreList: request + 'Store/goodsStoreList', //商品界面店铺列表
 
     //个人中心菜单模块
@@ -111,7 +111,7 @@ const config = {
 
     // 购买商品
     orderBegin: request + 'Order/orderBegin', // 立即购买
-    orderBeginFromGood: request + 'Order/orderBeginFromGood', //立即购买 -- 直接购买 (在商品列表)
+    orderBeginFromGood: request + 'GeneratingOrder/orderBeginFromGood', //立即购买 -- 直接购买 (在商品列表)
     cartGoodsDetail: request + 'Goods/cartGoodsDetail', //立即购买 -- 获取商品详情 (在商品列表)	
     // cartGoodsDetail: request + 'GoodsCart/cartGoodsDetail', //立即购买 -- 获取商品详情 (在商品列表)
     search: request + 'GoodsClass/search', // 搜索宝贝
@@ -143,7 +143,7 @@ const config = {
     // 积分
     integralGoodsList: request + 'IntegralGoods/integralGoodsList', // 积分兑换列表
     integralGoodInfo: request + 'IntegralGoods/integralGoodInfo', // 积分商品详情
-    confirmExchange: request + 'IntegralGoods/confirmExchange', // 确认兑换
+    confirmExchange: request + 'GeneratingOrderIntegral/confirmExchange', // 确认兑换
     confirmPay: request + 'PayOrderByIntegral/initiatePayment', // 立即支付
     integralGoodDetails: request + 'IntegralGoods/integralGoodDetails', // 积分商品详情--获取数据
     myConfirm: request + 'OrderIntegral/myConfirm', // 我的兑换
@@ -175,7 +175,7 @@ const config = {
     cartNumModify: request + 'GoodsCart/cartNumModify', //购物车商品数量修改
     cartNumPlus: request + 'GoodsCart/cartNumPlus', //购车商品数量加
     cartNumReduce: request + 'GoodsCart/cartNumReduce', //购物车商品数量减
-    goBuy: request + 'GoodsCart/goBuy', //购物车去结算
+    goBuy: request + 'GeneratingOrder/buildOrderByCart', //购物车去结算
 
     //套餐购物车
     cartPackageList: request + 'GoodsPackageCart/cartPackageList', //购物车-套餐商品列表
@@ -186,13 +186,13 @@ const config = {
     cartPackagetoSettleAccounts: request + 'GoodsPackageCart/toSettleAccounts', //套餐购物车去购买
     cartPackageAddGoodsAll: request + 'GoodsCart/addGoodsAll', //多个商品添加购物
     cartPackageAddCart: request + 'GoodsPackageCart/addCart', //套餐添加购物车
-    cartPackageBuyNow: request + 'GoodsCombo/buyNow', //多个商品立即购买
-    orderBeginAll: request + 'Order/orderBeginAll', //多个商品创建订单
+    cartPackageBuyNow: request + 'ImmediatePurchaseOfParts/goodsComboBuyNow', //多个商品立即购买
+    orderBeginAll: request + 'GeneratingOrder/partsBuyNow', //配件创建订单
     purchaseImmediately: request + 'GoodsPackage/cartPackageBuyNow', //套餐商品立即购买
     createsetMealorOder: request + 'OrderPackage/orderBegin', //套餐商品创建订单
     orderBeginByCart: request + 'OrderPackage/orderBeginByCart', //购物车套餐商品创建订单
-    orderPackageBuyPay:request+'PayOrderByPackage/initiatePayment',//套餐支付
-    cartPackageInvoices: request + 'OrderPackageInvoice/invoicesOrderAdd',//套餐发票保存
+    orderPackageBuyPay: request + 'PayOrderByPackage/initiatePayment', //套餐支付
+    cartPackageInvoices: request + 'OrderPackageInvoice/invoicesOrderAdd', //套餐发票保存
 
     //我的钱包
     my_wallet: request + userModuleIndex + 'MyWallet/myWalletMoney',
@@ -216,8 +216,8 @@ const config = {
 
     //入驻验证
     isCheckIn: request + 'CanICheckIn/isCheckIn', //个人企业入驻验证
+
     //  个人入驻
-    agreementOfInvestment: request + 'StoreHelp/agreementOfInvestment', //入驻协议
     enterBankInfo: request + 'StorePerson/enterBankInfo', //个人入驻-填写结算账号信息
     enterRunInfo: request + 'StorePerson/enterRunInfo', //入驻提交--个人
     nextClassId: request + 'GoodsClass/nextClassId', //个人入驻获取下级分类
@@ -229,7 +229,7 @@ const config = {
     standardOfInvestment: request + 'StoreHelp/standardOfInvestment', //入驻标准
     enterFlow: request + 'StoreHelp/enterFlow', //入驻流程
     rulesOfCooperation: request + 'StoreHelp/rulesOfCooperation', //合作细节
-    StoreHelp: request +'StoreHelp/storeHelp',//协议详情内容
+    StoreHelp: request + 'StoreHelp/storeHelp', //协议详情内容
 
     //订单
     orderDetail: request + 'Order/orderDetail', //订单详情
@@ -255,8 +255,8 @@ const config = {
     checkCoupons: request + 'CheckIsUseCoupon/check', //检查该优惠券是否可用
     lookGoodsExpress: request + userModuleIndex + 'LogisticsQuery/lookGoodsExpress', //订单物流
     deleteOrder: request + 'Order/deleteOrder', //删除订单
-    getCommentImageConfig: request + uploadImage + 'FileUpload/getCommentImageConfig', //获取上传图片接口配置
-    uploadImageByImageComment: request + uploadImage + 'FileUpload/uploadImageByImageComment', //上传评论图片
+    getCommentImageConfig: imgRequest + uploadImage + 'FileUpload/getCommentImageConfig', //获取上传图片接口配置
+    uploadImageByImageComment: imgRequest + uploadImage + 'FileUpload/uploadImageByImageComment', //上传评论图片
 
     //套餐订单
     packageOrderAll: request + 'OrderPackage/orderListAll', //全部订单

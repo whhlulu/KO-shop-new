@@ -124,10 +124,10 @@
 			},
 			comment() {
 				//              this.load = true;
-				if(this.imgs.length == 0){
+				if(this.msg.length == 0){
 					Toast('请填写评论');
 					return;
-				}else if(this.msg.length == 0){
+				}else if(this.imgs.length == 0){
 					Toast('请上传图片');
 					return;
 				}else if(this.value1[0] == 0){

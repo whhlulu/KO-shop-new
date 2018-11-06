@@ -116,6 +116,7 @@ const logInBind = r => require(['@/components/logIn/logInBind'], r); //绑定
 const authLogin = r => require(['@/components/logIn/children/authLogin'], r); //授权成功
 const authError = r => require(['@/components/logIn/authError'], r); //授权失败
 const reset = r => require(['@/components/logIn/resetPassword'], r); // 重置密码
+const phoneVerify = r => require(['@/components/logIn/phoneVerify'], r); // 修改密码手机验证
 
 // 主页
 const Home = r => require(['@/components/home/home'], r); //主页
@@ -123,6 +124,7 @@ const Class = r => require(['@/components/home/classification'], r); //分类
 
 // page页
 const prTab = r => require(['@/components/page/children/tab'], r); //商品详情图
+const answerDetails = r => require(['@/components/page/children/answerDetails'], r); //商品咨询详情
 const list = r => require(['@/components/page/list'], r); //商品列表
 const listHomeMore = r => require(['@/components/page/listHomeMore'], r); //商品列表
 const integralTab = r => require(['@/components/page/children/integralTab'], r); //商品详情图
@@ -144,7 +146,7 @@ const auctionList = r => require(['@/components/auction/auctionList'], r) // 抢
 // 个人入驻
 const checkProadd = r => require(['@/components/shopOpen/perShop/addInformation'], r); //填写个人资料
 const checkProIdInfor = r => require(['@/components/shopOpen/perShop/proId'], r); //填写身份证
-const checkProBankInfor = r => require(['@/components/shopOpen/perShop/proBank'], r); //填写身份证
+const checkProBankInfor = r => require(['@/components/shopOpen/perShop/proBank'], r); //填写银行打款信息（挪到个人资料处了）
 const checkProBusinessInfor = r => require(['@/components/shopOpen/perShop/Business'], r); //提交
 
 // 企业入驻
@@ -361,9 +363,14 @@ const router = new Router({
                 component: feedback
             },
             { //商品详情Tbg
-                path: '/tab/:id',
+                path: '/tab/:id/:p_id/',
                 name: 'tab',
                 component: prTab
+            },
+            { //商品咨询详情
+                path: '/answerDetails',
+                name: 'answerDetails',
+                component: answerDetails
             },
             { //积分商品详情Tbg
                 path: '/integralTab/:id',
@@ -467,7 +474,7 @@ const router = new Router({
                 component: CashierOpenShopPay
             },
             { // 积分商城支付
-                path: '/CashierIntegral/:id/:number',
+                path: '/CashierIntegral/:id/:integral/:money',
                 name: 'CashierIntegral',
                 component: CashierIntegral
             },
@@ -542,7 +549,7 @@ const router = new Router({
                 component: modifyPassword
             },
             { //发票信息
-                path: '/invoice/:status',
+                path: '/invoice/:status/:id',
                 name: 'invoice',
                 component: invoice
             },
@@ -590,6 +597,11 @@ const router = new Router({
                 path: '/reset',
                 name: 'reset',
                 component: reset
+            },
+            { //修改密码手机验证
+                path: '/phoneVerify',
+                name: 'phoneVerify',
+                component: phoneVerify
             },
             { //个人资料
                 path: '/personal',
@@ -798,6 +810,6 @@ const router = new Router({
             },
 
         ]
-    }]
+    }],
 });
 export default router;

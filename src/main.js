@@ -114,31 +114,6 @@ router.beforeEach((to, from, next) => {
     };
     next();
 });
-//router.beforeEach((to, from, next) => {
-//if(to.path == '/author' && store.state.user.id){
-//  // 用户使用后退返回到授权页，则默认回到首页
-//  next('/index')
-//  return false
-//}
-//if((!holdno.cookie.get('user') || !store.state.user.id) && to.path != '/author'){
-//  // 第一次进入项目
-//  holdno.cookie.set('beforeLoginUrl', to.fullPath) // 保存用户进入的url
-//  next('/author')
-//  return false
-//}else if(!store.state.user.id && to.path != '/author'){
-//  // 之前有获取过授权
-//  next('/author')
-//  return false
-//}
-//next()
-//})
-
-// router.afterEach(router => {
-//     setTimeout(function() {
-//         Indicator.close();
-//     }, 100)
-// });
-
 new Vue({
     el: '#app',
     router,

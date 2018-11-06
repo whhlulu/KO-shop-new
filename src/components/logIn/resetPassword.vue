@@ -1,9 +1,13 @@
 <template>
-    <div class="wrap" ref="box">
-        <div v-title :data-title="title">{{title}}</div>
-        <header class="logoIn-header">
-           <span @click="remove" class="btn-back">取消</span>{{title}}
+<div style="background:#fff;position:absolute;top:0;left:0;right:0;bottom:0;">
+    <div v-title :data-title="title">{{title}}</div>
+    <div class="teacher-main">
+        <header class="header">
+            <span @click="btnGo" class="btnGo"></span>
+            {{title}}
         </header>
+    </div>
+    <div class="wrap">
         <div class="input-main passWord">
             <span class="icon"></span>
             <input type="password" placeholder="请输入原密码...." v-model="pass">
@@ -17,8 +21,10 @@
             <input type="password" placeholder="请再次输入新密码...." v-model="re_password">
         </div>
         
-        <button class="btn-in" @click="register">重置密码</button>
+        <button class="btn-in" @click="register">确定</button>
     </div>
+</div>
+    
 </template>
 <script>
     import qs from 'qs';
@@ -26,24 +32,17 @@
     export default {
         data(){
             return {
-                title:'重置密码',
+                title:'修改密码',
                 password:'',
                 re_password:'',
                 pass:''
             }
         },
-        mounted () {
-            this.$refs.box.style.height = "100%";
-        },
         methods:{
-            remove(){//路由回退一步
+            btnGo(){//路由回退一步
                 this.$router.go(-1)
             },
             register(){
-            	if(this.pass==this.password){
-            		Toast("请输入新密码");
-                    return false;
-            	}
                 if(this.password.length<6&&this.password.length>12){
                     Toast("请输入密码");
                     return false;
@@ -61,14 +60,19 @@
                     new_password1:this.password,
                     new_password2:this.re_password
                 })).then((res) => {
-                    Toast({
-                            message: res.data.message,
-                            position: 'bottom'
-                        });
                     if(res.data.status == 1){
-                         this.$router.push('/seetin');
-                    }
-                   
+                        Toast({
+                            message: '修改密码成功',
+                            duration: 1000
+                        });
+                         sessionStorage.clear();
+                         this.$router.push('/LogIn');
+                    }else{
+                        Toast({
+                            message: res.data.message,
+                            duration: 1000
+                        });
+                    }   
                 }).catch((err) => {
                     console.log(err);
                 });
@@ -77,27 +81,33 @@
     }
 </script>
 <style lang="less" scoped>
+.teacher-main{
+    width: 100%;
+    .header{
+        background: #c79a01;
+        text-align: center;
+        color: #fff;
+        font-size: .36rem;
+        font-weight: 700;
+        padding: .16rem 0;
+        line-height: .62rem;
+        width: 100%;
+        position: relative;
+        .btnGo{
+            position:absolute;
+            left:.2rem;
+            top:50%;
+            margin-top:-.23rem;
+            width:.46rem;
+            height:.46rem;
+            background:url(../../assets/btn-return.png) no-repeat;
+            background-size:100% 100%;
+        }
+    }
+}
     .wrap{
         padding:0 .6rem;
         background:#fff;
-        .logoIn-header{
-            width:100%;
-            height:.9rem;
-            line-height:.9rem;
-            text-align:center;
-            font-size:.36rem;
-            color:#333;
-            position:relative;
-            .btn-back{
-                width:1.3rem;
-                height:100%;
-                font-size:.28rem;
-                color:#999;
-                position:absolute;
-                left:-.6rem;
-                top:0;
-            }
-        }
         .input-main{
             height:1.1rem;
             margin-top:.3rem;

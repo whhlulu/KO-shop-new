@@ -63,7 +63,7 @@
 				<button class="fr btn" @click="toCashierAll">提交订单</button>
 				<div class="fr money">
 					实付款&nbsp;:&nbsp;<span class="price">￥
-						<span>{{goods_data.money * goods_data.goods_num+ freight}}</span>
+						<span>{{Number(goods_data.money) * Number(goods_data.goods_num)+ Number(freight)|keepTwoNum}}</span>
 					所需积分:<span class="price">{{goods_data.integral * goods_data.goods_num}}</span>
 					</span>
 				</div>
@@ -232,12 +232,13 @@
 						name: 'CashierIntegral',
 						params: {
 							id: 1, 
-							number:res.data.data
+							integral: res.data.data.integral,
+							money:res.data.data.money
 						},
-						query:{
-							goods:this.$route.query.goods,
-							orderId:res.data.data.orderId
-						}
+						// query:{
+						// 	goods:this.$route.query.goods,
+						// 	orderId:res.data.data.orderId
+						// }
 					});
 					this.$store.state.order_number = res.data.data.orderId;
 				}).catch((err) => {
@@ -258,11 +259,6 @@
 						}
 					});
 			},
-			limit() {
-				if(this.message.length > 45) {
-					Toast('留言不能超过45字！');
-				}
-			}
 		},
 		destroyed() {
 			this.scrollWatch = false;

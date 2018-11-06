@@ -23,7 +23,6 @@
             <input type="password" placeholder="请再次输入密码...." v-model="re_password">
         </div>
 
-            <button class="btn-in" @click="logoIn">找回密码</button>
             <button class="btn-in" @click="logoIn">确认</button>
 
         </div>

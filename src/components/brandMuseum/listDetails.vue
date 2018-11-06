@@ -96,6 +96,7 @@
                     sort:this.sort_id,
                     page:this.page
                 })).then(res => {
+                    this.goods = [];
                     this.stateHandling(res.data.status, res.data.data.goods);
                     this.brand = res.data.data.brand;
                     this.brand_logo = res.data.data.brand.brand_logo;
@@ -111,10 +112,10 @@
                 if (data.length < 10 && this.page == 1) { //第一次请求成功如果数据没达到每页页数就禁止下拉
                     this.load_show = false; //动画隐藏
                     this.roll_switch = false; //禁止下拉加载
-				}
-					for (let index = 0; index < data.length; index++) {
-						this.goods.push(data[index]);
-					}
+                }
+                for (let index = 0; index < data.length; index++) {
+                    this.goods.push(data[index]);
+                }
                 this.slide_switch = true;
             },
             //请求后返回不同状态时的处理

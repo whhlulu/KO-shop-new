@@ -23,7 +23,7 @@
 			</div>
 		</div>
 		<!-- 已选 -->
-		<div class="selected" @click="theSon">已选
+		<div class="selected">已选
 			<span class="number">数量{{$store.state.commodity_val}}</span>
 			<span v-if="item" v-for="(item, index) in $store.state.guigeidname" :key="index" class="number">{{$store.state.guigeName[index]}}&nbsp;{{item}}</span>
 			<span class="btn-right"></span>
@@ -371,7 +371,7 @@
 	.selected {
 		padding: 0 .5rem 0 .2rem;
 		min-height: .8rem;
-		line-height: .6rem;
+		line-height: .8rem;
 		font-size: .3rem;
 		color: #777;
 		position: relative;

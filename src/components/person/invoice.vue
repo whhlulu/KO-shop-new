@@ -54,7 +54,7 @@
             btn
         },
         mounted () {
-				this.getAllInvoice();
+			this.getAllInvoice();
         },
         methods:{
             //获取发票
@@ -65,10 +65,24 @@
 	              params:{
                     }
 	          }).then(res =>{
-	          	
+                if(res.data.status == 10001){
+                    this.$router.push('/LogIn');
+                    }
 	          	this.$store.state.type_data=res.data.data.invoiceType;
 	          	this.$store.state.res_data=res.data.data.invoiceCompany;
-	          	this.$store.state.content_data=res.data.data.content;
+                this.$store.state.content_data=res.data.data.content;
+                if(sessionStorage.getItem('invoiceInit')){
+                    let invoiceInit = JSON.parse(sessionStorage.getItem('invoiceInit'));
+                    if(invoiceInit[this.$route.params.id]){
+                        this.$store.state.invoice = true;
+                        this.$store.state.type = invoiceInit[this.$route.params.id][0];
+                        this.$store.state.rise = invoiceInit[this.$route.params.id][1];
+                        this.$store.state.content = invoiceInit[this.$route.params.id][2];
+                        this.$store.state.type_id = this.$store.state.type_data[invoiceInit[this.$route.params.id][0]].id;
+                        this.$store.state.rise_id = this.$store.state.res_data[invoiceInit[this.$route.params.id][1]].id;
+                        this.$store.state.content_id = this.$store.state.content_data[invoiceInit[this.$route.params.id][2]].id;
+                    }
+                }
 	          })
             },
             add(item,index){

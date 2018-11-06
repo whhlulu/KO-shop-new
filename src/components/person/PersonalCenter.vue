@@ -16,8 +16,8 @@
                 <div class="admin" @click="toLink('/seetin')"><span></span>账户管理</div>
             </div>
             <div class="status">
-                <span class="name">{{data.nick_name}}</span>
-                <!--<span class="member">黄金会员</span>-->
+                <span class="name">{{data.user_name}}</span>
+                <span class="member">{{data.level_name}}</span>
             </div>
         </div>
         <div class="myOrder clearfix">
@@ -66,7 +66,7 @@
         data(){
             return {
                 more:{
-                     name:['优惠券','我的积分','我的收藏','足迹','我的拍卖','我的钱包','我的发票','我要开店','我的评价','收货地址','客服中心','意见反馈','套餐订单'],
+                     name:['优惠券','我的积分','我的收藏','足迹','我的拍卖','我的钱包','我的发票','我要开店','我的评价','收货地址','客服中心','意见反馈','套餐订单','积分订单'],
                     icon:[
                         require('@/assets/images/coupon.png'),
                         require('@/assets/images/intmall.png'),
@@ -80,7 +80,8 @@
                         require('@/assets/images/myAdvice.png'),
                         require('@/assets/images/service.png'),
                         require('@/assets/images/opinion.png'),
-                        require('@/assets/images/package-0.png')
+                        require('@/assets/images/package-0.png'),
+                        require('@/assets/images/intmall_order.png')
                     ],
                 },
                 scrollWatch:false,
@@ -184,12 +185,15 @@
                             this.$router.push('/Feedback');
                             break;
                         case 12:
-                        this.$router.push({
-                            name:'packageList',
-                            params:{
-                                id:0
-                                }
-                        });
+                            this.$router.push({
+                                name:'packageList',
+                                params:{
+                                    id:0
+                                    }
+                            });
+                            break;
+                        case 13:
+                            this.$router.push('/intOrder');
                             break;
                     }
                 }
@@ -206,7 +210,6 @@
             	if(res.data.status==10001){
 		            this.$router.push('/LogIn');
 		        } else{
-                    console.log(res);
                     this.data = res.data.data;
                     let ua = window.navigator.userAgent.toLowerCase();
                     if (ua.match(/MicroMessenger/i) == 'micromessenger') {
@@ -586,6 +589,12 @@
                 img{
                     width:.6rem;
                     height:.61rem;
+                }
+            }
+            &:nth-child(14){
+                img{
+                    width: .7rem;
+                    height: .72rem;
                 }
             }
             &:nth-child(4n){

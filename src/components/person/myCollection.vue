@@ -278,10 +278,12 @@
 			},
 			activeCli(index) {
 				if(index == 0) {
+					this.data = [];
 					this.getList();
 					this.goods = true;
 					this.shop = false
 				} else {
+					this.shopData = [];
 					this.shoplist();
 					this.shop = true;
 					this.goods = false;

@@ -437,8 +437,16 @@ export default {
           console.log(err);
         });
     },
+    keepTwoNum (value) {
+      value = Number(value);
+      var b = value.toFixed(3);
+      return b.substring(0, b.toString().length - 1)
+    },
     toOrder() {
       //去结算
+      sessionStorage.removeItem('invoiceGroup');
+      sessionStorage.removeItem('invoiceInit');
+      sessionStorage.removeItem('invoiceSign');
       this.$store.state.invoice = false;
       this.$store.state.rise = null;
       this.$store.state.type = null;
@@ -453,12 +461,14 @@ export default {
       for (var i = 0; i < this.goods.length; i++) {
         this.cartId.push(this.goods[i].id);
       }
+      let oldPrice = this.keepTwoNum(this.bottomPrice.oldPrice);
+      let reduction = this.keepTwoNum(this.bottomPrice.oldPrice - this.price);
       this.$router.push({
         name: "cartOrderPackage",
         params: {
           cart_id: this.cartId.join(","),
-          oldPrice:this.bottomPrice.oldPrice,
-          reduction :this.bottomPrice.oldPrice - this.price
+          oldPrice:oldPrice,
+          reduction :reduction
         }
       });
     },

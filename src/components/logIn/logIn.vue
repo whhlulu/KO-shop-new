@@ -155,6 +155,7 @@
                     Toast(res.data.message);
                     this.load = false;
                     if(res.data.status == 1){
+                        sessionStorage.clear(); 
                         // this.setTime(); //不要删除
                         this.$router.push('/KOhome')
                         this.show = false;

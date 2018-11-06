@@ -15,7 +15,7 @@
 				</div>
 				<div class="inf-wrap clearfix">
 					<div class="inf fl">
-						{{new Date(item.create_time * 1000).getFullYear()+'/'+(new Date(item.create_time * 1000).getMilliseconds() + 1)+'/'+new Date(item.create_time * 1000).getDay()}}&nbsp;&nbsp;&nbsp;
+						{{item.create_time | formatDate}}&nbsp;&nbsp;&nbsp;
 						<span v-for="items in item.space" :key="items.id">{{items.speName+':'+items.item}}</span>
 					</div>
 					<div class="status fr" v-if="item.score == 3">差评</div>

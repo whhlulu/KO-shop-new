@@ -206,8 +206,7 @@ export default {
           "Content-Type": "multipart/form-data"
         }
       };
-      this.axios
-        .post(this.$httpConfig.uploadPicture, param, config)
+      this.axios.post(this.$httpConfig.uploadPicture, param, config)
         .then(res => {
           if (res.data.status == 10001) {
             this.$router.push("/LogIn");

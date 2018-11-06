@@ -70,12 +70,14 @@
 				this.$store.state.const_join = true;
 			},
 			buy() {
+				sessionStorage.removeItem('invoiceGroup');
+				sessionStorage.removeItem('invoiceInit');
 				this.$store.state.invoice = false;
 				this.$store.state.rise = null;
 				this.$store.state.type = null;
 				this.$store.state.content = null;
 				this.$store.state.invoice_id = '';
-				if(this.$store.state.commodity_data.stock == 0 ){
+				if(this.$store.state.commodity_data.stock <= 0 ){
 					Toast({
 					  message: "库存不足",
 					  duration: 1000
@@ -105,6 +107,10 @@
 					}
 
 				}).then((res) => {
+					if(res.data.data==""){
+						this.isCol = false;
+						this.type = 2;
+					}else{
 						this.dataCol = res.data.data.goods;
 						let cols = this.dataCol;
 						for(var i in cols){
@@ -117,6 +123,8 @@
 								this.type = 2;
 							}
 						}
+
+					}
 						this.load = false;
 						this.load_wrap = false;
 				}).catch((err) => {

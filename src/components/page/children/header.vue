@@ -6,7 +6,7 @@
 			<span v-if="text" class="customTitle">{{text}}</span>
 			<span v-if="ways" class="customTitle">{{ways}}</span>
 			<div class="integral-title" v-if="title" @click="screen">{{title}}<i class="icon"></i></div>
-			<div class="input-main fl" v-if="sea"><input type="text" placeholder="请输入商品名称..." v-model="value" @keyup.enter="submit(value)"></div>
+			<div class="input-main fl" v-if="sea"><input type="text" placeholder="请输入商品名称..." v-model="$store.state.search_value" @keyup.enter="submit(value)"></div>
 			 <span class="cartBtn" v-if="status" @click="toCart"></span> 
 			<div class="btn-search" v-if="search"></div>
 			<div class="btn-ng clearfix" v-if="!btn" v-show="!set" @click="addClass">
@@ -83,7 +83,7 @@
 				// 点击回车
 				this.axios.post(this.$httpConfig.keyWordSearch, qs.stringify({
 					page: 1,
-					keyword: this.value,
+					keyword: this.$store.state.search_value,
 					sort:1
 				})).then((res) => {
 					if(res.data.status){

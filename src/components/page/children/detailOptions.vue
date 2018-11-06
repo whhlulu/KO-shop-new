@@ -5,9 +5,9 @@
 				<div class="padd">
 					<div class="contet-item clearfix" v-if="$store.state.commodity_data">
 						<img :src="URL + data.images[0].pic_url" >
-						<p class="item">{{data.title }}</p>
-						<p class="price" v-if="$route.params.status ==1">￥<span>{{data.price_member}}</span></p>
-						<p class="price" v-if="$store.state.commodity_data.goods"><span>{{$store.state.commodity_data.goods.integral}}</span> 积分</p>
+						<p class="item">{{data.goods.title }}</p>
+						<p class="price" v-if="$route.params.status ==1">￥<span>{{data.goods.price_member}}</span></p>
+						<p class="price" v-else><span>{{$store.state.commodity_data.goods.integral}}</span> 积分</p>
 						<span class="delete-btn" @click="remove">×</span>
 					</div>
 					<div class="content-scroll">
@@ -19,10 +19,10 @@
 						<div class="addSub clearfix">
 							<span class="pull-left fl">数量</span>
 							<div class="pull-right fr clearfix">
-								<span class="stock fl" v-if="$store.state.commodity_data.stock">库存：{{data.stock}}件</span>
+								<span class="stock fl" v-if="$store.state.commodity_data.stock">库存：{{data.goods.stock}}件</span>
 								<div class="input-main fl clearfix">
 									<button class="fl" @click="reduce">-</button>
-									<input type="number" class="fl" v-model="$store.state.commodity_val" @input="min">
+									<input type="tel" class="fl" :maxlength="data.goods.stock.length" v-model="$store.state.commodity_val" @change="min">
 									<button class="fl" @click="plus">+</button>
 								</div>
 							</div>
@@ -30,8 +30,8 @@
 						<!-- 共计 -->
 						<div class="com">
 							共<span>{{Number($store.state.commodity_val)}} </span>件&nbsp;&nbsp; 共计
-							<span v-if="$store.state.commodity_data.price_member"><i>￥</i>{{$store.state.commodity_val * data.price_member}}</span>
-							<span v-if="$store.state.commodity_data.goods"> {{$store.state.commodity_val * $store.state.commodity_data.goods.integral}} <i>积分</i></span>
+							<span v-if="$route.params.status ==1"><i>￥</i>{{$store.state.commodity_val * data.goods.price_member|keepTwoNum}}</span>
+							<span v-else> {{$store.state.commodity_val * $store.state.commodity_data.goods.integral}} <i>积分</i></span>
 						</div>
 				</div>
 				<div class="btn-join clearfix" v-if="$route.params.status == 1">
@@ -95,7 +95,7 @@
 				//规格
 				this.axios.post(this.$httpConfig.goodSpecsByGoodsChildren,
 					qs.stringify({
-						id:this.data.id
+						id:this.data.goods.id
 					})).then(res => {
 						if(res.data.status == 1) {
 							this.guigedata = res.data.data;
@@ -112,8 +112,10 @@
 				this.$store.state.commodity_val++;
 			},
 			min() {
-				if(this.val >= this.$store.state.commodity_data.stock) this.$store.state.commodity_val = this.$store.state.commodity_data.stock;
-				if(this.val <= 0) this.$store.state.commodity_val = 1;
+				let val = parseInt(this.$store.state.commodity_val);
+				let reg = /(^[1-9]([0-9]*)$|^[0-9]$)/;
+				if(!reg.test(val)||val == 0){this.$store.state.commodity_val = 1}
+				if(val >= this.data.goods.stock)this.$store.state.commodity_val = this.data.goods.stock;
 			},
 			remove() {
 				this.$store.state.const_join = false;
@@ -128,7 +130,8 @@
                     }
                 }).then((res) => {
                    	this.$store.state.commodity_data = res.data.data;
-                    this.$store.state.commodity_val = 1;
+					this.$store.state.commodity_val = 1;
+					this.$emit('recommend');
                 }).catch((err) => {
                     console.log(err);
                 });
@@ -182,6 +185,8 @@
                 });
 			},
 			toOrder() {
+				sessionStorage.removeItem('invoiceGroup');
+				sessionStorage.removeItem('invoiceInit');
 				this.$store.state.invoice = false;
 				this.$store.state.rise = null;
 				this.$store.state.type = null;
@@ -243,10 +248,10 @@
 					return false
 				}
 				this.axios.post(this.$httpConfig.addGoodToCart, qs.stringify({
-					goods_id: this.data.id,
+					goods_id: this.data.goods.id,
 					goods_num: this.$store.state.commodity_val,
-					price_new: this.data.price_member,
-					store_id: this.data.store_id
+					price_new: this.data.goods.price_member,
+					store_id: this.data.goods.store_id
 				})).then((res) => {
 					if(res.data.status==10001){
                 		this.$router.push('/LogIn');

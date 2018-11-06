@@ -47,7 +47,7 @@ export default {
       	 this.$router.push({
       	 	name:"shopHome",
       	 	params:{
-              id:this.data.store_id,
+              id:this.data.goods.store_id,
               index:0
           }})
       }

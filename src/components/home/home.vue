@@ -4,7 +4,7 @@
 		<home-header :userName="getData"></home-header>
 		<mt-swipe :auto="3000">
 			<mt-swipe-item v-for="item in this.$store.state.home_data.banner" :key="item.id">
-			<img class="home-banner-img" :src="IMG_URL + item.pic_url"  @click="goAd(item.ad_link)" />
+			<img class="home-banner-img" :src="URL + item.pic_url"  @click="goAd(item.ad_link)" />
 
 			</mt-swipe-item>
 		</mt-swipe>
@@ -68,7 +68,6 @@
 				getData: '',
 				newsData: null,
 				endtime: '',
-				//text:['店铺街','烧造工艺','皇家御饮','滋补养身','御贡膳品','珠宝玉器','红木家具'],
 				promotions: '',
 				currentPage:1,
 				floorList:[],
@@ -116,7 +115,7 @@
 		},
 		methods: {
 			goAd(address){
-				location.href = address;
+				window.open(address);
 			},
 			getFloor(){
 				if(this.isRepeat && this.currentPage == 1){
@@ -127,34 +126,21 @@
 					}
 					this.floorLoading = true;
 					var params = {page:this.currentPage};
-					this.$HTTP(this.$httpConfig.indexFloor,params,'post').then((res)=>{ 
-
-					// })
-					// this.axios.post(this.$httpConfig.indexFloor,QS.stringify({
-					// 	page:this.currentPage
-					// })).then((res)=>{
-						if (res.data.status==1) {							
-							this.floorList.push(res.data.data);
-							this.currentPage++;
-							this.isBottom = false;
-							this.isEnd = false;
-							this.getAd();
-						}else{
+					this.$HTTP(this.$httpConfig.indexFloor,params,'post').then((res)=>{
+						this.floorList.push(res.data.data);
+						this.currentPage++;
+						this.isBottom = false;
+						this.isEnd = false;
+						this.getAd();
+					}).catch((err)=>{
+						if(err.data.status == 0){
 							this.isEnd = true;
 						}
-					}).catch((err)=>{
-						Toast(err);
 					});
 				}
-				// var names = [];
-				// for(var i in this.floorList){
-				// 	names.push(this.floorList[i].class.class_name);
-				// }
 			},
 			getAd(){
-				this.axios.post(this.$httpConfig.getAd,QS.stringify({
-					page:this.currentPage-1
-				})).then((res)=>{
+				this.$HTTP(this.$httpConfig.getAd,{page:this.currentPage-1},'post').then((res)=>{
 					this.adList.push(res.data.data);
 					this.floorLoading = true;
 				})

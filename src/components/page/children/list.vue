@@ -18,12 +18,14 @@
     </div>
 </template>
 <script>
+    import qs from 'qs';
     export default {
         name : 'list',
         data(){
             return {
                 isClass:false,
-                load:false
+                load:false,
+                page:1
             }
         },
         props:{
@@ -66,12 +68,13 @@
                
             },
             myLove(){
-                 this.axios({//猜你喜欢
-                    url:this.$httpConfig.guessLove,
-                    method:'get',
-                    params:{
-                    }
-                }).then((res) => {
+
+                let p = ++this.page;
+                this.axios.post(
+                    this.$httpConfig.guessLove,
+                    qs.stringify({page : p}),
+                    
+                ).then((res) => {
                 	if(res.data.status==10001){
                 		this.$router.push('/LogIn');
                 	}else{

@@ -1,6 +1,7 @@
 @charset"utf-8";
 body {
-    background: #f1f1f1
+    background: #f1f1f1;
+    -webkit-overflow-scrolling: touch;
 }
 
 img {

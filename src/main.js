@@ -5,6 +5,7 @@ import axios from 'axios'
 import App from './App'
 import router from './router'
 import $ from 'jquery'
+import mui from '../static/mui.js'
 import store from './control/index'
 import './config/rem'
 import './config/rotate';
@@ -48,7 +49,7 @@ Vue.prototype.IMG_URL = window.IMG_URL;
 Vue.prototype.WX_URL = WX_URL;
 // Vue.prototype.load_wrap = load_wrap;
 
-
+Vue.prototype.mui = mui
 // Element
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'

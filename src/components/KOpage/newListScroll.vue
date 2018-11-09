@@ -85,6 +85,7 @@
             });
         },
         destroyed(){
+            console.log('destroyed')
             this.scrollWatch = false;
         },
         methods: {

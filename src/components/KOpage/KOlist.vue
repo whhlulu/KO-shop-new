@@ -59,7 +59,7 @@
         components: {
             newList,
         },
-        created() {
+        mounted() {
             var this_ = this;
             //判断是否需要重新请求分类数据
             if(this.$store.state.categoryLists.length===0){
@@ -122,6 +122,7 @@
 
         },
         destroyed(){
+            console.log('destroyed')
             this.scrollWatch = false;
         },
         methods: {
@@ -149,6 +150,7 @@
                 this.getAllNewList();
             },
             changeCId(id){
+                console.log(id)
                 this.$router.push({
                     path:'/KOlist/'+id
                 });

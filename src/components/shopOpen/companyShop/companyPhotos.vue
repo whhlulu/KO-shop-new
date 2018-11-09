@@ -128,7 +128,14 @@ export default {
 			nextinfor: function() {
 				if(this.license_number==''){
                     Toast({
-						message: '营业执照不能为空',
+						message: '营业执照号不能为空',
+						duration: 1000
+					});
+					return;
+                }
+                if(this.validity_start==""||this.validity_end==""){
+                    Toast({
+						message: '请正确填写营业执照的有效期',
 						duration: 1000
 					});
 					return;

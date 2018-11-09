@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div class="hd clearfix" v-for="item in text">
+        <div class="hd clearfix" v-for="(item,index) in text" :key="index">
         	<div class="top">
         		 <div class="title fl" >{{item.class_name}}</div>
            		 <span class="more fr" @click="tolin">更多<em><i></i><b></b></em></span>

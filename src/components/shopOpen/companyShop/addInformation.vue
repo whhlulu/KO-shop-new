@@ -40,13 +40,13 @@
 			</div>
 			<div class="select">
 				<ul class="address-area-tit">
-					<li v-model="prov" :class="showProvince?'active':''" @click="selectedArea('province')">
+					<li :class="showProvince?'active':''" @click="selectedArea('province')">
 						{{ province }}</li>
-					<li v-model="Bcity" v-if="choiceCity" :class="showCity?'active':''" @click="selectedArea('city')">
+					<li v-if="choiceCity" :class="showCity?'active':''" @click="selectedArea('city')">
 						{{ city }}</li>
-					<li v-model="district" v-if="choiceArea" @click="selectedArea('area')" :class="showArea?'active':''">
+					<li v-if="choiceArea" @click="selectedArea('area')" :class="showArea?'active':''">
 						{{ area }}</li>
-					<li v-model="Township" v-if="choiceStreet" :class="showStreet?'active':''">
+					<li v-if="choiceStreet" :class="showStreet?'active':''">
 						{{ street }}</li>
 				</ul>
 				<ul class="address-city" v-if="showProvince">

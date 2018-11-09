@@ -39,6 +39,7 @@ export default {
         })).then((res) => {
             this.content = res.data.data;
             this.content.content = this.unescape(this.content.content);
+            this.content.content=this.content.content.replace(/<img [^>]*src=['"]/g,'<img alt="" src="'+this.URL);
         }).catch((err) => {
             console.log(err);
         });

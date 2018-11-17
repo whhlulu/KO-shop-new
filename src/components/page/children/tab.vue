@@ -102,7 +102,7 @@
                 page:1,
                 comIndex :0,
                 conName:['全部评价', '好评', '中评', '差评', "有图"],
-                comId:1,
+                comId:4,
                 product:'',
                 problem:'',
                 load:false,
@@ -222,23 +222,24 @@
             conActiveClick(index){
                 if(index == this.comIndex)return
                 this.comIndex = index
-                switch(this.comIndex){
+                    // ['全部评价', '好评', '中评', '差评', "有图"],
+                switch(index){
                      case 0:
-                        this.comId = 4;
+                        this.comId = 4; // 全部评价
                         this.load = true;
                         break;
                     case 1:
-                        this.comId = 3;
+                        this.comId = 3; // 好评
                         this.load = true;
                         break;
                     case 2:
-                        this.comId = 2;
+                        this.comId = 2; // 中评
                         break;
                     case 3:
-                        this.comId = 1;
+                        this.comId = 1; // 差评
                         break;
                     case 4:
-                        this.comId = 5;
+                        this.comId = 5; // 有图
                         break;
                     }
                     this.comContent()
@@ -251,7 +252,7 @@
                     method:'get',
                     params:{
                         goods_id:this.$route.params.id,
-                        status:4,
+                        status:this.comId,
                         page:this.page
                     }
                 }).then((res) => {

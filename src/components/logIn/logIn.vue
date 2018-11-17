@@ -157,7 +157,8 @@
                     if(res.data.status == 1){
                         sessionStorage.clear(); 
                         // this.setTime(); //不要删除
-                        this.$router.push('/KOhome')
+                        //this.$router.push('/KOhome')
+                        this.$router.go(-1);
                         this.show = false;
                     }
                 }).catch((err) => {

@@ -155,10 +155,13 @@ const config = {
     orderNewBuy: request + 'OrderIntegral/orderNewBuy', //再次购买
     getOrderPriceById: request + 'Order/getOrderPriceById', // 收银台
 
-    // 客服中心
+    // 客服中心 ---  学邦新闻资讯模块
     articleLists: request + 'Article/lists', // 文章列表
     articleInfo: request + 'Article/info', // 文章详情
     categoryLists: request + 'Article/categoryLists', // 文章分类
+    Newsinfo: request + userModuleIndex + 'News/info', // 消息详情
+    collectArticle: request + userModuleIndex + 'user/collect/articleid', // 收藏新闻 +id
+    myCollectList: request + userModuleIndex + 'user/collectlist', // 我的收藏列表
 
     // 我的收藏
     myCollection: request + userModuleIndex + 'Collection/myCollection', // 收藏的宝贝

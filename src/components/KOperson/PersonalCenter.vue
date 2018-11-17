@@ -8,7 +8,7 @@
             </div>
             <div class="header-dd-center">
                 <div class="icon-wrap" @click="toLink('/seetin')">
-                    <img v-if="userdata.user_header" :src="URL+ userdata.user_header">
+                    <img v-if="userdata.img_url" :src="URL+ userdata.img_url">
                     <img v-else src="../../assets/my_user_pic.png">
                 </div>
                 <div class="admin" @click="toLink('/seetin')"><span></span>账户管理</div>

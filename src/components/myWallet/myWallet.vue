@@ -5,7 +5,7 @@
 		<div class="balance-wrap">
 			<div class="hd clearfix">
 				<!-- <img :src="URL+$store.state.user_Imag" class="hd-port fl">  -->
-				<img :src="URL+headerIMG" class="hd-port fl">
+				<img :src="headerIMG||require('../../assets/my_user_pic.png')" class="hd-port fl">
 				<div class="amount fl">
 					<div class="title">账户余额</div>
 					<div class="number text-single-hidden">
@@ -23,7 +23,8 @@
 			<li>
 				<header>使用明细</header>
 				<ul class="integral-wrap">
-					<li @click="routeDet" v-for='(detail,index) in $store.state.my_wallet' :key="index">
+					<!--暂时注释 @click="routeDet"-->
+					<li v-for='(detail,index) in $store.state.my_wallet' :key="index">
 						<div class="conFl">
 							<img :src="imgs[detail.type]">
 							<div>

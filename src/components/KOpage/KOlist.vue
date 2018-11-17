@@ -122,7 +122,7 @@
 
         },
         destroyed(){
-            console.log('destroyed')
+            console.log('kolist destroyed')
             this.scrollWatch = false;
         },
         methods: {

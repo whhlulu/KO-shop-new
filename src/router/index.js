@@ -212,12 +212,12 @@ const router = new Router({
                 name: 'KOinfo',
                 component: KOinfo
             },
-            { //我的收藏
+            { //我的收藏-列表
                 path: '/KOListCollect',
                 name: 'KOListCollect',
                 component: KOListCollect
             },
-            { //我的收藏
+            { //我的收藏-足迹
                 path: '/KOListFoot',
                 name: 'KOListFoot',
                 component: KOListFoot

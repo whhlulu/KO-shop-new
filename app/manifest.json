@@ -3,7 +3,7 @@
     "id": "H5ECD4FDD",/*应用的标识，创建应用时自动生成，勿手动修改*/
     "name": "学邦",/*应用名称，程序桌面图标名称*/
     "version": {
-        "name": "1.1",/*应用版本名称*/
+        "name": "1.2",/*应用版本名称*/
         "code": ""
     },
     "description": "学邦",/*应用描述信息*/
@@ -111,7 +111,7 @@
                         "default": "", /*iPhone3启动图片选，分辨率：320x480*/
                         "retina35": "",/*3.5英寸设备(iPhone4)启动图片，分辨率：640x960*/
                         "retina40": "",/*4.0 英寸设备(iPhone5/iPhone5s)启动图片，分辨率：640x1136*/
-                        "retina47": "C:/Users/Administrator/Desktop/makeicon_636769302886504842/icon-messages-app-store-1024x768.png",/*4.7 英寸设备(iPhone6)启动图片，分辨率：750x1334*/
+                        /*4.7 英寸设备(iPhone6)启动图片，分辨率：750x1334*/
                         "retina55": "",/*5.5 英寸设备(iPhone6 Plus)启动图片，分辨率：1242x2208*/
                         "retina55l": ""/*5.5 英寸设备(iPhone6 Plus)横屏启动图片，分辨率：2208x1242*/
                     },
@@ -129,11 +129,11 @@
                 "android": {
                     "mdpi": "", /*普通屏启动图片，分辨率：240x282*/
                     "ldpi": "", /*大屏启动图片，分辨率：320x442*/
-                    "hdpi": "C:/Users/Administrator/Desktop/basic-d41d8cd98f00b204e9800998ecf8427e/高清Logo/480-762.png", /*高分屏启动图片，分辨率：480x762*/
-                    "xhdpi": "C:/Users/Administrator/Desktop/basic-d41d8cd98f00b204e9800998ecf8427e/高清Logo/720-1242.png", /*720P高分屏启动图片，分辨率：720x1242*/
-                    "xxhdpi": "C:/Users/Administrator/Desktop/basic-d41d8cd98f00b204e9800998ecf8427e/高清Logo/1080-1882.png"/*1080P高分屏启动图片，分辨率：1080x1882*/
+                    "hdpi": "H:/testCode/shop/ShopsN1/LOGO资源/高清Logo/480-762.png", /*高分屏启动图片，分辨率：480x762*/
+                    "xhdpi": "H:/testCode/shop/ShopsN1/LOGO资源/高清Logo/720-1242.png", /*720P高分屏启动图片，分辨率：720x1242*/
+                    "xxhdpi": "H:/testCode/shop/ShopsN1/LOGO资源/高清Logo/1080-1882.png"/*1080P高分屏启动图片，分辨率：1080x1882*/
                 }
             }
         }
-    }
+    },"fullscreen":false
 }

@@ -1,6 +1,34 @@
 <template>
     <div class="KOlist">
+        <!--<div class="nav-wrap">-->
+            <!--<div class="nav-type">-->
+                <!--<el-dropdown trigger="click"  @command="handleCommand">-->
+                    <!--<span class="el-dropdown-link">-->
+                        <!--{{this.KOlistCurTypeData=='2'?'视频':'图文'}}-->
+                        <!--<i class="el-icon-arrow-down el-icon&#45;&#45;right"></i>-->
+                    <!--</span>-->
+                    <!--<el-dropdown-menu slot="dropdown">-->
+                        <!--<el-dropdown-item command="1">图文</el-dropdown-item>-->
+                        <!--<el-dropdown-item command="2">视频</el-dropdown-item>-->
+                    <!--</el-dropdown-menu>-->
+                <!--</el-dropdown>-->
+                <!--&lt;!&ndash;<span class="list_shadow"></span>&ndash;&gt;-->
+            <!--</div>-->
+            <!--<div class="nav-list">-->
+                <!--<a href="javascript:void(0)"-->
+                   <!--class="nav"-->
+                   <!--v-for="(item,index) in $store.state.categoryLists"-->
+                   <!--:key="item.id"-->
+                   <!--:class="{active:$route.params.type == item.id}"-->
+                   <!--@click="changeCId(item.id)"-->
+                <!--&gt;-->
+                    <!--{{item.name}}-->
+                <!--</a>-->
+            <!--</div>-->
+        <!--</div>-->
         <div class="nav-wrap">
+            <span class="header_logo" @click="btnGo"></span>
+            <span class="title">{{name}}</span>
             <div class="nav-type">
                 <el-dropdown trigger="click"  @command="handleCommand">
                     <span class="el-dropdown-link">
@@ -13,17 +41,6 @@
                     </el-dropdown-menu>
                 </el-dropdown>
                 <!--<span class="list_shadow"></span>-->
-            </div>
-            <div class="nav-list">
-                <a href="javascript:void(0)"
-                   class="nav"
-                   v-for="(item,index) in $store.state.categoryLists"
-                   :key="item.id"
-                   :class="{active:$route.params.type == item.id}"
-                   @click="changeCId(item.id)"
-                >
-                    {{item.name}}
-                </a>
             </div>
         </div>
         <div class="new-list-scroll">
@@ -51,6 +68,7 @@
         name: 'newListScroll',
         data(){
             return {
+                name: sessionStorage.getItem('KOlist_name')||'资讯',
                 KOlistCurTypeData: sessionStorage.getItem('KOlistCurType'),
                 //初始化加载相关参数
                 scrollWatch: true,
@@ -65,7 +83,7 @@
             if(this.$store.state.categoryLists.length===0){
                 this.getCategoryLists();
             }
-            //第一次请求首页数据
+            //第一次请求首页数据, 数据是否是同一个分类由进入时判断
             if(this.$store.state.AllNewList.length===0){
                 this.getAllNewList();
             }
@@ -190,6 +208,9 @@
                     console.log(err);
                 });
             },
+            btnGo() {
+                this.$router.go(-1);
+            },
         }
     }
 </script>
@@ -215,9 +236,28 @@
             top: 0;
             left: 0;
             z-index: 100;
+            .header_logo{
+                position: absolute;
+                top: .24rem;
+                left: .4rem;
+                width: .46rem;
+                height: .46rem;
+                display: block;
+                background-image: url("../../assets/images/return_icon_top.png");
+                background-size: 100% 100%;
+            }
+            .title{
+                display: inline-block;
+                height: .96rem;
+                line-height: .96rem;
+                width: 100%;
+                text-align: center;
+                font-size: .36rem;
+            }
             .nav-type {
-                float: left;
-                position: relative;
+                position: absolute;
+                top:0;
+                right:0;
                 height: .96rem;
                 line-height: .96rem;
                 padding: 0 .2rem;

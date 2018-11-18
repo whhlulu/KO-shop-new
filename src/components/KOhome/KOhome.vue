@@ -5,10 +5,12 @@
         <mt-swipe :auto="3000">
             <mt-swipe-item v-for="item in this.$store.state.KOhome_data.banner" :key="item.id">
                 <img class="home-banner-img" :src="IMG_URL + item.pic_url"  @click="goAd(item.ad_link)" />
+                <!--<div class="swipe-title">dadsad</div>-->
             </mt-swipe-item>
         </mt-swipe>
-        <news-flash :nav="$store.state.categoryLists"></news-flash>
-        <new-list-scroll></new-list-scroll>
+        <news-card :nav="$store.state.categoryLists"></news-card>
+        <!--<news-flash :nav="$store.state.categoryLists"></news-flash>-->
+        <!--<new-list-scroll></new-list-scroll>-->
         <to-Top></to-Top>
     </div>
 </template>
@@ -16,6 +18,7 @@
     import { MessageBox, Toast, Popup } from 'mint-ui';
     import HomeHeader from './children/Header';
     import NewsFlash from './children/newsFlash';
+    import NewsCard from './children/newsCard.vue';
     import newListScroll from '../KOpage/newListScroll.vue'
     import toTop from '@/components/page/toTop'; //回到顶部
     export default {
@@ -82,6 +85,7 @@
         components: {
             HomeHeader,
             NewsFlash,
+            NewsCard,
             newListScroll,
             toTop
         }
@@ -95,6 +99,11 @@
         .mint-swipe-indicators{
             width: 100%;
             text-align: center;
+        }
+        .swipe-title{
+            position: absolute;
+            left: 0px;
+            bottom: 0px;
         }
     }
 </style>

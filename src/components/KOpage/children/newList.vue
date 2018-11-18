@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div class="new-all" v-for="(item,index) in newList" :key="item.id">
+        <div class="new-all" v-for="(item,index) in newList">
             <div v-if="item.news_type==1">
                 <div class="new">
                     <img v-if="item.pic_url" v-lazy="IMG_URL+item.pic_url" class="fl" @click="toDetails(item)">
@@ -26,7 +26,7 @@
                                             type: 'video/mp4',
                                             //type: 'video/x-flv',
                                             src: IMG_URL+item.video
-                                            //src: 'http://m.youyoulegou.cn/a.mp4'
+                                            //src: 'http://m.fzxbwl.com/a.mp4'
                                         }],
                                         //techOrder: ['flash'],
                                         language: 'zh-CN',
@@ -76,6 +76,7 @@
                 }
             },
             onPlayerPause(player){
+                player.pause()
                 console.log("pause");
             },
             toDetails(item){

@@ -195,17 +195,17 @@ const router = new Router({
                         name: 'KOhome',
                         component: KOHome
                     },
-                    { //资讯列表
-                        path: '/KOlist/:type',
-                        name: 'KOlist',
-                        component: KOlist
-                    },
                     { //个人中心
                         path: '/KOperson',
                         name: 'KOperson',
                         component: KOperson
                     }
                 ]
+            },
+            { //资讯列表
+                path: '/KOlist/:type',
+                name: 'KOlist',
+                component: KOlist
             },
             { //我的收藏
                 path: '/KOinfo/:id',

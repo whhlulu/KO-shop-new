@@ -1,9 +1,9 @@
 //const request =  "http://192.168.123.6/shopsn_b2b2c_mobile_api/index.php/"
 //const request =  "http://b2b2c.zybv.cn/"
 //const request =  "http://api.shopsn.net/"
-window.API_URL = 'http://mapi.youyoulegou.cn/';
-window.IMG_URL = 'http://center.youyoulegou.cn/';
-window.URL = 'http://center.youyoulegou.cn/';
+window.API_URL = 'http://mapi.fzxbwl.com/';
+window.IMG_URL = 'http://center.fzxbwl.com/';
+window.URL = 'http://center.fzxbwl.com/';
 const request = window.API_URL;
 const imgRequest = window.URL;
 
@@ -158,7 +158,8 @@ const config = {
     // 客服中心 ---  学邦新闻资讯模块
     articleLists: request + 'Article/lists', // 文章列表
     articleInfo: request + 'Article/info', // 文章详情
-    categoryLists: request + 'Article/categoryLists', // 文章分类
+    categoryLists: request + 'Article/categoryHome', // 文章分类 Article/categoryLists
+    categoryHome: request + 'Article/categoryHome', // 文章分类
     Newsinfo: request + userModuleIndex + 'News/info', // 消息详情
     collectArticle: request + userModuleIndex + 'user/collect/articleid', // 收藏新闻 +id
     myCollectList: request + userModuleIndex + 'user/collectlist', // 我的收藏列表

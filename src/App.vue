@@ -25,6 +25,10 @@ export default {
           })
           var first = null;
           mui.back = function () {
+              var wv = plus.webview.getWebviewById('whh-second-wv')
+              if(wv){
+                  plus.webview.close(wv);
+              }
               if (!first) {
                   first = new Date().getTime();  //记录第一次按下返回键的时间
                   mui.toast('再按一次退出应用');

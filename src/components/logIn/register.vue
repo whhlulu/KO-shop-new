@@ -26,29 +26,34 @@
                 <span class="icon"></span>
                 <input type="password" placeholder="请再次输入密码...." v-model="re_password">
             </div>
-            <div class="input-main message">
-                <span class="icon"></span>
-                <input type="text" placeholder="请输入邮箱地址" v-model="email">
-            </div>
             <div class="input-main school" @click="editSchool">
                 <input type="text" placeholder="请选择学校" v-model="schoolValue">
             </div>
             <mt-popup
                     v-model="popupVisible"
                     position="bottom">
-                <div id="listBtn" style="overflow:hidden">
+                <div class="listBtn" style="overflow:hidden">
                     <button   @click.stop="btmValues(1)">清除</button>
                     <button style="float:right"  @click.stop="btmValues(2)">确认</button>
                 </div>
                 <mt-picker :slots="slots" @change="onSchoolChange"></mt-picker>
             </mt-popup>
             <div class="input-main grade-clazz">
-                <input class="grade" type="text" placeholder="请选择年级" v-model="grade">
-                <input class="clazz" type="text" placeholder="请输入班级" v-model="clazz">
+                <input class="grade" type="text" placeholder="请选择年级班级" v-model="gradeClazzValue" @click="editGradeClazz">
+                <input class="student" type="text" placeholder="请输入学生姓名" v-model="student">
             </div>
-            <div class="input-main student">
+            <mt-popup
+                    v-model="popupVisibleG"
+                    position="bottom">
+                <div class="listBtn" style="overflow:hidden">
+                    <button   @click.stop="btmValuesG(1)">清除</button>
+                    <button style="float:right"  @click.stop="btmValuesG(2)">确认</button>
+                </div>
+                <mt-picker :slots="slotsG" @change="onGradeClazzChange"></mt-picker>
+            </mt-popup>
+            <div class="input-main message">
                 <span class="icon"></span>
-                <input type="text" placeholder="请输入学生姓名" v-model="student">
+                <input type="text" placeholder="请输入邮箱地址(选填)" v-model="email">
             </div>
             <!--<div class="input-main rec">-->
                 <!--<span class="icon"></span>-->
@@ -65,6 +70,7 @@
     import { Toast, Popup, Picker  } from 'mint-ui';
     import Qs from 'qs'
     import schoolList from './school'
+    import {gradeList, clazzList} from './clazz'
     export default {
         name : 'register',
         data(){
@@ -87,6 +93,24 @@
                         textAlign: 'center'
                     }
                 ],
+                popupVisibleG: false,
+                slotsG: [
+                    {
+                        flex: 1,
+                        values: gradeList,
+                        className: 'slot1',
+                        textAlign: 'center'
+                    }, {
+                        divider: true,
+                        content: '-',
+                        className: 'slot2'
+                    }, {
+                        flex: 1,
+                        values: clazzList,
+                        className: 'slot3',
+                        textAlign: 'center'
+                    }
+                ],
                 title:this.$constant.mainTitle+'注册',
                 username : '',
                 mobile:'',
@@ -101,7 +125,10 @@
                 school:'',
                 schoolValue:'',
                 grade:'',
+                gradeValue:'',
                 clazz:'',
+                clazzValue:'',
+                gradeClazzValue:'',
                 student:'',
             }
         },
@@ -121,6 +148,28 @@
                 }
                 if(index == 2){
                     this.schoolValue = this.school
+                }
+            },
+            editGradeClazz(){
+                this.popupVisibleG = true;
+            },
+            onGradeClazzChange(picker, values) {
+                this.grade = values[0];
+                this.clazz = values[1];
+            },
+            btmValuesG(index){
+                this.popupVisibleG =false;
+                if(index == 1){
+                    this.grade = '';
+                    this.gradeValue = '';
+                    this.clazz = '';
+                    this.clazzValue = '';
+                    this.gradeClazzValue = '';
+                }
+                if(index == 2){
+                    this.gradeValue = this.grade;
+                    this.clazzValue = this.clazz;
+                    this.gradeClazzValue = this.grade + '-' + this.clazz;
                 }
             },
             remove(){
@@ -186,10 +235,13 @@
                     Toast("请输入至少6位的确认密码");
                     return false;
                 }
-                if(!/^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/.test(this.email)){
-                    Toast("请输入邮箱地址");
-                    return false;
+                if(this.email!=''){
+                    if(!/^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/.test(this.email)){
+                        Toast("请输入正确的邮箱地址");
+                        return false;
+                    }
                 }
+
                   this.axios({
                     method: 'post',
                     url: this.$httpConfig.register,
@@ -201,8 +253,8 @@
                         password:this.password,
                         re_password:this.re_password,
                         schoole:this.schoolValue,
-                        grade:this.grade,
-                        class:this.clazz,
+                        grade:this.gradeValue,
+                        class:this.clazzValue,
                         student_name:this.student,
                     })
                 }).then((res) => {
@@ -233,7 +285,7 @@
     }
 </style>
 <style lang="less" scoped>
-    #listBtn{
+    .listBtn{
         z-index: 1;
         border-bottom: 1/100rem solid #ccc;
         button{
@@ -305,14 +357,9 @@
                 .grade{
                     width: 49%;
                 }
-                .clazz{
+                .student{
                     width: 49%;
                     float: right;
-                }
-            }
-            .student{
-                input{
-                    text-indent:.4rem;
                 }
             }
             .userName{

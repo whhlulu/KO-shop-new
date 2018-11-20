@@ -9,7 +9,7 @@
                 <el-row :gutter="20">
                     <el-col :span="12" v-for="(newItem,index) in item.data">
                         <div class="new-item">
-                            <img class="v-img" v-lazy="IMG_URL + newItem.pic_url">
+                            <img class="v-img" v-lazy="IMG_URL + newItem.pic_url" @click="goLink(newItem)">
                             <div class="title">{{newItem.name}}</div>
                         </div>
                     </el-col>
@@ -33,12 +33,37 @@
         methods: {
             link(id, name){
                 // 判断数据是否需要更新
-                if (sessionStorage.getItem('KOlist_index') && sessionStorage.getItem('KOlist_index') != id) {
-                    this.getAllNewList(id)
-                }
+//                if (sessionStorage.getItem('KOlist_index') && sessionStorage.getItem('KOlist_index') != id) {
+//                    console.log('点击调用')
+//                    this.getAllNewList(id)
+//                }
                 sessionStorage.setItem('KOlist_name', name)
                 this.$router.push({
                     path: `/KOlist/${id}`
+                });
+            },
+            goLink(item){
+                window.mui.openWindow({
+                    url: IMG_URL+item.video,
+                    id: 'whh-second-wv',
+                    styles: {                             // 窗口参数 参考5+规范中的WebviewStyle,也就是说WebviewStyle下的参数都可以在此设置
+                        titleNView: {                       // 窗口的标题栏控件
+                            titleText:item.name||"推荐视频",                // 标题栏文字,当不设置此属性时，默认加载当前页面的标题，并自动更新页面的标题
+                            titleColor:"#000000",             // 字体颜色,颜色值格式为"#RRGGBB",默认值为"#000000"
+                            titleSize:"17px",                 // 字体大小,默认17px
+                            backgroundColor:"#F7F7F7",        // 控件背景颜色,颜色值格式为"#RRGGBB",默认值为"#F7F7F7"
+                            progress:{                        // 标题栏控件的进度条样式
+                                color:"#00FF00",                // 进度条颜色,默认值为"#00FF00"
+                                height:"2px",                    // 进度条高度,默认值为"2px"
+                            },
+                            homeButton: true,
+                            autoBackButton: true,
+                            splitLine:{                       // 标题栏控件的底部分割线，类似borderBottom
+                                color:"#CCCCCC",                // 分割线颜色,默认值为"#CCCCCC"
+                                height:"1px"                    // 分割线高度,默认值为"2px"
+                            }
+                        }
+                    }
                 });
             },
             getAllNewList(id){
@@ -51,7 +76,7 @@
                 this.$store.state.KOAllno_data = false;
                 this.$store.state.KOAllslidingSwitch = true;
                 this_.$store.state.AllNewList = [];
-                var KOlistCurType = sessionStorage.getItem('KOlistCurType') || '1'
+                var KOlistCurType = sessionStorage.getItem('KOlistCurType') || '2'
                 this.axios({
                     url: `${this.$httpConfig.articleLists}/cid/${id}/page/${this_.$store.state.KOAllpage}/type/${KOlistCurType}`,
                     method: 'get',

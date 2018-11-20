@@ -81,7 +81,7 @@
             goAd(address){
                 window.mui.openWindow({
                     url: address,
-                    id: 'xu-nav',
+                    id: 'whh-second-wv',
                     styles: {                             // 窗口参数 参考5+规范中的WebviewStyle,也就是说WebviewStyle下的参数都可以在此设置
                         titleNView: {                       // 窗口的标题栏控件
                             titleText:"推荐视频",                // 标题栏文字,当不设置此属性时，默认加载当前页面的标题，并自动更新页面的标题
@@ -92,6 +92,7 @@
                                 color:"#00FF00",                // 进度条颜色,默认值为"#00FF00"
                                 height:"2px",                    // 进度条高度,默认值为"2px"
                             },
+                            homeButton: true,
                             autoBackButton: true,
                             splitLine:{                       // 标题栏控件的底部分割线，类似borderBottom
                                 color:"#CCCCCC",                // 分割线颜色,默认值为"#CCCCCC"

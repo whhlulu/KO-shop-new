@@ -32,7 +32,7 @@
             <div class="nav-type">
                 <el-dropdown trigger="click"  @command="handleCommand">
                     <span class="el-dropdown-link">
-                        {{this.KOlistCurTypeData=='2'?'视频':'图文'}}
+                        {{this.KOlistCurTypeData=='1'?'图文':'视频'}}
                         <i class="el-icon-arrow-down el-icon--right"></i>
                     </span>
                     <el-dropdown-menu slot="dropdown">
@@ -45,7 +45,7 @@
         </div>
         <div class="new-list-scroll">
             <new-list :newList="$store.state.AllNewList"></new-list>
-            <div class="comm-null" v-if="$store.state.AllNewList.length===0">
+            <div class="comm-null" v-if="$store.state.AllNewList.length===0 && !$store.state.KOAllqueryLoading">
                 <div class="con-wrap text-center">
                     <img src="../../assets/null_com.png">
                     <p>暂时没有资讯</p>
@@ -53,8 +53,8 @@
             </div>
             <p class="page-infinite-loading" v-show="$store.state.KOAllqueryLoading">
                 <mt-spinner type="fading-circle" color="#666" :size="20" v-show="$store.state.KOAllmoreLoading"></mt-spinner>
-                <span style="font-size:.2rem;color:#666;" v-show="$store.state.KOAllallLoaded">暂无更多数据</span>
-                <span style="font-size:.2rem;color:#666;" v-show="$store.state.KOAllloading">加载中...</span>
+                <span style="font-size:.28rem;color:#666;" v-show="$store.state.KOAllallLoaded">暂无更多数据</span>
+                <span style="font-size:.28rem;color:#666;" v-show="$store.state.KOAllloading">加载中...</span>
             </p>
         </div>
     </div>
@@ -78,16 +78,18 @@
             newList,
         },
         mounted() {
+            //document.body.scrollTop = 0;
             var this_ = this;
             //判断是否需要重新请求分类数据
             if(this.$store.state.categoryLists.length===0){
                 this.getCategoryLists();
             }
             //第一次请求首页数据, 数据是否是同一个分类由进入时判断
-            if(this.$store.state.AllNewList.length===0){
+            if(this.$store.state.AllNewList.length===0 || (this.$store.state.AllNewList[0].article_category_id!=this.$route.params.type)){
+                console.log('内部')
                 this.getAllNewList();
             }
-            // document.body.scrollTop = 0;
+
             // 注册scroll事件并监听
             window.addEventListener('scroll', () => {
                 if (this_.scrollWatch) {
@@ -177,14 +179,14 @@
             getAllNewList(){
                 var this_ = this;
                 this.$store.state.KOAllpage = 1; //初始页
-                this.$store.state.KOAllqueryLoading = false; //整个加载的框
+                this.$store.state.KOAllqueryLoading = true; //整个加载的框
                 this.$store.state.KOAllallLoaded = false;
-                this.$store.state.KOAllmoreLoading = false;
-                this.$store.state.KOAllloading = false;
+                this.$store.state.KOAllmoreLoading = true;
+                this.$store.state.KOAllloading = true;
                 this.$store.state.KOAllno_data = false;
                 this.$store.state.KOAllslidingSwitch = true;
                 this_.$store.state.AllNewList=[];
-                var KOlistCurType = sessionStorage.getItem('KOlistCurType') || '1'
+                var KOlistCurType = sessionStorage.getItem('KOlistCurType') || '2'
                 this.axios({
                     url:`${this.$httpConfig.articleLists}/cid/${this.$route.params.type}/page/${this_.$store.state.KOAllpage}/type/${KOlistCurType}`,
                     method:'get',

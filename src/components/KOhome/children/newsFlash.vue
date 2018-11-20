@@ -39,7 +39,7 @@
                 this.$store.state.KOAllno_data = false;
                 this.$store.state.KOAllslidingSwitch = true;
                 this_.$store.state.AllNewList=[];
-                var KOlistCurType = sessionStorage.getItem('KOlistCurType') || '1'
+                var KOlistCurType = sessionStorage.getItem('KOlistCurType') || '2'
                 this.axios({
                     url:`${this.$httpConfig.articleLists}/cid/${id}/page/${this_.$store.state.KOAllpage}/type/${KOlistCurType}`,
                     method:'get',

@@ -49,7 +49,7 @@ Vue.prototype.IMG_URL = window.IMG_URL;
 Vue.prototype.WX_URL = WX_URL;
 // Vue.prototype.load_wrap = load_wrap;
 
-Vue.prototype.mui = mui
+window.mui = mui
 // Element
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'

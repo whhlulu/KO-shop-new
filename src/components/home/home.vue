@@ -4,23 +4,23 @@
 		<home-header :userName="getData"></home-header>
 		<mt-swipe :auto="3000">
 			<mt-swipe-item v-for="item in this.$store.state.home_data.banner" :key="item.id">
-			<img class="home-banner-img" :src="URL + item.pic_url"  @click="goAd(item.ad_link)" />
+			<img class="home-banner-img" :src="URL + item.pic_url"  @click="goAd(item.ad_link, item.title)" />
 
 			</mt-swipe-item>
 		</mt-swipe>
 		<!-- 快捷链接加快讯 -->
-		<news-flash :nav="$store.state.home_data.nav" :data="$store.state.home_data.announcement" @hit='hit'></news-flash>
+		<!--<news-flash :nav="$store.state.home_data.nav" :data="$store.state.home_data.announcement" @hit='hit'></news-flash>-->
 		<!-- 店铺街 -->
 		<!--<limited-hd :text="$store.state.home_data.recommendGoods"></limited-hd>-->
 		<ul class="floor">
 			<li class="floor-item" v-for="(item,index) in floorList" :key="index">
 				<div class="top">
 					<div class="title fl">{{item.class.class_name}}</div>
-					<span @click="more(item)" class="more fr">更多
-    					<em><i></i><b></b></em>    					
-    				</span>
+					<!--<span @click="more(item)" class="more fr">更多-->
+    					<!--<em><i></i><b></b></em>    					-->
+    				<!--</span>-->
 				</div>
-				<div class="image-ad" @click="goAd(adList[index].ad_link)">
+				<div class="image-ad" @click="goAd(adList[index].ad_link, '活动指南')">
 					<img v-if="adList[index]"  :src="URL+adList[index].pic_url" />
 				</div>
 				<div class="goods-box">
@@ -114,8 +114,29 @@
 			});			
 		},
 		methods: {
-			goAd(address){
-				window.open(address);
+			goAd(address,name){
+                window.mui.openWindow({
+                    url: address,
+                    id: 'whh-second-wv',
+                    styles: {                             // 窗口参数 参考5+规范中的WebviewStyle,也就是说WebviewStyle下的参数都可以在此设置
+                        titleNView: {                       // 窗口的标题栏控件
+                            titleText:name||"新页面",                // 标题栏文字,当不设置此属性时，默认加载当前页面的标题，并自动更新页面的标题
+                            titleColor:"#000000",             // 字体颜色,颜色值格式为"#RRGGBB",默认值为"#000000"
+                            titleSize:"17px",                 // 字体大小,默认17px
+                            backgroundColor:"#F7F7F7",        // 控件背景颜色,颜色值格式为"#RRGGBB",默认值为"#F7F7F7"
+                            progress:{                        // 标题栏控件的进度条样式
+                                color:"#00FF00",                // 进度条颜色,默认值为"#00FF00"
+                                height:"2px",                    // 进度条高度,默认值为"2px"
+                            },
+                            homeButton: true,
+                            autoBackButton: true,
+                            splitLine:{                       // 标题栏控件的底部分割线，类似borderBottom
+                                color:"#CCCCCC",                // 分割线颜色,默认值为"#CCCCCC"
+                                height:"1px"                    // 分割线高度,默认值为"2px"
+                            }
+                        }
+                    }
+                });
 			},
 			getFloor(){
 				if(this.isRepeat && this.currentPage == 1){

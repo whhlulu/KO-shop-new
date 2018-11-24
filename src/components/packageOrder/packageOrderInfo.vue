@@ -61,7 +61,7 @@
 					<span class="fr price">￥{{parseFloat(order.price_sum||0)}}</span>
 				</p>
 				<p class="clearfix">
-					<span class="fl name">运费</span>
+					<span class="fl name">配送费</span>
 					<span class="fr price">+ <em>￥{{order.shipping_monery||0}}</em></span>
 				</p>
 				<p class="clearfix">

@@ -4,7 +4,7 @@
         <home-header :userName="getData"></home-header>
         <mt-swipe :auto="3000">
             <mt-swipe-item v-for="item in this.$store.state.KOhome_data.banner" :key="item.id">
-                <img class="home-banner-img" :src="IMG_URL + item.pic_url"  @click="goAd(item.ad_link)" />
+                <img class="home-banner-img" :src="IMG_URL + item.pic_url"  @click="goAd(item.ad_link, item.title)" />
                 <!--<div class="swipe-title">dadsad</div>-->
             </mt-swipe-item>
         </mt-swipe>
@@ -78,13 +78,13 @@
                     console.log(err);
                 });
             },
-            goAd(address){
+            goAd(address,name){
                 window.mui.openWindow({
                     url: address,
                     id: 'whh-second-wv',
                     styles: {                             // 窗口参数 参考5+规范中的WebviewStyle,也就是说WebviewStyle下的参数都可以在此设置
                         titleNView: {                       // 窗口的标题栏控件
-                            titleText:"推荐视频",                // 标题栏文字,当不设置此属性时，默认加载当前页面的标题，并自动更新页面的标题
+                            titleText:name||"推荐视频",                // 标题栏文字,当不设置此属性时，默认加载当前页面的标题，并自动更新页面的标题
                             titleColor:"#000000",             // 字体颜色,颜色值格式为"#RRGGBB",默认值为"#000000"
                             titleSize:"17px",                 // 字体大小,默认17px
                             backgroundColor:"#F7F7F7",        // 控件背景颜色,颜色值格式为"#RRGGBB",默认值为"#F7F7F7"

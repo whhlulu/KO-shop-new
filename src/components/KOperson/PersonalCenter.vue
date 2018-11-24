@@ -29,6 +29,7 @@
     </div>
 </template>
 <script>
+    import { Toast,Picker, MessageBox } from 'mint-ui';
     import qs from 'qs';
     import '../../config/getUrlParm.js';
     export default {
@@ -49,9 +50,22 @@
         components: {},
         methods: {
             toLink(link){
-                this.$router.push({
-                    path: link
-                });
+                if(link=='/customer'){
+                    MessageBox({
+                        title: '客服电话',
+                        message: '15079004857',
+                        confirmButtonText: '呼叫',
+                        showCancelButton: true
+                    }).then(action => {
+                        if(action == "confirm") window.location.href = "tel:15079004857"
+                    })
+                }else if(link=='/KOListFoot'){
+                    Toast('尽请期待');
+                }else {
+                    this.$router.push({
+                        path: link
+                    });
+                }
             }
         },
         created(){

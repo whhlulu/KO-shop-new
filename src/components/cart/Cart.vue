@@ -5,9 +5,9 @@
 			<!-- ({{nav[0].number+nav[1].number}}) -->
 			<router-link to="/myNews"><span></span></router-link>
 		</header>
-		<ul class="nav">
-			<li @click="selectNav(index)" :class="{active:item.isSelected}" :key="index" v-for="(item,index) in nav">{{item.name}}</li>
-		</ul>
+		<!--<ul class="nav">-->
+			<!--<li @click="selectNav(index)" :class="{active:item.isSelected}" :key="index" v-for="(item,index) in nav">{{item.name}}</li>-->
+		<!--</ul>-->
 		<div class="cart-active text-center" v-show="$store.state.no_data">
 			<img src="../../assets/cart.png">
 			<p class="text">您的购物车还没有宝贝哦，

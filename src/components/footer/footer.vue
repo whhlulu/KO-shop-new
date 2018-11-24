@@ -16,10 +16,15 @@
             return {
                 isClass:sessionStorage.getItem('router_index'),
                 tabbar:{
-                    isIcon:[require('@/assets/images/home_icon_active.png'),require('@/assets/images/class_icon_active.png'),require('@/assets/images/cart_icon_active.png'),require('@/assets/images/per_icon_active.png')],
-                    Icon:[require('@/assets/images/home_icon.png'),require('@/assets/images/class_icon.png'),require('@/assets/images/cart_icon.png'),require('@/assets/images/per_icon.png')],
-                    font:['首页','分类','购物车','我的']
-                }
+                    isIcon:[require('@/assets/images/home_icon_active.png'),require('@/assets/images/cart_icon_active.png'),require('@/assets/images/per_icon_active.png')],
+                    Icon:[require('@/assets/images/home_icon.png'),require('@/assets/images/cart_icon.png'),require('@/assets/images/per_icon.png')],
+                    font:['首页','购物车','我的']
+                },
+//                tabbar:{
+//                    isIcon:[require('@/assets/images/home_icon_active.png'),require('@/assets/images/class_icon_active.png'),require('@/assets/images/cart_icon_active.png'),require('@/assets/images/per_icon_active.png')],
+//                    Icon:[require('@/assets/images/home_icon.png'),require('@/assets/images/class_icon.png'),require('@/assets/images/cart_icon.png'),require('@/assets/images/per_icon.png')],
+//                    font:['首页','分类','购物车','我的']
+//                }
             }
         },
         methods:{
@@ -30,17 +35,17 @@
                             path:'/home'
                         });
                         break;
+//                    case 1:
+//                        this.$router.push({
+//                            path:'/class'
+//                        });
+//                        break;
                     case 1:
-                        this.$router.push({
-                            path:'/class'
-                        });
-                        break;
-                    case 2:
                         this.$router.push({
                             name: 'Cart'
                         });
                         break;
-                    case 3:
+                    case 2:
                         this.$router.push({
                             path:'/person'
                         });
@@ -74,7 +79,7 @@
             box-shadow: border-box;
             z-index:99999999;
             li{
-                width:25%;
+                width:33.33%;
                 text-align:center;
                 
                 .font{
@@ -120,19 +125,19 @@
                     height:.37rem;
                 }
             }
+            /*li:nth-child(2){*/
+                /*img{*/
+                    /*width:.43rem;*/
+                    /*height:.32rem;*/
+                /*}*/
+            /*}*/
             li:nth-child(2){
-                img{
-                    width:.43rem;
-                    height:.32rem;
-                }
-            }
-            li:nth-child(3){
                 img{
                     width:.54rem;
                     height:.41rem;
                 }
             }
-            li:nth-child(4){
+            li:nth-child(3){
                 img{
                     width:.35rem;
                     height:.4rem;

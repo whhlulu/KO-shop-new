@@ -12,7 +12,7 @@
             <li class="clearfix" v-for="item in data[status-1]" :class="{green:status == 3 &&item.money >= 150 ,yellow:status == 3 &&item.money <= 50,origin:status == 3 &&item.money > 50 &&item.money <150,gray:status == 1 || status == 2}">
                 <div class="fl item-pull-left">
                     <h2>{{item.name}}</h2>
-                    <p class="status">(不包含运费)</p>
+                    <p class="status">(不包含配送费)</p>
                     <p class="term">使用期限</p>
                     <p class="timer">{{item.use_start_time}} -- {{item.use_end_time}}</p>
                 </div>

@@ -63,7 +63,7 @@
 				<span class="fr">￥{{goods_data.price_member * goods_data.goods_num}}</span>
 			</div>
 			<div class="freight price clearfix">
-				<span class="fl">运费</span>
+				<span class="fl">配送费</span>
 				<span class="fr">+&nbsp;&nbsp;<i>￥{{freight}}</i></span>
 			</div>
 			<div class="freight price clearfix">
@@ -248,6 +248,9 @@
 								invoiceData[this.goods_data.store_id] = {translate:0};
 								this.invoiceGroup = invoiceData;
 							}
+						}else{
+						    this.$router.go(-1)
+						    Toast(res.data.message)
 						}
 					}).catch((err) => {
 						console.log(err);

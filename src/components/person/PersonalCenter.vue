@@ -58,6 +58,7 @@
     </div>
 </template>
 <script>
+    import { Toast, Picker, MessageBox } from 'mint-ui';
     import qs from 'qs';
     import Shopsn from '@/components/page/Shopsn.vue';
     import '../../config/getUrlParm.js';
@@ -66,22 +67,14 @@
         data(){
             return {
                 more:{
-                     name:['优惠券','我的积分','我的收藏','足迹','我的拍卖','我的钱包','我的发票','我要开店','我的评价','收货地址','客服中心','意见反馈','套餐订单','积分订单'],
+                     name:['我的收藏','足迹','我的评价','收货地址','客服中心','意见反馈'],
                     icon:[
-                        require('@/assets/images/coupon.png'),
-                        require('@/assets/images/intmall.png'),
                         require('@/assets/images/collection.png'),
                         require('@/assets/images/footprint.png'),
-                        require('@/assets/images/auction.png'),
-                        require('@/assets/images/wallet.png'),
-                        require('@/assets/images/invoice.png'),
-                        require('@/assets/images/shop.png'),
                         require('@/assets/images/asses.png'),
                         require('@/assets/images/myAdvice.png'),
                         require('@/assets/images/service.png'),
                         require('@/assets/images/opinion.png'),
-                        require('@/assets/images/package-0.png'),
-                        require('@/assets/images/intmall_order.png')
                     ],
                 },
                 scrollWatch:false,
@@ -147,30 +140,15 @@
                 }else{
                     switch(link){
                         case 0:
-                            this.$router.push('/coupon');
-                            break;
-                        case 1:
-                            this.$router.push('/Integral')
-                            break;
-                        case 2:
                             this.$router.push('/Collection');
                             break;
-                        case 3:
+                        case 1:
                             this.$router.push('/footprint')
                             break;
-                        case 5:
-                            this.$router.push('/myWallet')
-                            break;
-                        case 6:
-                            this.$router.push('/documents')
-                            break;
-                        case 7:
-                            this.$router.push('/shopOpen')
-                            break;
-                        case 8:
+                        case 2:
                             this.$router.push('/myComment')
                             break;
-                        case 9:
+                        case 3:
                             this.$router.push({
                                 name:'address',
                                 params:{
@@ -178,22 +156,19 @@
                                 }
                             });
                             break;
-                        case 10:
-                            this.$router.push('/customer');
+                        case 4:
+                            MessageBox({
+                                title: '客服电话',
+                                message: '15079004857',
+                                confirmButtonText: '呼叫',
+                                showCancelButton: true
+                            }).then(action => {
+                                if(action == "confirm") window.location.href = "tel:15079004857"
+                            })
+                            //this.$router.push('/customer');
                             break;
-                        case 11:
+                        case 5:
                             this.$router.push('/Feedback');
-                            break;
-                        case 12:
-                            this.$router.push({
-                                name:'packageList',
-                                params:{
-                                    id:0
-                                    }
-                            });
-                            break;
-                        case 13:
-                            this.$router.push('/intOrder');
                             break;
                     }
                 }
@@ -515,86 +490,38 @@
             }
             &:nth-child(1){
                 img{
-                    width:.7rem;
-                    height:.51rem;
-                }
-            }
-            &:nth-child(2){
-                img{
-                    width:.49rem;
-                    height:.51rem;
-                }
-            }
-            &:nth-child(3){
-                img{
                     width:.46rem;
                     height:.5rem;
                 }
             }
-            &:nth-child(4){
+            &:nth-child(2){
                 img{
                     width:.45rem;
                     height:.55rem;
                 }
             }
-            &:nth-child(5){
-                img{
-                    width:.67rem;
-                    height:.61rem;
-                }
-            }
-            &:nth-child(6){
-                img{
-                    width:.52rem;
-                    height:.5rem;
-                }
-            }
-            &:nth-child(7){
-                img{
-                    width:.54rem;
-                    height:.43rem;
-                }
-            }
-            &:nth-child(8){
-                img{
-                    width:.5rem;
-                    height:.49rem;
-                }
-            }
-            &:nth-child(9){
+            &:nth-child(3){
                 img{
                     width:.53rem;
                     height:.53rem;
                 }
             }
-            &:nth-child(10){
+            &:nth-child(4){
                 img{
                     width:.58rem;
                     height:.52rem;
                 }
             }
-            &:nth-child(11){
+            &:nth-child(5){
                 img{
                     width:.61rem;
                     height:.57rem;
                 }
             }
-            &:nth-child(12){
+            &:nth-child(6){
                 img{
                     width:.48rem;
                     height:.48rem;
-                }
-            }
-            &:nth-child(13){
-                img{
-                    width:.6rem;
-                    height:.61rem;
-                }
-            }
-            &:nth-child(14){
-                img{
-                    width: .7rem;
-                    height: .72rem;
                 }
             }
             &:nth-child(4n){

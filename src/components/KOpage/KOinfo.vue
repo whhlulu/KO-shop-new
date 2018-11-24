@@ -92,6 +92,10 @@
         img{
            width: 300px!important;
         }
+        .video-js {
+            width: 320px;
+            height: auto;
+        }
     }
 
 </style>

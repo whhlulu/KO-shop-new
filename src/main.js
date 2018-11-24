@@ -104,13 +104,13 @@ router.beforeEach((to, from, next) => {
             }
             break;
         case 'class':
-            sessionStorage.setItem('router_index', 1);
+            sessionStorage.setItem('router_index', 4);
             break;
         case 'Cart':
-            sessionStorage.setItem('router_index', 2);
+            sessionStorage.setItem('router_index', 1);
             break;
         case 'person':
-            sessionStorage.setItem('router_index', 3);
+            sessionStorage.setItem('router_index', 2);
             break;
     };
     next();

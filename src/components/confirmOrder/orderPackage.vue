@@ -75,7 +75,7 @@
 				<span class="fr">-&nbsp;&nbsp;<i>￥{{favorable_price|keepTwoNum}}</i></span>
 			</div>
 			<div class="freight price clearfix">
-				<span class="fl">运费</span>
+				<span class="fl">配送费</span>
 				<span class="fr">+&nbsp;&nbsp;<i>￥{{freight}}</i></span>
 			</div>
 			<div class="freight price clearfix">

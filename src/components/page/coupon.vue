@@ -12,7 +12,7 @@
             <li class="clearfix" v-for="item in data" :key="item.id" :class="{yellow:status == 3,gray:status == 1 || status == 2}">
                 <div class="fl item-pull-left">
                     <h2>{{item.name}}</h2>
-                    <p class="status">(不包含运费)</p>
+                    <p class="status">(不包含配送费)</p>
                     <p class="term">使用期限</p>
                     <p class="timer">{{new Date(item.use_start_time * 1000).getFullYear()+'.'+(new Date(Number(item.use_start_time * 1000)).getMonth()+1)+'.'+new Date(Number(item.use_start_time * 1000)).getDate()}}  --  {{new Date(item.use_end_time * 1000).getFullYear()+'.'+(new Date(Number(item.use_end_time * 1000)).getMonth()+1)+'.'+new Date(Number(item.use_end_time * 1000)).getDate()}}</p>
                 </div>

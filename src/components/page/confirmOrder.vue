@@ -56,7 +56,7 @@
                 <span class="fr">-&nbsp;&nbsp;<i>￥0</i></span>
             </div>
             <div class="freight price clearfix" v-if="$route.params.id != 3">
-                <span class="fl">运费</span>
+                <span class="fl">配送费</span>
                 <span class="fr">+&nbsp;&nbsp;<i>￥{{data.freight}}</i></span>
             </div>
             <div class="freight price clearfix" v-if="$route.params.id != 3">

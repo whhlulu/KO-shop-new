@@ -1,10 +1,13 @@
 <template>
     <div class="header">
-        <!--<router-link to="/KOhome" class="header_logo"></router-link>-->
-        <div class="header_seek" @click="searchIn">
-            <img class="header_seek_img" :src="seekImg" alt="搜素img">
-            <input type="text" disabled placeholder="搜索资讯、视频...">
+        <div class="title">
+            学邦教育平台
         </div>
+        <!--<router-link to="/KOhome" class="header_logo"></router-link>-->
+        <!--<div class="header_seek" @click="searchIn">-->
+            <!--<img class="header_seek_img" :src="seekImg" alt="搜素img">-->
+            <!--<input type="text" disabled placeholder="搜索资讯、视频...">-->
+        <!--</div>-->
         <!--<div class="header_news">-->
             <!--&lt;!&ndash; <router-link to="">-->
                 <!--<img class="header_news_RichScan" :src="RichScan" alt="扫一扫img">-->
@@ -57,6 +60,12 @@
         background-color: #D19E29;
         position: relative;
         overflow: hidden;
+        .title{
+            font-size: .34rem;
+            color: #ffffff;
+            text-align: center;
+            line-height: 0.9rem;
+        }
         .header_logo{
             position: absolute;    
             left: 0;

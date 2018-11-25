@@ -273,7 +273,7 @@ const config = {
     packageOrderDetail: request + 'OrderPackage/orderDetail', //套餐订单详情
     packageCancelOrder: request + 'OrderPackage/cancelOrder', //套餐订单取消订单
     packageOrderDel: request + 'OrderPackage/orderDel', //套餐订单删除订单
-    packageBuyAgain: request + 'OrderPackage/buyAgain', //套餐订单再次购买加入购物车
+    packageBuyAgain: request + 'OrderPackage/buyAgain', //套餐订单再次购买加入我的福利
 
 
 

@@ -327,6 +327,9 @@
         .list-main{
             padding-top:.1rem;
         }
+        #pic_article{
+            padding: 16px;
+        }
         #pic_article  img {
             width: 100%;
         }

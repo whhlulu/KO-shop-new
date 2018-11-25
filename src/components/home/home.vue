@@ -1,10 +1,10 @@
 <template>
 	<div class="home" ref="home">
 		<div v-title data-title="主页">主页</div>
-		<home-header :userName="getData"></home-header>
+		<home-header :leftAction="leftAction" :userName="getData"></home-header>
 		<mt-swipe :auto="3000">
 			<mt-swipe-item v-for="item in this.$store.state.home_data.banner" :key="item.id">
-			<img class="home-banner-img" :src="URL + item.pic_url"  @click="goAd(item.ad_link, item.title)" />
+			<img class="home-banner-img" :src="URL + item.pic_url"  @click="goAdInfo(item.ad_link, item.title)" />
 
 			</mt-swipe-item>
 		</mt-swipe>
@@ -59,6 +59,7 @@
 		name: 'home',
 		data() {
 			return {
+			    leftAction: '/KOhome',
 				continuous: true,
 				defaultIndex: 0,
 				showIndicators: true,
@@ -114,6 +115,9 @@
 			});			
 		},
 		methods: {
+            goAdInfo(address,name){
+                window.location.href = address
+			},
 			goAd(address,name){
                 window.mui.openWindow({
                     url: address,

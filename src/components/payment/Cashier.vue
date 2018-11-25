@@ -9,17 +9,17 @@
 					<span>{{$route.params.number}}</span>元</div>
 			</div>
 		</div>
-		<div class="choice" >
-			<span class="span-main">当前余额：<span> {{balance}} </span>元</span>
-		</div>
-		<div class="default-pay">
-			<el-button class="pay-btn" v-for="item in paymentType" v-if="item.is_default == 1" :key="item.id" type="success" @click="paymentMethod(item.id)">
-				{{item.type_name}}
-			</el-button>
-			<span v-else></span>
-		</div>
+		<!--<div class="choice" >-->
+			<!--<span class="span-main">当前余额：<span> {{balance}} </span>元</span>-->
+		<!--</div>-->
+		<!--<div class="default-pay">-->
+			<!--<el-button class="pay-btn" v-for="item in paymentType" v-if="item.is_default == 1" :key="item.id" type="success" @click="paymentMethod(item.id)">-->
+				<!--{{item.type_name}}-->
+			<!--</el-button>-->
+			<!--<span v-else></span>-->
+		<!--</div>-->
 		<dl class="other" v-if="$route.params.id != 3">
-			<dt>其他支付方式</dt>
+			<dt>支付方式</dt>
 			<dd v-if="item.is_default!= 1" v-for="item in paymentType" :key="item.id" class="clearfix" @click="payment(item.id)">
 				<img :src="URL+item.logo" class="fl">
 				<div class="fl pull-right">
@@ -87,8 +87,9 @@
 				});
 			},
 			wechatPay(){
+			    Toast('微信支付正在接入,敬请期待!');
 				console.log('微信支付');
-				window.location.href = this.payData;
+				//window.location.href = this.payData;
 			},
 			aliPay(){
 				console.log('支付宝支付');

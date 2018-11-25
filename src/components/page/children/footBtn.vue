@@ -8,7 +8,7 @@
 				<span v-if="type==2">收藏</span>
 				<span v-else>已收藏</span>
 			</div>
-			<div class="join fl" @click="hide">加入购物车</div>
+			<div class="join fl" @click="hide">加入我的福利</div>
 			<div class="imm fl" @click="buy">立即购买</div>
 		</div>
 	</div>

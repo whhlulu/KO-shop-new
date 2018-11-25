@@ -108,7 +108,7 @@
                                 this_.$store.state.KOAllqueryLoading = true; // 整个加载的框
                                 this_.$store.state.KOAllmoreLoading = true; //转圈动画
                                 this_.$store.state.KOAllloading = true; //加载中
-                                var KOlistCurType = sessionStorage.getItem('KOlistCurType') || '1'
+                                var KOlistCurType = sessionStorage.getItem('KOlistCurType') || '2'
                                 this.axios({
                                     url:`${this.$httpConfig.articleLists}/cid/${this.$route.params.type}/page/${this_.$store.state.KOAllpage}/type/${KOlistCurType}`,
                                     method:'get',

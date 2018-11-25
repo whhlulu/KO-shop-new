@@ -331,15 +331,16 @@
 						}
 					});
 				} else if(to = '/invoice') {
-					sessionStorage.removeItem('invoiceSign');
-					this.clearData();
-					this.$router.push({
-						name: 'invoice',
-						params:{
-							status:3,//3是套餐商品 4是套餐购物车
-							id:id
-						}
-					});
+                    Toast('请联系客服索取！')
+//					sessionStorage.removeItem('invoiceSign');
+//					this.clearData();
+//					this.$router.push({
+//						name: 'invoice',
+//						params:{
+//							status:3,//3是套餐商品 4是套餐购物车
+//							id:id
+//						}
+//					});
 				}else{
 					this.$router.push(to);
 				}

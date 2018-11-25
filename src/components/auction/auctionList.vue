@@ -119,7 +119,7 @@
 				<span class="el-icon-star-off  star"></span>
 				<span class="texts"  v-text="sort" ></span>
 			</p>
-    		<p class="join l button">加入购物车</p>
+    		<p class="join l button">加入我的福利</p>
     		<p class="buy l button">立即购买</p>
        </mt-tabbar>
 	</div>

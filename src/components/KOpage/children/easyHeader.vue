@@ -66,7 +66,6 @@
             display: -webkit-box;
             -webkit-line-clamp: 1;
             -webkit-box-orient: vertical;
-            padding-left: .8rem;
         }
     }
 </style>

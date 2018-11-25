@@ -45,7 +45,7 @@
 	import FootBtn from '@/components/IntegralMall/children/footBtn.vue'; // 底部按钮
 	import PageOption from '@/components/page/children/pageOption.vue';
 	import shopInfor from '@/components/page/children/shopInfor.vue'; // 店铺信息
-	import detailOption from '@/components/page/children/detailOptions.vue'; // 立即购买 || 加入购物车 弹框
+	import detailOption from '@/components/page/children/detailOptions.vue'; // 立即购买 || 加入我的福利 弹框
 	import Shopsn from '@/components/page/Shopsn.vue';
 	import qs from 'qs';
 	import { Popup } from 'mint-ui';	

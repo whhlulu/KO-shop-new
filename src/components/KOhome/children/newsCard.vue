@@ -44,7 +44,7 @@
             },
             goLink(item){
                 window.mui.openWindow({
-                    url: IMG_URL+item.video,
+                    url: 'http://m.fzxbwl.com/#/KOinfo/'+item.id,
                     id: 'whh-second-wv',
                     styles: {                             // 窗口参数 参考5+规范中的WebviewStyle,也就是说WebviewStyle下的参数都可以在此设置
                         titleNView: {                       // 窗口的标题栏控件

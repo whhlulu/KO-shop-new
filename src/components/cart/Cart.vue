@@ -1,7 +1,7 @@
 <template>
 	<div class="goos" ref="cart">
-		<div v-title data-title="我的购物车">我的购物车</div>
-		<header class="cart-header">我的购物车
+		<div v-title data-title="我的福利">我的福利</div>
+		<header class="cart-header">我的福利
 			<!-- ({{nav[0].number+nav[1].number}}) -->
 			<router-link to="/myNews"><span></span></router-link>
 		</header>

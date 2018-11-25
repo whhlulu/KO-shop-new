@@ -1,7 +1,7 @@
 <template>
     <div class="goos">
-        <div v-title data-title="我的购物车">我的购物车</div>
-        <header class="cart-header">我的购物车({{$store.state.cart_data.length}})<router-link to="/myNews"><span></span></router-link></header>
+        <div v-title data-title="我的福利">我的福利</div>
+        <header class="cart-header">我的福利({{$store.state.cart_data.length}})<router-link to="/myNews"><span></span></router-link></header>
         <dl class="mark-wrap" v-if="$store.state.cart_data">
             <dt>shopSN商城
                 <span class="clearfix" @click="deit">

@@ -9,7 +9,7 @@
                     <span class="newPrice fl">￥<em>{{item.price_market}}</em></span>
                     <s class="price fr">￥{{item.price_member}}</s>
                 </div>
-                <button type="button" class="jion" @click="jion(item)">加入购物车&nbsp;></button>
+                <button type="button" class="jion" @click="jion(item)">加入我的福利&nbsp;></button>
             </div>
 
         </div>

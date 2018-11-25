@@ -35,7 +35,7 @@
 						</div>
 				</div>
 				<div class="btn-join clearfix" v-if="$route.params.status == 1">
-					<button class="join fl" @click="join">加入购物车</button>
+					<button class="join fl" @click="join">加入我的福利</button>
 					<button class="fl imm" @click="toOrder">立即购买</button>
 				</div>
 				<div class="btn-join clearfix" v-if="$route.params.status == 2">

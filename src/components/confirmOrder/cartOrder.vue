@@ -343,15 +343,16 @@
 						}
 					});
 				} else if(to = '/invoice1') {
-					sessionStorage.removeItem('invoiceSign');
-					this.clearData();
-					this.$router.push({
-						name: 'invoice',
-						params:{
-							status:2, //1是商品 2是购物车
-							id:id  //店铺id
-						}
-					});
+                    Toast('请联系客服索取！')
+//					sessionStorage.removeItem('invoiceSign');
+//					this.clearData();
+//					this.$router.push({
+//						name: 'invoice',
+//						params:{
+//							status:2, //1是商品 2是购物车
+//							id:id  //店铺id
+//						}
+//					});
 				}else{
 					this.$router.push(to);
 				}

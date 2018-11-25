@@ -215,6 +215,8 @@
                             status:1
                         }
                 });
+                }else if(to == 'invoice'){
+                    Toast('请联系客服索取！')
                 }else{
                    this.$router.push(to);
                 }

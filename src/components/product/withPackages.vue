@@ -22,7 +22,7 @@
         </div>
         <div class="fixedBtm1" v-show="list==0 || list == 2">
             <div class="shopbtn buyShop"  @click="buy">立即购买</div>
-            <div class="shopbtn addShop" @click="addCar">加入购物车</div>
+            <div class="shopbtn addShop" @click="addCar">加入我的福利</div>
         </div>
         <div class="package-box">
             <div class="content-box-package" v-for="(items,i) in accessories" v-bind:key="items.package_id" v-show="list==1">
@@ -47,7 +47,7 @@
         </div>
         <div class="fixedBtm" v-show="list == 1">
             <div class="shopbtn buyShop"  @click="setMealBuy">立即购买</div>
-            <div class="shopbtn addShop" @click="addCar">加入购物车</div>
+            <div class="shopbtn addShop" @click="addCar">加入我的福利</div>
             <div class="con">
                 <p class="title">套餐价：<span class="reds">￥{{showPrice.newPrice | keepTwoNum}}</span> </p>
                 <p class="info">总额:￥{{showPrice.oldPrice | keepTwoNum}}&nbsp;&nbsp;优惠:<span>￥{{showPrice.discount | keepTwoNum}}</span></p>
@@ -283,7 +283,7 @@
             	})
                 
             },
-            //加入购物车
+            //加入我的福利
             addCar(){
                     if(!this.accessories){
                         Toast({

@@ -18,7 +18,7 @@
                 tabbar:{
                     isIcon:[require('@/assets/images/home_icon_active.png'),require('@/assets/images/cart_icon_active.png'),require('@/assets/images/per_icon_active.png')],
                     Icon:[require('@/assets/images/home_icon.png'),require('@/assets/images/cart_icon.png'),require('@/assets/images/per_icon.png')],
-                    font:['首页','购物车','我的']
+                    font:['福利社','我的福利','我的']
                 },
 //                tabbar:{
 //                    isIcon:[require('@/assets/images/home_icon_active.png'),require('@/assets/images/class_icon_active.png'),require('@/assets/images/cart_icon_active.png'),require('@/assets/images/per_icon_active.png')],

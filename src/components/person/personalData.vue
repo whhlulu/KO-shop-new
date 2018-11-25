@@ -34,9 +34,19 @@
 					<span class="userName fr">{{data.sex || '请填写'}}</span>
 					<div class="icon-btn"></div>
 				</li>
-				<li class="clearfix" @click="bir">
-					<span class="userStatus fl">生日</span>
-					<span class="userName fr">{{data.birthday|formatDate}}</span>
+				<!--<li class="clearfix" @click="bir">-->
+					<!--<span class="userStatus fl">生日</span>-->
+					<!--<span class="userName fr">{{data.birthday}}</span>-->
+					<!--<div class="icon-btn"></div>-->
+				<!--</li>-->
+				<li class="clearfix" @click="modify('rechargenum')">
+					<span class="userStatus fl">充值号码</span>
+					<span class="userName fr">{{data.rechargenum|| '请填写激活后的手机卡号'}}</span>
+					<div class="icon-btn"></div>
+				</li>
+				<li class="clearfix" @click="modify('rechargename')">
+					<span class="userStatus fl">充值用户姓名</span>
+					<span class="userName fr">{{data.rechargename|| '请填写'}}</span>
 					<div class="icon-btn"></div>
 				</li>
 			</ul>
@@ -119,11 +129,6 @@ export default {
             } else if (res.data.data.sex == 1) {
               this.data.sex = "男";
             }
-            if (res.data.birthday != 0) {
-              this.data.birthday = Number(res.data.data.birthday);
-            } else {
-              this.data.birthday = res.data.data.birthday;
-            }
           }
         })
         .catch(err => {
@@ -177,6 +182,24 @@ export default {
               console.log(err);
             });
           break;
+          case "rechargenum":
+              MessageBox.prompt("请填写激活后的手机卡号")
+                  .then(({ value, action }) => {
+                      this.data.rechargenum = value;
+                  })
+                  .catch(err => {
+                      console.log(err);
+                  });
+              break;
+          case "rechargename":
+              MessageBox.prompt("请输入充值用户姓名")
+                  .then(({ value, action }) => {
+                      this.data.rechargename = value;
+                  })
+                  .catch(err => {
+                      console.log(err);
+                  });
+              break;
       }
     },
     dataChange(val) {
@@ -234,10 +257,11 @@ export default {
         .post(
           this.$httpConfig.editUserInfo,
           qs.stringify({
-            nick_name: this.data.nick_name,
+              nick_name: this.data.nick_name,
+              rechargenum: this.data.rechargenum,
+              rechargename: this.data.rechargename,
             email: this.data.email,
             sex: sex,
-            birthday: this.data.birthday,
             user_header: this.data.img_url,
             img_new: this.user_header,
             type: this.img_type

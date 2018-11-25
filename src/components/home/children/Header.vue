@@ -1,11 +1,11 @@
 <template>
     <div class="header">
-        <router-link to="/KOhome" class="header_logo"></router-link>
+        <div class="header_logo" @click="goBack(leftAction)"></div>
         <!--<div class="header_seek" @click="searchIn">-->
             <!--<img class="header_seek_img" :src="seekImg" alt="搜素img">-->
             <!--<input type="search" placeholder="搜索宝贝、店铺...">-->
         <!--</div>-->
-        <div class="title">活动专栏</div>
+        <div class="title">{{btn||'活动专栏'}}</div>
         <div class="header_news">
             <!-- <router-link to="">
                 <img class="header_news_RichScan" :src="RichScan" alt="扫一扫img">
@@ -30,7 +30,20 @@
                 advices:require('@/assets/images/advices.png')
             }
         },
+        props: {
+            leftAction:null,
+            btn: null,
+        },
         methods: {
+            goBack(leftAction){
+                if(leftAction){
+                    this.$router.push({
+                        path:leftAction
+                    })
+                }else{
+                    this.$router.go(-1)
+                }
+            },
             searchIn() {
                 this.$router.push({
                     path:'/search'

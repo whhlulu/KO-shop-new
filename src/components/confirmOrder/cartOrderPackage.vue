@@ -351,6 +351,7 @@
 						}
 					});
 				} else if(to = '/invoice1') {
+				    //4是套餐购物车暂时不高
 					this.clearData();
 					let sign = true;
 					sessionStorage.setItem('invoiceSign',sign);

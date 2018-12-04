@@ -25,6 +25,11 @@ export default {
           })
           var first = null;
           mui.back = function () {
+//              var weixin = plus.webview.getWebviewById('whh-weixin')
+//              if(weixin){
+//                  alert(1)
+//                  plus.webview.close(weixin);
+//              }
               var wv = plus.webview.getWebviewById('whh-second-wv')
               if(wv){
                   plus.webview.close(wv);

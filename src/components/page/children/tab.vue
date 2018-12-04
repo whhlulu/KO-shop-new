@@ -50,7 +50,7 @@
                         </div>
                         <div class="list-com">{{item.content}}</div>
                         <div class="list-img-main clearfix" >
-                            <img :class="{'active':isChoose}"  @click="imgScc" :src="URL + items.path" class="fl" v-for="items in item.img" :key="items.id">
+                            <img :class="{'active':isChoose}" :src="URL + items.path" class="fl" v-for="items in item.img" :key="items.id">
                         </div>
                         <div class="list-purTimer">{{item.goods_apace[0].speName}}&nbsp;&nbsp;&nbsp;{{item.goods_apace[0].item }} &nbsp;&nbsp;&nbsp;{{Number(item.create_time)|formatDate}}</div>
                     </div>

@@ -1,0 +1,90 @@
+[2018-11-29 22:29:43 GMT+08:00] <Thread-53>  INFO: Logging to file: H:\testCode\shop\ShopsN1\KO-shop-new\app\unpackage\release\io.dcloud.xuebang_1129220848.ipa_1811292229.log
+[2018-11-29 22:29:43 GMT+08:00] <Thread-53>  INFO: Logging configured successfully.
+[2018-11-29 22:29:43 GMT+08:00] <Thread-53>  INFO: iTMSTransporter : iTunes Store Transporter [1.9.8]
+[2018-11-29 22:29:43 GMT+08:00] <Thread-53>  INFO: OS identifier: Windows 7 6.1 (amd64); jvm=25.171-b11; jre=1.8.0_171-b11
+[2018-11-29 22:29:43 GMT+08:00] <Thread-53>  INFO: Memory: [JVM] 144M free, 187M total, 1796M max [System] (Physical) 3774M free, 8075M total (Swap) 10848M free, 16148M total
+[2018-11-29 22:29:43 GMT+08:00] <Thread-53>  INFO: Upload mode selected.
+[2018-11-29 22:29:43 GMT+08:00] <Thread-53>  INFO: Examining the package at: C:\Users\ADMINI~1\AppData\Local\Temp\au\itmsp\1445027078.itmsp
+[2018-11-29 22:29:43 GMT+08:00] <Thread-53>  INFO: Ensuring that package has well formed metadata file...
+[2018-11-29 22:29:43 GMT+08:00] <Thread-53>  INFO: Gathering the list of valid files from the package ...
+[2018-11-29 22:29:43 GMT+08:00] <Thread-53>  INFO: Finished gathering the list of valid files from the package.
+[2018-11-29 22:29:43 GMT+08:00] <Thread-53>  INFO: Verify progress: Analyzing metadata (Step 0/?)
+[2018-11-29 22:29:43 GMT+08:00] <Thread-53>  INFO: Performing authentication of package 1445027078.itmsp ...
+[2018-11-29 22:29:43 GMT+08:00] <Thread-53>  INFO: Verify progress: Analyzing metadata (Step 1/2)
+[2018-11-29 22:29:43 GMT+08:00] <Thread-53>  INFO: id = 20181129222943-006
+[2018-11-29 22:29:45 GMT+08:00] <Thread-53>  INFO: id = 20181129222945-548
+[2018-11-29 22:29:46 GMT+08:00] <Thread-53>  INFO: The list of files requested for upload by Apple is: [metadata.xml, 1445027078.ipa].  These are the files that will be uploaded.
+[2018-11-29 22:29:46 GMT+08:00] <Thread-53>  INFO: Starting media analysis of assets
+[2018-11-29 22:29:47 GMT+08:00] <Thread-53>  INFO: Verify progress: Adding asset to analyze: 1445027078.ipa (Step 2/3)
+[2018-11-29 22:29:47 GMT+08:00] <Thread-53>  INFO: Asset media analysis has completed
+[2018-11-29 22:29:47 GMT+08:00] <Thread-53>  INFO: id = 20181129222947-439
+[2018-11-29 22:30:13 GMT+08:00] <Thread-53>  INFO: Verify progress: Validating assets (Step 3/3)
+[2018-11-29 22:30:13 GMT+08:00] <Thread-53>  INFO: Verify progress: Validating assets (Step 4/3)
+[2018-11-29 22:30:13 GMT+08:00] <Thread-53>  INFO: id = 20181129223013-609
+[2018-11-29 22:30:59 GMT+08:00] <Thread-53>  INFO: The list of files requested for upload by Apple is: [metadata.xml, 1445027078.ipa].  These are the files that will be uploaded.
+[2018-11-29 22:30:59 GMT+08:00] <Thread-53>  INFO: Done performing authentication.
+[2018-11-29 22:30:59 GMT+08:00] <Thread-53>  INFO: The asset replacement verification check is disabled.
+[2018-11-29 22:30:59 GMT+08:00] <Thread-53>  INFO: Checking the file size of the files: [1445027078.ipa]
+[2018-11-29 22:30:59 GMT+08:00] <Thread-53>  INFO: Done checking the file sizes.
+[2018-11-29 22:30:59 GMT+08:00] <Thread-53>  INFO: Checking the md5 checksum of the files: [1445027078.ipa]
+[2018-11-29 22:30:59 GMT+08:00] <Thread-53>  INFO: Done checking the md5 checksum.
+[2018-11-29 22:30:59 GMT+08:00] <Thread-53>  INFO: Preparing to upload package 1445027078.itmsp ...
+[2018-11-29 22:30:59 GMT+08:00] <Thread-53>  INFO: Starting to upload the package's files (1445027078.itmsp) ...
+[2018-11-29 22:30:59 GMT+08:00] <Thread-53>  INFO: Attempting to connect to Apple's webDAV...
+[2018-11-29 22:31:01 GMT+08:00] <Thread-53>  INFO: Successfully connected to Apple's webDAV.
+[2018-11-29 22:31:01 GMT+08:00] <Thread-53>  INFO: Attempting to create the package's folder on Apple's webDAV: /5/MLVRA7JSKZ/uploading/1445027078-20181129062932-384.itmsp/
+[2018-11-29 22:31:01 GMT+08:00] <Thread-53>  INFO: Successfully created/set the package's folder on Apple's webDAV.
+[2018-11-29 22:31:01 GMT+08:00] <Thread-53>  INFO: Determining which files should be uploaded ...
+[2018-11-29 22:31:01 GMT+08:00] <Thread-53>  INFO: Finished determining which files should be uploaded.
+[2018-11-29 22:31:01 GMT+08:00] <Thread-53>  INFO: Computing total size of files to upload ...
+[2018-11-29 22:31:01 GMT+08:00] <Thread-53>  INFO: Done computing total size of files to upload.
+[2018-11-29 22:31:01 GMT+08:00] <Thread-53>  INFO: Starting upload of file: C:\Users\ADMINI~1\AppData\Local\Temp\au\itmsp\1445027078.itmsp\1445027078.ipa ...
+[2018-11-29 22:31:59 GMT+08:00] <Thread-53>  INFO:      File: 1445027078.ipa 10485760/12220564, 85% completed
+[2018-11-29 22:32:06 GMT+08:00] <Thread-53>  INFO:      File: 1445027078.ipa 12220564/12220564, 100% completed
+[2018-11-29 22:32:06 GMT+08:00] <Thread-53>  INFO:   Successfully uploaded file: C:\Users\ADMINI~1\AppData\Local\Temp\au\itmsp\1445027078.itmsp\1445027078.ipa
+[2018-11-29 22:32:06 GMT+08:00] <Thread-53>  INFO: Package upload progress: 99% completed
+[2018-11-29 22:32:06 GMT+08:00] <Thread-53>  INFO: Finished upload of file: C:\Users\ADMINI~1\AppData\Local\Temp\au\itmsp\1445027078.itmsp\1445027078.ipa.
+[2018-11-29 22:32:06 GMT+08:00] <Thread-53>  INFO: Starting upload of file: C:\Users\ADMINI~1\AppData\Local\Temp\au\itmsp\1445027078.itmsp\metadata.xml ...
+[2018-11-29 22:32:07 GMT+08:00] <Thread-53>  INFO:      File: metadata.xml 523/523, 100% completed
+[2018-11-29 22:32:07 GMT+08:00] <Thread-53>  INFO:   Successfully uploaded file: C:\Users\ADMINI~1\AppData\Local\Temp\au\itmsp\1445027078.itmsp\metadata.xml
+[2018-11-29 22:32:07 GMT+08:00] <Thread-53>  INFO: Package upload progress: 100% completed
+[2018-11-29 22:32:07 GMT+08:00] <Thread-53>  INFO: Finished upload of file: C:\Users\ADMINI~1\AppData\Local\Temp\au\itmsp\1445027078.itmsp\metadata.xml.
+[2018-11-29 22:32:07 GMT+08:00] <Thread-53>  INFO: Gathering list of uploaded files from Apple's webDAV...
+[2018-11-29 22:32:07 GMT+08:00] <Thread-53>  INFO: Done gathering list of uploaded files from Apple's webDAV...
+[2018-11-29 22:32:07 GMT+08:00] <Thread-53>  INFO: Checking if any encryption/compression files are outdated locally ...
+[2018-11-29 22:32:07 GMT+08:00] <Thread-53>  INFO: Finished checking if any encryption/compression files are outdated locally.
+[2018-11-29 22:32:07 GMT+08:00] <Thread-53>  INFO: Confirming that the previously uploaded files were uploaded correctly ...
+[2018-11-29 22:32:07 GMT+08:00] <Thread-53>  INFO: Finished confirming that the previously uploaded files were uploaded correctly.
+[2018-11-29 22:32:07 GMT+08:00] <Thread-53>  INFO: Determining which files were not uploaded ...
+[2018-11-29 22:32:07 GMT+08:00] <Thread-53>  INFO: Finished determining which files were not uploaded.
+[2018-11-29 22:32:07 GMT+08:00] <Thread-53>  INFO: Done performing upload.
+[2018-11-29 22:32:07 GMT+08:00] <Thread-53>  INFO: id = 20181129223207-994
+[2018-11-29 22:32:10 GMT+08:00] <Thread-53>  INFO: Done performing uploadDone notification to Apple.
+[2018-11-29 22:32:10 GMT+08:00] <Thread-53>  INFO: The package: C:\Users\ADMINI~1\AppData\Local\Temp\au\itmsp\1445027078.itmsp has been successfully uploaded.
+[2018-11-29 22:32:10 GMT+08:00] <Thread-53>  INFO: Verify progress: Operation completed (Step 3/3)
+
+
+
+Package Summary:
+ 
+1 packages were uploaded successfully:
+	C:\Users\ADMINI~1\AppData\Local\Temp\au\itmsp\1445027078.itmsp
+[2018-11-29 23:05:45 GMT+08:00] <Thread-57> Cookie rejected [DSESSIONID="4em0vvu4t55ip5n3rm4qgrn4hlsvr3l0sndg6sc1g1evrf78heu", version:0, domain:developer.apple.com, path:/, expiry:null] Illegal 'domain' attribute "developer.apple.com". Domain of origin: "developerservices2.apple.com"
+[2018-11-29 23:05:54 GMT+08:00] <Thread-58> Cookie rejected [DSESSIONID="1u058as2vlvre6ol27noeb5nejksrvkn1d221hdthnkirulspbq6", version:0, domain:developer.apple.com, path:/, expiry:null] Illegal 'domain' attribute "developer.apple.com". Domain of origin: "developerservices2.apple.com"
+[2018-11-29 23:05:56 GMT+08:00] <Thread-59> Cookie rejected [DSESSIONID="137568g9tcdllvkagr7d8g9m9470jt2ieanbs3621191h2diq3ij", version:0, domain:developer.apple.com, path:/, expiry:null] Illegal 'domain' attribute "developer.apple.com". Domain of origin: "developerservices2.apple.com"
+[2018-11-29 23:08:36 GMT+08:00] <Thread-61> Cookie rejected [DSESSIONID="1fk4hsettrhlv7sugh9qger5c6kbgksm2cm8c181fqi6rb2sgjir", version:0, domain:developer.apple.com, path:/, expiry:null] Illegal 'domain' attribute "developer.apple.com". Domain of origin: "developerservices2.apple.com"
+[2018-11-29 23:08:38 GMT+08:00] <Thread-62> Cookie rejected [DSESSIONID="17vu46ithp7f328lgsc7bcuqm93hh6na1gthns5bcuovsqi27ngh", version:0, domain:developer.apple.com, path:/, expiry:null] Illegal 'domain' attribute "developer.apple.com". Domain of origin: "developerservices2.apple.com"
+[2018-11-29 23:08:50 GMT+08:00] <Thread-63> Cookie rejected [DSESSIONID="10krueufrefd7k70f7vl1sfpfvu83urbhi5sbo9b7huf59jr1i7h", version:0, domain:developer.apple.com, path:/, expiry:null] Illegal 'domain' attribute "developer.apple.com". Domain of origin: "developerservices2.apple.com"
+[2018-11-29 23:08:51 GMT+08:00] <Thread-64> Cookie rejected [DSESSIONID="1t3u25rrp7crhasg9fue325unrcgm58oursski9mfq55isaqe7d5", version:0, domain:developer.apple.com, path:/, expiry:null] Illegal 'domain' attribute "developer.apple.com". Domain of origin: "developerservices2.apple.com"
+[2018-11-29 23:09:07 GMT+08:00] <Thread-65> Cookie rejected [DSESSIONID="1rcsnh45l2gcro932coevhohe2850b9b0k4nkmscot3r8dm7tqi4", version:0, domain:developer.apple.com, path:/, expiry:null] Illegal 'domain' attribute "developer.apple.com". Domain of origin: "developerservices2.apple.com"
+[2018-11-29 23:09:08 GMT+08:00] <Thread-66> Cookie rejected [DSESSIONID="1qu5dgdbuajin1o8ljkoef79hholriku4ng0fg90gt6i4l3cgr2c", version:0, domain:developer.apple.com, path:/, expiry:null] Illegal 'domain' attribute "developer.apple.com". Domain of origin: "developerservices2.apple.com"
+[2018-11-29 23:09:31 GMT+08:00] <Thread-67> Cookie rejected [DSESSIONID="1jt10jtdn69rhn8casff7vp0kojfc6bn4t9pqhordq3dvjd3rd4", version:0, domain:developer.apple.com, path:/, expiry:null] Illegal 'domain' attribute "developer.apple.com". Domain of origin: "developerservices2.apple.com"
+[2018-11-29 23:11:03 GMT+08:00] <Thread-68> Cookie rejected [DSESSIONID="1udq92hdnm3b31pk2se1asps8qvsikpoehp3sicfgdj4nagml6ev", version:0, domain:developer.apple.com, path:/, expiry:null] Illegal 'domain' attribute "developer.apple.com". Domain of origin: "developerservices2.apple.com"
+[2018-11-29 23:11:04 GMT+08:00] <Thread-69> Cookie rejected [DSESSIONID="us2be69417nvq0g8fghltis2mr460akco6r9toci07bbpdq1uqg", version:0, domain:developer.apple.com, path:/, expiry:null] Illegal 'domain' attribute "developer.apple.com". Domain of origin: "developerservices2.apple.com"
+[2018-11-29 23:11:09 GMT+08:00] <Thread-70> Cookie rejected [DSESSIONID="1coo3ad2u6earnhai841c9mj932523t17iqutqii8u41c43rmud", version:0, domain:developer.apple.com, path:/, expiry:null] Illegal 'domain' attribute "developer.apple.com". Domain of origin: "developerservices2.apple.com"
+[2018-11-29 23:11:14 GMT+08:00] <Thread-71> Cookie rejected [DSESSIONID="1j0fnb4o9msd6p28fon0g4n38j8lol0dao2lpbj8bkcjp21vdq4v", version:0, domain:developer.apple.com, path:/, expiry:null] Illegal 'domain' attribute "developer.apple.com". Domain of origin: "developerservices2.apple.com"
+[2018-11-29 23:13:18 GMT+08:00] <Thread-73> Cookie rejected [DSESSIONID="j7bupi8vggaq9uv5mqsuso7lt3jif99d0t6m89jnna86fmj4303", version:0, domain:developer.apple.com, path:/, expiry:null] Illegal 'domain' attribute "developer.apple.com". Domain of origin: "developerservices2.apple.com"
+[2018-11-29 23:13:20 GMT+08:00] <Thread-74> Cookie rejected [DSESSIONID="4knnci3af9e843eao5m0j1c7k7kgjvbs2lm2u7pgu0fc0mo0928", version:0, domain:developer.apple.com, path:/, expiry:null] Illegal 'domain' attribute "developer.apple.com". Domain of origin: "developerservices2.apple.com"
+[2018-11-29 23:13:43 GMT+08:00] <Thread-75> Cookie rejected [DSESSIONID="1p7ggu9o9u0jks0qavoh7mhpbkqoagbmpddv01s13aa7gbq46uio", version:0, domain:developer.apple.com, path:/, expiry:null] Illegal 'domain' attribute "developer.apple.com". Domain of origin: "developerservices2.apple.com"
+[2018-11-29 23:13:45 GMT+08:00] <Thread-76> Cookie rejected [DSESSIONID="fg7gt1km50inhkbee5hmeb6l1pcikoej499mn3lv4bkoug774se", version:0, domain:developer.apple.com, path:/, expiry:null] Illegal 'domain' attribute "developer.apple.com". Domain of origin: "developerservices2.apple.com"
+[2018-11-29 23:13:55 GMT+08:00] <Thread-77> Cookie rejected [DSESSIONID="88suj853b7idstjjbpi8jmgpo007e9qncrc2nihulajv2rejhse", version:0, domain:developer.apple.com, path:/, expiry:null] Illegal 'domain' attribute "developer.apple.com". Domain of origin: "developerservices2.apple.com"

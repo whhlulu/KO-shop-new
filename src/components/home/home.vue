@@ -369,7 +369,7 @@
 	.home {
 		.mint-swipe {
 			width: 100%;
-			height: 3.28rem;
+			height: 4rem;
 			img {
 				width: 100%;
 				height: 100%;

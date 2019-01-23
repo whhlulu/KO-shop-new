@@ -9,7 +9,7 @@
 				<span v-else>已收藏</span>
 			</div>
 			<div class="join fl" @click="hide">加入我的福利</div>
-			<div class="imm fl" @click="buy">立即购买</div>
+			<div class="imm fl" @click="hide">立即购买</div>
 		</div>
 	</div>
 </template>

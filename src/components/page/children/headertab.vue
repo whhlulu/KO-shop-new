@@ -2,10 +2,11 @@
     <div class="teacher-main">
         <header class="header">
             <span @click="btnGo" class="btnGo"></span>
-            <div class="tabhead">
-                <p @click = "activeCli(0)" :class="{active:activeIndex ==0}">我的收藏</p>
-                <p @click = "activeCli(1)" :class="{activelastr:activeIndex ==1}">关注店铺</p>
-            </div>
+            我的收藏
+            <!--<div class="tabhead">-->
+                <!--<p @click = "activeCli(0)" :class="{active:activeIndex ==0}">我的收藏</p>-->
+                <!--<p @click = "activeCli(1)" :class="{activelastr:activeIndex ==1}">关注店铺</p>-->
+            <!--</div>-->
             <div class="btn-ng clearfix" v-if="!btn" v-show="!set" @click="addClass">
                 <span class="fl"></span>
                 <span class="fl"></span>

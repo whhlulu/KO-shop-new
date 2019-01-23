@@ -28,7 +28,9 @@
 		<!-- 猜你喜欢 -->
 		<pr-list v-if="$store.state.dataLeave.length != 0 || $store.state.dataLeave.length" :conItem="conItem" :val="2" :data="$store.state.dataLeave"></pr-list>
 
-		<div class="prompt" @click="toTab">点击查看更多商品信息</div>
+		<div class="prompt">
+			<el-button @click="toTab" type="warning" plain round>点击查看更多商品信息</el-button>
+		</div>
 		<detail-option @recommend="matchGood($store.state.commodity_data.goods.id)" v-if='guige' :data="$store.state.commodity_data"></detail-option>
 		<Shopsn></Shopsn>
 		<foot-btn :state="sonState" :Number="$store.state.commodity_val" :data="$store.state.commodity_data" @reduce="reduce" @plus="plus" :money='this.$route.params.money'></foot-btn>
@@ -372,13 +374,8 @@
 	}
 	
 	.prompt {
-		width: 100%;
-		height: .9rem;
-		background: #f1f1f1;
-		line-height: .9rem;
+		margin: .2rem auto;
 		text-align: center;
-		font-size: .26rem;
-		color: #999;
 	}
 	
 	#popup {

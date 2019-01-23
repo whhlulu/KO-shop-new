@@ -20,13 +20,13 @@
             <li class="fl" @click="toAcclogoIn">账号登录</li>
             <li class="fl" @click="goNow">现在注册 ></li>
         </ul>
-        <dl class="tplogin" v-show="show">
-            <dt>
-                社交账号一键登录
-                <span></span><span></span>
-            </dt>
-            <dd   @click="qqLogin"></dd>
-        </dl>
+        <!--<dl class="tplogin" v-show="show">-->
+            <!--<dt>-->
+                <!--社交账号一键登录-->
+                <!--<span></span><span></span>-->
+            <!--</dt>-->
+            <!--<dd   @click="qqLogin"></dd>-->
+        <!--</dl>-->
     </div>
 </template>
 <script>

@@ -53,11 +53,13 @@
                 if(link=='/customer'){
                     MessageBox({
                         title: '客服电话',
-                        message: '15079004857',
+                        message: '15279437988',
                         confirmButtonText: '呼叫',
-                        showCancelButton: true
+                        showCancelButton: true,
+                        cancelButtonClass:'cancelButton',
+                        confirmButtonClass:'confirmButton',
                     }).then(action => {
-                        if(action == "confirm") window.location.href = "tel:15079004857"
+                        if(action == "confirm") window.location.href = "tel:15279437988"
                     })
                 }else if(link=='/KOListFoot'){
                     Toast('尽请期待');

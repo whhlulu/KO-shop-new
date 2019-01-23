@@ -15,7 +15,7 @@
 				</div>
 				<div class="inf-wrap clearfix">
 					<div class="inf fl">
-						{{item.create_time | formatDate}}&nbsp;&nbsp;&nbsp;
+						{{formatTime(item.create_time)}}&nbsp;&nbsp;&nbsp;
 						<span v-for="items in item.space" :key="items.id">{{items.speName+':'+items.item}}</span>
 					</div>
 					<div class="status fr" v-if="item.score == 3">差评</div>
@@ -43,7 +43,7 @@
 				</div>
 				<div class="inf-wrap clearfix">
 					<div class="inf fl">
-						{{new Date(item.create_time * 1000).getFullYear()+'/'+(new Date(item.create_time * 1000).getMilliseconds() + 1)+'/'+new Date(item.create_time * 1000).getDay()}}&nbsp;&nbsp;&nbsp;
+						{{formatTime(item.create_time)}}&nbsp;&nbsp;&nbsp;
 						<span v-for="items in item.space" :key="items.id">{{items.speName+':'+items.item}}</span>
 					</div>
 					<div class="status fr" v-if="item.score == 3">差评</div>
@@ -86,6 +86,19 @@
 			
 		},
 		methods: {
+            formatTime(t){
+                var time = new Date(Number(t) * 1000);
+                var Y = time.getFullYear();
+                var m = time.getMonth() + 1;
+                var d = time.getDate();
+                if (m < 10) {
+                    m = '0' + m;
+                }
+                if (d < 10) {
+                    d = '0' + d;
+                }
+                return (Y + "-" + m + "-" + d);
+            },
 			tabIndex(index) {
 				this.status = index;
 				if(this.status == 0) {

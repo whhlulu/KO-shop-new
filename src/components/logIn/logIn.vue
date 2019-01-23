@@ -8,7 +8,7 @@
             <div class="from">
                 <div class="input-main userName">
                     <span class="icon"></span>
-                    <input type="text" oninput="if(value.length > 11)value=value.slice(0, 11)" placeholder="请输入手机号" v-model="userName" >
+                    <input type="text" oninput="if(value.length > 11)value=value.slice(0, 11)" placeholder="请输入手机号/用户名" v-model="userName" >
                 </div>
                 <div class="input-main passWord">
                     <span class="icon"></span>

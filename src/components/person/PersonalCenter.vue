@@ -159,11 +159,11 @@
                         case 4:
                             MessageBox({
                                 title: '客服电话',
-                                message: '15079004857',
+                                message: '15279437988',
                                 confirmButtonText: '呼叫',
                                 showCancelButton: true
                             }).then(action => {
-                                if(action == "confirm") window.location.href = "tel:15079004857"
+                                if(action == "confirm") window.location.href = "tel:15279437988"
                             })
                             //this.$router.push('/customer');
                             break;
@@ -206,6 +206,9 @@
 <style lang="less" scoped>
     .per-center{
         background:#f1f1f1;
+        .mint-msgbox-message{
+            font-size: 15px;
+        }
     }
     .header-wrap{
         width:100%;

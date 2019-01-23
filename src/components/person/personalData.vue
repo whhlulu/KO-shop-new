@@ -19,16 +19,28 @@
 					<span class="userName fr">{{data.user_name}}</span>
 					<div class="icon-btn"></div>
 				</li>
+				<li class="clearfix">
+					<span class="userStatus fl">学校</span>
+					<span class="userName fr">{{data.schoole|| '无'}}</span>
+				</li>
+				<li class="clearfix">
+					<span class="userStatus fl">班级</span>
+					<span class="userName fr">{{(data.grade+data.class)|| '无'}}</span>
+				</li>
+				<li class="clearfix">
+					<span class="userStatus fl">学生姓名</span>
+					<span class="userName fr">{{data.student_name|| '无'}}</span>
+				</li>
 				<li class="clearfix" @click="modify('nickname')">
 					<span class="userStatus fl">昵称<span>*</span></span>
 					<span class="userName fr">{{data.nick_name|| '请填写'}}</span>
 					<div class="icon-btn"></div>
 				</li>
-				<li class="clearfix" @click="modify('email')">
-					<span class="userStatus fl">邮箱</span>
-					<span class="userName fr">{{data.email || '请填写'}}</span>
-					<div class="icon-btn"></div>
-				</li>
+				<!--<li class="clearfix" @click="modify('email')">-->
+					<!--<span class="userStatus fl">邮箱</span>-->
+					<!--<span class="userName fr">{{data.email || '请填写'}}</span>-->
+					<!--<div class="icon-btn"></div>-->
+				<!--</li>-->
 				<li class="clearfix" @click="modify('sex')">
 					<span class="userStatus fl">性别</span>
 					<span class="userName fr">{{data.sex || '请填写'}}</span>
@@ -39,16 +51,36 @@
 					<!--<span class="userName fr">{{data.birthday}}</span>-->
 					<!--<div class="icon-btn"></div>-->
 				<!--</li>-->
-				<li class="clearfix" @click="modify('rechargenum')">
-					<span class="userStatus fl">充值号码</span>
-					<span class="userName fr">{{data.rechargenum|| '请填写激活后的手机卡号'}}</span>
-					<div class="icon-btn"></div>
-				</li>
-				<li class="clearfix" @click="modify('rechargename')">
-					<span class="userStatus fl">充值用户姓名</span>
-					<span class="userName fr">{{data.rechargename|| '请填写'}}</span>
-					<div class="icon-btn"></div>
-				</li>
+				<!--<li class="clearfix" @click="modify('rechargenum')">-->
+					<!--<span class="userStatus fl">充值号码</span>-->
+					<!--<span class="userName fr">{{data.rechargenum|| '请填写激活后的手机卡号'}}</span>-->
+					<!--<div class="icon-btn"></div>-->
+				<!--</li>-->
+				<!--<li class="clearfix" @click="modify('rechargename')">-->
+					<!--<span class="userStatus fl">充值用户姓名</span>-->
+					<!--<span class="userName fr">{{data.rechargename|| '请填写'}}</span>-->
+					<!--<div class="icon-btn"></div>-->
+				<!--</li>-->
+				<!--<li class="clearfix" @click="modify('rechargenum2')">-->
+					<!--<span class="userStatus fl">充值号码2</span>-->
+					<!--<span class="userName fr">{{data.rechargenum2|| '请填写激活后的手机卡号'}}</span>-->
+					<!--<div class="icon-btn"></div>-->
+				<!--</li>-->
+				<!--<li class="clearfix" @click="modify('rechargename2')">-->
+					<!--<span class="userStatus fl">充值用户姓名2</span>-->
+					<!--<span class="userName fr">{{data.rechargename2|| '请填写'}}</span>-->
+					<!--<div class="icon-btn"></div>-->
+				<!--</li>-->
+				<!--<li class="clearfix" @click="modify('rechargenum3')">-->
+					<!--<span class="userStatus fl">充值号码3</span>-->
+					<!--<span class="userName fr">{{data.rechargenum3|| '请填写激活后的手机卡号'}}</span>-->
+					<!--<div class="icon-btn"></div>-->
+				<!--</li>-->
+				<!--<li class="clearfix" @click="modify('rechargename3')">-->
+					<!--<span class="userStatus fl">充值用户姓名3</span>-->
+					<!--<span class="userName fr">{{data.rechargename3|| '请填写'}}</span>-->
+					<!--<div class="icon-btn"></div>-->
+				<!--</li>-->
 			</ul>
 		</div>
 		<div class="from-btn" @click="preservation">确认修改</div>
@@ -200,6 +232,15 @@ export default {
                       console.log(err);
                   });
               break;
+		  default:
+              MessageBox.prompt("请输入")
+                  .then(({ value, action }) => {
+                      this.data[v] = value;
+                  })
+                  .catch(err => {
+                      console.log(err);
+                  });
+              break;
       }
     },
     dataChange(val) {
@@ -260,7 +301,11 @@ export default {
               nick_name: this.data.nick_name,
               rechargenum: this.data.rechargenum,
               rechargename: this.data.rechargename,
-            email: this.data.email,
+              rechargenum2: this.data.rechargenum2,
+              rechargename2: this.data.rechargename2,
+              rechargenum3: this.data.rechargenum3,
+              rechargename3: this.data.rechargename3,
+            //email: this.data.email,
             sex: sex,
             user_header: this.data.img_url,
             img_new: this.user_header,

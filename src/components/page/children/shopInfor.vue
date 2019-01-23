@@ -1,5 +1,5 @@
 <template>
-  <div class="box" @click="toShop">
+  <div class="box"> <!--@click="toShop"-->
     <div class="header" >
         <img v-show="shopData.store_logo" :src="URL+shopData.store_logo" alt="">
         <div>
@@ -22,10 +22,10 @@
             <p>发货速度: <span>4.80</span></p>
         </li>
     </ul>
-    <div class="footer">
-        <div @click="toShopList">查看分类</div>
-        <div>进店逛逛</div>
-    </div>
+    <!--<div class="footer">-->
+        <!--<div @click="toShopList">查看分类</div>-->
+        <!--<div>进店逛逛</div>-->
+    <!--</div>-->
   </div>
 </template>
 <script>

@@ -1,7 +1,7 @@
 <template>
     <div class="header">
         <div class="title">
-            学邦教育平台
+            学邦平台
         </div>
         <!--<router-link to="/KOhome" class="header_logo"></router-link>-->
         <!--<div class="header_seek" @click="searchIn">-->

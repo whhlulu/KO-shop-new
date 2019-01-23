@@ -16,10 +16,10 @@
                		 我的收货地址
                 <div class="icon-btn"></div>
             </dd>
-            <dd @click="toRouter('phone')">
-               		 绑定手机号码
-                <div class="icon-btn"></div>
-            </dd>
+            <!--<dd @click="toRouter('phone')">-->
+               		 <!--绑定手机号码-->
+                <!--<div class="icon-btn"></div>-->
+            <!--</dd>-->
             <!-- <dd>
                 	绑定支付宝
                 <div class="icon-btn"></div>
@@ -33,6 +33,10 @@
                 	修改密码
                 <div class="icon-btn"></div>
             </dd>
+            <!--<dd @click="toRouter('personal')">-->
+                <!--完善充值号码信息-->
+                <!--<div class="icon-btn"></div>-->
+            <!--</dd>-->
         </dl>
         <div class="footer" @click="signOut">退出当前账户</div>
         <mt-popup v-model="popupVisible" position="bottom">

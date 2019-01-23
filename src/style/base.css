@@ -316,3 +316,9 @@ textarea {
 ::-webkit-scrollbar {
     display: none
 }
+.mint-msgbox-message{
+    font-size: 16px;
+}
+.mint-msgbox-cancel,.mint-msgbox-confirm{
+    font-size: 15px;
+}

@@ -7,11 +7,11 @@
         <div class="from">
             <div class="input-main userName">
                 <span class="icon"></span>
-                <input type="text" placeholder="请输入用户名" v-model="username">
+                <input type="text" placeholder="请输入用户名（可为手机号或姓名）" v-model="username">
             </div>
             <div class="input-main phone-number">
                 <span class="icon"></span>
-                <input type="number" oninput="if(value.length > 11)value=value.slice(0, 11)"  placeholder="请输入验证手机号码" v-model="mobile">
+                <input type="number" oninput="if(value.length > 11)value=value.slice(0, 11)"  placeholder="请输入手机号码（全国移动联通电信均可）" v-model="mobile">
             </div>
             <div class="input-main message">
                 <span class="icon"></span>
